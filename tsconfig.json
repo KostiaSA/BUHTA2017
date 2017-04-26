@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    //"baseUrl": "../",
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es2017",
+    //"outDir": "dist",
+    //"declaration": true,
+    //"declarationDir":"declarations",
+    "module": "commonjs",
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    //    "reactNamespace": "__React"
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "node_modules"
+//    "node_modules/reflect-metadata/test",
+//    "node_modules/@blueprintjs/core/examples",
+//    "node_modules/@blueprintjs/core/src"
+    //".js"
+    //"**/*x.d.ts"
+  ]
+}

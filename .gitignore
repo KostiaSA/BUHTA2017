@@ -1,0 +1,15 @@
+.idea
+node_modules
+app
+vendor
+*.bak
+*.js
+*.jsx
+*.map
+*.rar
+*.zip
+!main.js
+*.pdf
+!node_modules/@types/monaco-editor/monaco.d.ts
+!node_modules/@types/react-draggable/index.d.ts
+

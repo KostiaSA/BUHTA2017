@@ -1,0 +1,31 @@
+{
+  "name": "buhta2017",
+  "version": "0.1.0",
+  "description": "E",
+  "main": "main.js",
+  "scripts": {
+    "run": "electron ."
+  },
+  "author": "Buhta OOO",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^1.6.1",
+    "json-loader": "^0.5.4"
+  },
+  "dependencies": {
+    "@types/jquery": "^2.0.41",
+    "@types/node": "^6.0.62",
+    "@types/ramda": "0.0.7",
+    "@types/react": "^0.14.55",
+    "@types/react-dom": "^0.14.19",
+    "@types/typescript": "^2.0.0",
+    "mobx": "^2.7.0",
+    "mobx-react": "^4.0.3",
+    "ramda": "^0.23.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-draggable": "^2.2.3",
+    "react-resizable": "^1.6.0",
+    "typescript": "^2.2.2"
+  }
+}
