@@ -32,36 +32,4 @@ export class TabPanelItem extends EnabledMixin(
 
     // ------------------------------ getReactElement ------------------------------
 
-    // getReactElement(index?: number | string): JSX.Element | null {
-    //     this.init();
-    //     console.log("TabPanel-getReactElement()", this.enabled);
-    //
-    //     let panelClass = classNames({
-    //         "buhta-tab-panel": true,
-    //     });
-    //
-    //     let tabs = <div style={{flex: "0 1 auto",border: "1px solid orange"}}>tabs</div>;
-    //     let content = <div style={{flex: "1 1 auto",border: "1px solid green"}}>content</div>;
-    //
-    //     return (
-    //         <div
-    //             className={panelClass}
-    //             style={{
-    //                 display: "flex",
-    //                 flexDirection: "column",
-    //                 position: this.top || this.left ? "absolute" : "relative",
-    //                 top: this.top,
-    //                 left: this.left,
-    //                 height: this.height,
-    //                 width: this.width,
-    //                 overflow: "hidden",
-    //                 border: "1px solid red"
-    //         }}>
-    //             {tabs}
-    //             {content}
-    //         </div>
-    //     );
-    //
-    // }
-
 }

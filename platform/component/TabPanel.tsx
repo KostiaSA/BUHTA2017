@@ -68,6 +68,8 @@ export class TabPanel extends EnabledMixin(
         });
 
         let tabsTitles: JSX.Element[] = [];
+        let tabsContent: JSX.Element[] = [];
+
         for (let child of this.children) {
             let panelItem = child as TabPanelItem;
 
@@ -103,11 +105,10 @@ export class TabPanel extends EnabledMixin(
                 </tr>
             );
 
-
             tabsTitles.push(
                 <span
                     onClick={() => {
-                        if (this.activeTab!==panelItem) {
+                        if (this.activeTab !== panelItem) {
                             this.activeTab = panelItem;
                             appStateforceUpdate();
                         }
@@ -132,11 +133,31 @@ export class TabPanel extends EnabledMixin(
                     </table>
                 </span>
             );
+
+
+            tabsContent.push(
+                <div style={{
+                    display: panelItem === this.activeTab ? "block" : "none",
+                    height: "100%",
+                    overflow: "auto",
+                    position:"absolute",
+                    top:0,
+                    left:0,
+                    right:0,
+                    bottom:0,
+                    border:"0px solid red"
+                }}>
+                    { panelItem.children.map((child, index) => child.getReactElement(index))}
+                </div>
+            )
+
+
         }
 
         let tabs = <div
             style={{flex: "0 1 auto", paddingLeft: 2, backgroundColor: "rgb(234, 234, 234)"}}>{tabsTitles}</div>;
-        let content = <div style={{flex: "1 1 auto"}}>content</div>;
+
+        let content = <div style={{flex: "1 1 auto",position:"relative"}}>{tabsContent}</div>;
 
         return (
             <div
