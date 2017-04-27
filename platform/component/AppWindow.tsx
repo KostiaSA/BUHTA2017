@@ -3,7 +3,9 @@ import * as ReactDOM from "react-dom";
 
 import {Component} from "./Component";
 import {Desktop} from "./Desktop";
+import {observer} from "mobx-react";
 
+@observer
 export class AppWindow extends React.Component<any, any> {
 
     desktop: Desktop = new Desktop();

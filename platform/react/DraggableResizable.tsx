@@ -48,13 +48,19 @@ export class DraggableResizable extends React.Component<IDraggableResizableProps
 
     render(): any {
         console.log("DraggableResizable render");
-
+        let props: any = {};
+        for (let propName of Object.keys(this.props)) {
+            if (propName !== "children" && propName !== "ref" && !propName.startsWith("bind"))
+                props[propName] = (this.props as any)[propName];
+        }
         return (
             <div
+                {...props}
+
                 ref={(e) => {
                     this.native = e
                 }}
-                style={this.props.style}>
+            >
                 {this.props.children}
             </div>
         )

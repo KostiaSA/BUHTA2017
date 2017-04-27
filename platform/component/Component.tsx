@@ -2,6 +2,15 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 
+export interface IEventArgs {
+    sender: Component;
+}
+
+export interface IEvent<TArgs extends IEventArgs> {
+    (args: TArgs): void;
+}
+
+
 export class Component {
 
     // --- parent ---
@@ -20,6 +29,7 @@ export class Component {
         this.initialized = true;
     }
 
+    native: HTMLElement;
 
     children: Component[] = [];
 

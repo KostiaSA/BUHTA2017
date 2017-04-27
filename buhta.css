@@ -18,6 +18,7 @@ body {
 .react-resizable {
     position: relative;
 }
+
 .react-resizable-handle {
     position: absolute;
     width: 20px;
@@ -33,9 +34,13 @@ body {
     cursor: se-resize;
 }
 
-.buhta-button {
+.buhta-button,.buhta-button.disabled:hover,.buhta-button.disabled:active {
     border: 1px solid #d4d4d4;
     background-color: #eaeaea;
+}
+
+.buhta-button.disabled {
+    opacity: 0.5;
 }
 
 .buhta-button:hover {

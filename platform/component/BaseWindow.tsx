@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Component} from "./Component";
 import {DraggableResizable} from "../react/DraggableResizable";
+import {Desktop} from "./Desktop";
 
 
 export interface IWindowStyle {
@@ -37,6 +38,10 @@ export class BaseWindow extends Component {
 
     icon: string = "vendor/fugue/icons-shadowless/application-blue.png";
 
+    bringToFront(){
+        (this.parent as Desktop).bringWindowToFront(this);
+    }
+
     getReactElement(index?: number | string): JSX.Element | null {
         console.log("getReactElement-window");
         this.init();
@@ -46,6 +51,10 @@ export class BaseWindow extends Component {
                 bindObject={this}
                 bindTop="top"
                 bindLeft="left"
+                onClick={()=>{
+                    console.log("win-click");
+                    this.bringToFront();
+                }}
                 style={{
                     display: "flex",
                     flexDirection: "column",
@@ -56,7 +65,8 @@ export class BaseWindow extends Component {
                     width: this.width,
                     height: this.height,
                     outline: "1px solid " + this.style.borderColor,
-                    boxShadow: "0 0 9px -1px #000"
+                    boxShadow: "0 0 9px -1px #000",
+                    zIndex:91
                 }}>
                 <div
                     className="window-title"
@@ -66,7 +76,7 @@ export class BaseWindow extends Component {
                         flexDirection: "row",
                         height: 26,
                         //borderBottom: "1px solid " + this.style.borderColor,
-                        backgroundColor:this.style.borderColor
+                        backgroundColor:this.style.borderColor,
                     }}>
                     <div style={{flex: "1 1 auto", overflow: "hidden", padding: 5, whiteSpace: "nowrap", cursor:"move"}}>
                         <img src={this.icon} height="16" width="16"/>
@@ -76,7 +86,7 @@ export class BaseWindow extends Component {
                             position: "relative",
                             whiteSpace: "nowrap",
                             color:"white",
-                            fontWeight:"bold"
+                            fontWeight:"bold",
                         }}
                         >
                             это window top={this.top} {new Date().getTime()}

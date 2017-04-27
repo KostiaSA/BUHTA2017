@@ -13,12 +13,14 @@
     "json-loader": "^0.5.4"
   },
   "dependencies": {
+    "@types/classnames": "0.0.32",
     "@types/jquery": "^2.0.41",
     "@types/node": "^6.0.62",
     "@types/ramda": "0.0.7",
     "@types/react": "^0.14.55",
     "@types/react-dom": "^0.14.19",
     "@types/typescript": "^2.0.0",
+    "classnames": "^2.2.5",
     "mobx": "^2.7.0",
     "mobx-react": "^4.0.3",
     "ramda": "^0.23.0",
