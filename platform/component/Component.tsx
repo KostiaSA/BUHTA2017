@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import {appStateforceUpdate} from "../util/appStateforceUpdate";
 
 
 export interface IEventArgs {
@@ -50,6 +51,11 @@ export class Component {
     //     this._$childrenContainer = value;
     // }
 
+    setPropertyWithForceUpdate(propName: string, value: any) {
+        let needUpdate = (this as any)[propName] !== value;
+        (this as any)[propName] = value;
+        appStateforceUpdate(needUpdate);
+    }
 
     // --- owner ---
     get owner(): Component {

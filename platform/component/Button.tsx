@@ -5,6 +5,7 @@ import {DraggableResizable} from "../react/DraggableResizable";
 import {EnabledMixin} from "./mixin/EnabledMixin";
 import {OnClickMixin} from "./mixin/OnClickMixin";
 import {appStateforceUpdate} from "../util/appStateforceUpdate";
+import {TopLeftMixin} from "./mixin/TopLeftMixin";
 
 
 export interface IButtonStyle {
@@ -22,10 +23,10 @@ export const DefaultButtonStyle: IButtonStyle = {
 
 export class Button extends EnabledMixin(
     OnClickMixin(
-        // TopLeftMixin(
+         TopLeftMixin(
         //     HeightWidthMixin(
         Component
-    )) {
+    ))) {
 
     style: IButtonStyle = DefaultButtonStyle;
 
@@ -35,8 +36,6 @@ export class Button extends EnabledMixin(
         super.init();
     }
 
-    top: number = 50;
-    left: number = 50;
     height: number = 300;
     width: number = 400;
     //text: ;

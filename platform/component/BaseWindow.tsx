@@ -2,6 +2,7 @@ import * as React from "react";
 import {Component} from "./Component";
 import {DraggableResizable} from "../react/DraggableResizable";
 import {Desktop} from "./Desktop";
+import {getRandomId} from "../util/getRandomId";
 
 
 export interface IWindowStyle {
@@ -31,6 +32,14 @@ export class BaseWindow extends Component {
 
     }
 
+    _id: string;
+    get id(): string {
+        if (!this._id) {
+            this._id = getRandomId()
+        }
+        return this._id;
+    }
+
     top: number = 50;
     left: number = 50;
     height: number = 300;
@@ -38,7 +47,7 @@ export class BaseWindow extends Component {
 
     icon: string = "vendor/fugue/icons-shadowless/application-blue.png";
 
-    bringToFront(){
+    bringToFront() {
         (this.parent as Desktop).bringWindowToFront(this);
     }
 
@@ -47,11 +56,11 @@ export class BaseWindow extends Component {
         this.init();
         return (
             <DraggableResizable
-                key={index}
+                key={this.id}
                 bindObject={this}
                 bindTop="top"
                 bindLeft="left"
-                onClick={()=>{
+                onClick={() => {
                     console.log("win-click");
                     this.bringToFront();
                 }}
@@ -66,7 +75,7 @@ export class BaseWindow extends Component {
                     height: this.height,
                     outline: "1px solid " + this.style.borderColor,
                     boxShadow: "0 0 9px -1px #000",
-                    zIndex:91
+                    zIndex: 91
                 }}>
                 <div
                     className="window-title"
@@ -76,24 +85,31 @@ export class BaseWindow extends Component {
                         flexDirection: "row",
                         height: 26,
                         //borderBottom: "1px solid " + this.style.borderColor,
-                        backgroundColor:this.style.borderColor,
+                        backgroundColor: this.style.borderColor,
                     }}>
-                    <div style={{flex: "1 1 auto", overflow: "hidden", padding: 5, whiteSpace: "nowrap", cursor:"move"}}>
+                    <div style={{
+                        flex: "1 1 auto",
+                        overflow: "hidden",
+                        padding: 5,
+                        whiteSpace: "nowrap",
+                        cursor: "move"
+                    }}>
                         <img src={this.icon} height="16" width="16"/>
                         <span style={{
                             top: -4,
                             left: 5,
                             position: "relative",
                             whiteSpace: "nowrap",
-                            color:"white",
-                            fontWeight:"bold",
+                            color: "white",
+                            fontWeight: "bold",
                         }}
                         >
                             это window top={this.top} {new Date().getTime()}
                         </span>
                     </div>
                     <div style={{flex: "0 1 auto", padding: 5}}>
-                        <img src={"vendor/fugue/icons-shadowless/cross.png"} height="16" width="16" style={{opacity: 0.6, cursor:"pointer"}}/>
+                        <img src={"vendor/fugue/icons-shadowless/cross.png"} height="16" width="16"
+                             style={{opacity: 0.6, cursor: "pointer"}}/>
                     </div>
 
                 </div>
@@ -101,9 +117,11 @@ export class BaseWindow extends Component {
                     className="window-content"
                     style={{
                         flex: "1 0 auto",
+                        overflow: "auto",
+                        position: "relative"
                         //outline: "2px solid orange",
                     }}>
-                    {this.children.map((child,index)=>child.getReactElement(index))}
+                    {this.children.map((child, index) => child.getReactElement(index))}
                 </div>
             </DraggableResizable>
         );
