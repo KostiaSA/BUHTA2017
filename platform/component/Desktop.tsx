@@ -29,7 +29,7 @@ export class Desktop extends Component {
         console.log("getReactElement-desktop");
         return (
             <div key={index}
-                 style={{position: "relative", overflow: "auto", height: 700, width: 700, border: "1px solid green"}}>
+                 style={{position: "relative", overflow: "auto", height: 900, width: 900, border: "1px solid green"}}>
                 это десктоп {new Date().getTime()}
                 {this.children.map((child, index) => child.getReactElement(index))}
             </div>);

@@ -1,10 +1,8 @@
 import * as React from "react";
 import * as classNames from "classnames";
 import {Component} from "./Component";
-import {DraggableResizable} from "../react/DraggableResizable";
 import {EnabledMixin} from "./mixin/EnabledMixin";
 import {OnClickMixin} from "./mixin/OnClickMixin";
-import {appStateforceUpdate} from "../util/appStateforceUpdate";
 import {TopLeftMixin} from "./mixin/TopLeftMixin";
 import {TextMixin} from "./mixin/TextMixin";
 import {IconMixin} from "./mixin/IconMixin";
