@@ -32,14 +32,6 @@ export class BaseWindow extends Component {
 
     }
 
-    _id: string;
-    get id(): string {
-        if (!this._id) {
-            this._id = getRandomId()
-        }
-        return this._id;
-    }
-
     top: number = 50;
     left: number = 50;
     height: number = 300;

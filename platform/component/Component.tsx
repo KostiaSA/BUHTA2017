@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {appStateforceUpdate} from "../util/appStateforceUpdate";
+import {getRandomId} from "../util/getRandomId";
 
 
 export interface IEventArgs {
@@ -13,6 +14,16 @@ export interface IEvent<TArgs extends IEventArgs> {
 
 
 export class Component {
+
+
+    _id: string;
+    get id(): string {
+        if (!this._id) {
+            this._id = getRandomId()
+        }
+        return this._id;
+    }
+
 
     // --- parent ---
     _parent: Component;

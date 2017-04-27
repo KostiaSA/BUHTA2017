@@ -6,6 +6,8 @@ import {EnabledMixin} from "./mixin/EnabledMixin";
 import {OnClickMixin} from "./mixin/OnClickMixin";
 import {appStateforceUpdate} from "../util/appStateforceUpdate";
 import {TopLeftMixin} from "./mixin/TopLeftMixin";
+import {TextMixin} from "./mixin/TextMixin";
+import {IconMixin} from "./mixin/IconMixin";
 
 
 export interface IButtonStyle {
@@ -23,10 +25,12 @@ export const DefaultButtonStyle: IButtonStyle = {
 
 export class Button extends EnabledMixin(
     OnClickMixin(
-         TopLeftMixin(
-        //     HeightWidthMixin(
-        Component
-    ))) {
+        TopLeftMixin(
+            TextMixin(
+                IconMixin(
+                    //     HeightWidthMixin(
+                    Component
+                ))))) {
 
     style: IButtonStyle = DefaultButtonStyle;
 
@@ -38,19 +42,7 @@ export class Button extends EnabledMixin(
 
     height: number = 300;
     width: number = 400;
-    //text: ;
 
-    // ------------------------------ text ------------------------------
-    protected _text: string | JSX.Element = this.text_default;
-    get text(): string | JSX.Element {
-        return this._text;
-    }
-
-    set text(value: string | JSX.Element) {
-        let needUpdate = this._text !== value;
-        this._text = value;
-        appStateforceUpdate(needUpdate);
-    }
 
     protected get text_default(): string | JSX.Element {
         return "кнопка";
@@ -61,7 +53,7 @@ export class Button extends EnabledMixin(
     // }
 
 
-    icon: string = "vendor/fugue/icons-shadowless/application-blue.png";
+    // ------------------------------ getReactElement ------------------------------
 
     getReactElement(index?: number | string): JSX.Element | null {
         this.init();
@@ -72,6 +64,15 @@ export class Button extends EnabledMixin(
             "disabled": !this.enabled,
         });
 
+        let iconTag: JSX.Element | null = null;
+        if (this.icon)
+            iconTag = (
+                <td style={{verticalAlign: "middle"}}>
+                    <img src={this.icon} height="16" width="16"
+                         style={{marginLeft: 6, top: 1, position: "relative"}}/>
+                </td>
+            );
+
         return (
             <span
                 onClick={() => {
@@ -81,28 +82,37 @@ export class Button extends EnabledMixin(
                 className={btnClass}
                 disabled={!this.enabled}
                 style={{
-                    position: "relative",
+                    position: this.top || this.left ? "absolute" : "relative",
                     top: this.top,
                     left: this.left,
                     overflow: "hidden",
-                    padding: 8,
+                    padding: 0,
                     whiteSpace: "nowrap",
                     cursor: this.enabled ? "pointer" : "default",
                 }}>
-                    <img src={this.icon} height="16" width="16" style={{position: "relative", top: 2}}/>
-                    <span style={{
-                        position: "relative",
-                        whiteSpace: "nowrap",
-                        marginLeft: 6,
-                        top: -1,
-                        marginRight: 1,
-                        cursor: this.enabled ? "pointer" : "default",
-                    }}
-                    >
-                      {this.text}
-                    </span>
+                <table style={{height: 28}}>
+                    <tbody>
+                        <tr>
+                            {iconTag}
+                            <td style={{verticalAlign: "middle"}}>
+                                <span style={{
+                                    position: "relative",
+                                    whiteSpace: "nowrap",
+                                    marginLeft: 6,
+                                    marginRight: 6,
+                                    top: -1,
+                                    cursor: this.enabled ? "pointer" : "default",
+                                }}
+                                >
+                                    {this.text}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </span>
         );
+
     }
 
 }

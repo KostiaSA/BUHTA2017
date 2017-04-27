@@ -16,9 +16,7 @@ export function EnabledMixin<T extends MixinConstructor<Component>>(Base: T) {
         }
 
         set enabled(value: boolean) {
-            let needUpdate = this._enabled !== value;
-            this._enabled = value;
-            appStateforceUpdate(needUpdate);
+            this.setPropertyWithForceUpdate("_enabled",value);
         }
 
         protected get enabled_default(): boolean {
