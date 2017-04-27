@@ -1,9 +1,6 @@
 import * as React from "react";
 import {Component} from "./Component";
 import {DraggableResizable} from "../react/DraggableResizable";
-//import Draggable from "react-draggable";
-//let Draggable = require('react-draggable');
-//let Resizable = require('react-resizable').Resizable;
 
 
 export interface IWindowStyle {
@@ -19,11 +16,11 @@ export const DefaultWindowStyle: IWindowStyle = {
 
 };
 
-export class Window extends Component {
+export class BaseWindow extends Component {
 
     style: IWindowStyle = DefaultWindowStyle;
 
-    //win1: Window = new Window();
+    //win1: BaseWindow = new BaseWindow();
 
     init() {
         if (this.initialized) return;
@@ -36,7 +33,7 @@ export class Window extends Component {
     top: number = 50;
     left: number = 50;
     height: number = 300;
-    width: number = 300;
+    width: number = 400;
 
     icon: string = "vendor/fugue/icons-shadowless/application-blue.png";
 
@@ -96,7 +93,7 @@ export class Window extends Component {
                         flex: "1 0 auto",
                         //outline: "2px solid orange",
                     }}>
-                    это window content={this.top} {new Date().getTime()}
+                    {this.children.map((child,index)=>child.getReactElement(index))}
                 </div>
             </DraggableResizable>
         );

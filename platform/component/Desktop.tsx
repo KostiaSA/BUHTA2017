@@ -1,15 +1,20 @@
 import * as React from "react";
 import {Component} from "./Component";
-import {Window} from "./Window";
+import {BaseWindow} from "./BaseWindow";
+import {TestWindow1} from "../../app/TestWindow1";
 
 export class Desktop extends Component {
 
-    win1: Window = new Window();
+    win1: BaseWindow = new BaseWindow();
+    win2: TestWindow1 = new TestWindow1();
 
     init() {
         if (this.initialized) return;
         super.init();
         this.childrenAdd(this.win1);
+
+
+        this.childrenAdd(this.win2);
     }
 
 

@@ -32,3 +32,16 @@ body {
     box-sizing: border-box;
     cursor: se-resize;
 }
+
+.buhta-button {
+    border: 1px solid #d4d4d4;
+    background-color: #eaeaea;
+}
+
+.buhta-button:hover {
+    border: 1px solid #c3c3c3;
+}
+
+.buhta-button:active {
+    background-color: #d4d4d4;
+}
