@@ -1,6 +1,6 @@
 import * as React from "react";
 import {HTMLProps} from "react";
-import {appStateforceUpdate} from "../util/appStateforceUpdate";
+//import {appStateforceUpdate} from "../util/appStateforceUpdate";
 
 
 export interface IDraggableResizableProps extends HTMLProps<any> {
@@ -26,7 +26,7 @@ export class DraggableResizable extends React.Component<IDraggableResizableProps
                 }
                 //console.log(event, ui);
 
-                appStateforceUpdate();
+                //appStateforceUpdate();
             }
         });
 
@@ -39,7 +39,7 @@ export class DraggableResizable extends React.Component<IDraggableResizableProps
                         this.props.bindObject[this.props.bindWidth] = ui.size.width;
                 }
                 //console.log(event, ui);
-                appStateforceUpdate();
+                //appStateforceUpdate();
             }
         });
     }

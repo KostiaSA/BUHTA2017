@@ -3,6 +3,7 @@ import {Component} from "./Component";
 import {DraggableResizable} from "../react/DraggableResizable";
 import {Desktop} from "./Desktop";
 import {getRandomId} from "../util/getRandomId";
+import {BuhtaComponent} from "../react/BuhtaComponent";
 
 
 export interface IWindowStyle {
@@ -34,8 +35,20 @@ export class BaseWindow extends Component {
 
     top: number = 50;
     left: number = 50;
-    height: number = 300;
     width: number = 400;
+
+    _height: number | string = 300;
+
+    get height(): number | string {
+        return this._height;
+    }
+
+    set height(value: number | string) {
+        this._height=value;
+        console.log("new win height",value);
+        //this.setPropertyWithForceUpdate("_height", value);
+    }
+
 
     icon: string = "vendor/fugue/icons-shadowless/application-blue.png";
 
@@ -52,6 +65,8 @@ export class BaseWindow extends Component {
                 bindObject={this}
                 bindTop="top"
                 bindLeft="left"
+                bindHeight="height"
+                bindWidth="width"
                 onClick={() => {
                     console.log("win-click");
                     this.bringToFront();
@@ -65,8 +80,9 @@ export class BaseWindow extends Component {
                     left: this.left,
                     width: this.width,
                     height: this.height,
-                    outline: "1px solid " + this.style.borderColor,
-                    boxShadow: "0 0 9px -1px #000",
+                    border: "2px solid " + this.style.borderColor,
+                    borderRadius:2,
+                    //boxShadow: "0 0 9px -1px #000",
                     zIndex: 91
                 }}>
                 <div
@@ -125,7 +141,7 @@ export class BaseWindow extends Component {
                         position: "relative"
                         //outline: "2px solid orange",
                     }}>
-                    {this.children.map((child, index) => child.getReactElement(index))}
+                    {this.children.map((child, index) => <BuhtaComponent component={child} key={index}> </BuhtaComponent> )}
                 </div>
             </DraggableResizable>
         );

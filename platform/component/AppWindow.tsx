@@ -4,9 +4,10 @@ import * as ReactDOM from "react-dom";
 import {Component} from "./Component";
 import {Desktop} from "./Desktop";
 import {observer} from "mobx-react";
+import {BuhtaComponent} from "../react/BuhtaComponent";
 
-@observer
-export class AppWindow extends React.Component<any, any> {
+
+export class AppWindow extends Component {
 
     desktop: Desktop = new Desktop();
 
@@ -16,17 +17,17 @@ export class AppWindow extends React.Component<any, any> {
         if (this.initialized) return;
     }
 
-    componentDidMount() {
-        let appState= require("../appState").appState;
-        appState.appWindow=this;
-         // setInterval(() => {
-         //     this.forceUpdate()
-         // }, 1000);
+    // componentDidMount() {
+    //     let appState= require("../appState").appState;
+    //     appState.appWindow=this;
+    //      // setInterval(() => {
+    //      //     this.forceUpdate()
+    //      // }, 1000);
+    //
+    // }
 
-    }
 
-
-    render(): any {
+    getReactElement(index?: number | string): JSX.Element | null {
         console.log("App render2");
 
         this.init();
@@ -34,7 +35,7 @@ export class AppWindow extends React.Component<any, any> {
         return (
             <div style={{height: "97%", width: "97%", border: "1px solid red"}}>
                 привет AppWindow! {new Date().getTime()}
-                {this.desktop.getReactElement()}
+                <BuhtaComponent component={this.desktop} key={0}></BuhtaComponent>
             </div>
         )
 

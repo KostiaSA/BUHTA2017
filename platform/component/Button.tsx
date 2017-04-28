@@ -98,6 +98,16 @@ export class Button extends EnabledMixin(
         //     </tr>
         // );
 
+//        {...this.getTopLeftMixinStyle()},
+        let mainSpanStyle = {
+            ...this.getTopLeftMixinStyle(),
+            overflow: "hidden",
+            padding: 0,
+            whiteSpace: "nowrap",
+            width: this.width,
+            cursor: this.enabled ? "pointer" : "default",
+        };
+
         return (
             <span
                 onClick={() => {
@@ -106,16 +116,7 @@ export class Button extends EnabledMixin(
                 }}
                 className={btnClass}
                 disabled={!this.enabled}
-                style={{
-                    position: this.top || this.left ? "absolute" : "relative",
-                    top: this.top,
-                    left: this.left,
-                    overflow: "hidden",
-                    padding: 0,
-                    whiteSpace: "nowrap",
-                    width: this.width,
-                    cursor: this.enabled ? "pointer" : "default",
-                }}>
+                style={mainSpanStyle}>
                 <table style={{height: this.height}}>
                     <tbody>
                        {trTag}

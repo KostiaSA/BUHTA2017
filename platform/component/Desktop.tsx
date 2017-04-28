@@ -2,7 +2,8 @@ import * as React from "react";
 import {Component} from "./Component";
 import {BaseWindow} from "./BaseWindow";
 import {TestWindow1} from "../../app/TestWindow1";
-import {appStateforceUpdate} from "../util/appStateforceUpdate";
+//import {appStateforceUpdate} from "../util/appStateforceUpdate";
+import {BuhtaComponent} from "../react/BuhtaComponent";
 
 export class Desktop extends Component {
 
@@ -19,7 +20,7 @@ export class Desktop extends Component {
     bringWindowToFront(win: BaseWindow) {
         if (this.children.slice(-1)[0] !== win) {
             this.children = [...this.children.filter((item) => item !== win), win];
-            appStateforceUpdate();
+            this.refreshApp();
         }
     }
 
@@ -31,7 +32,7 @@ export class Desktop extends Component {
             <div key={index}
                  style={{position: "relative", overflow: "auto", height: 900, width: 900, border: "1px solid green"}}>
                 это десктоп {new Date().getTime()}
-                {this.children.map((child, index) => child.getReactElement(index))}
+                {this.children.map((child, index) => <BuhtaComponent component={child} key={index}> </BuhtaComponent> )}
             </div>);
     }
 

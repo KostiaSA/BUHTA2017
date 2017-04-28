@@ -8,7 +8,8 @@ import {TextMixin} from "./mixin/TextMixin";
 import {IconMixin} from "./mixin/IconMixin";
 import {HeightWidthMixin} from "./mixin/HeightWidthMixin";
 import {TabPanelItem} from "./TabPanelItem";
-import {appStateforceUpdate} from "../util/appStateforceUpdate";
+//import {appStateforceUpdate} from "../util/appStateforceUpdate";
+import {BuhtaComponent} from "../react/BuhtaComponent";
 
 
 // export interface IButtonStyle {
@@ -38,9 +39,9 @@ export class TabPanel extends EnabledMixin(
         super.init();
     }
 
-    protected get height_default(): number | string {
-        return "100%";
-    }
+    // protected get height_default(): number | string {
+    //     return "100%";
+    // }
 
 
     // ------------------------------ activeTab ------------------------------
@@ -110,7 +111,7 @@ export class TabPanel extends EnabledMixin(
                     onClick={() => {
                         if (this.activeTab !== panelItem) {
                             this.activeTab = panelItem;
-                            appStateforceUpdate();
+                            this.refreshParent();
                         }
                     }}
 
@@ -138,7 +139,7 @@ export class TabPanel extends EnabledMixin(
             tabsContent.push(
                 <div style={{
                     display: panelItem === this.activeTab ? "block" : "none",
-                    height: "100%",
+                    //height: "100%",
                     overflow: "auto",
                     position:"absolute",
                     top:0,
@@ -147,7 +148,8 @@ export class TabPanel extends EnabledMixin(
                     bottom:0,
                     border:"0px solid red"
                 }}>
-                    { panelItem.children.map((child, index) => child.getReactElement(index))}
+                    {/*{ panelItem.children.map((child, index) => child.getReactElement(index))}*/}
+                    {panelItem.children.map((child, index) => <BuhtaComponent component={child} key={index}> </BuhtaComponent> )}
                 </div>
             )
 
@@ -163,13 +165,10 @@ export class TabPanel extends EnabledMixin(
             <div
                 className={panelClass}
                 style={{
+                    ...this.getTopLeftMixinStyle(),
+                    ...this.getHeightWidthMixinStyle(),
                     display: "flex",
                     flexDirection: "column",
-                    position: this.top || this.left ? "absolute" : "relative",
-                    top: this.top,
-                    left: this.left,
-                    height: this.height,
-                    width: this.width,
                     overflow: "hidden",
                     border: "1px solid rgb(214, 214, 214)"
                 }}>

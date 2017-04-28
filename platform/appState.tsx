@@ -1,24 +1,28 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {AppWindow} from "./component/AppWindow";
+import {BuhtaComponent} from "./react/BuhtaComponent";
 
 export class AppState {
 
     appWindow: AppWindow;
 
     startApp() {
-        ReactDOM.render(<AppWindow/>, document.getElementById("content"));
+        this.appWindow = new AppWindow();
+        //ReactDOM.render(<AppWindow/>, document.getElementById("content"));
+        ReactDOM.render(<BuhtaComponent component={this.appWindow}
+                                        key={0}></BuhtaComponent>, document.getElementById("content"));
     }
 
-    forceUpdate() {
-        if (this.appWindow)
-            this.appWindow.forceUpdate();
-
-    }
+    // forceUpdate() {
+    //     if (this.appWindow)
+    //         this.appWindow.forceUpdate();
+    //
+    // }
 }
 
 export let appState = new AppState();
-setTimeout(()=>{
+setTimeout(() => {
     appState.startApp();
 
-},100);
+}, 100);

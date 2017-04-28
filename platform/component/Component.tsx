@@ -1,7 +1,11 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import {appStateforceUpdate} from "../util/appStateforceUpdate";
+//import {appStateforceUpdate} from "../util/appStateforceUpdate";
 import {getRandomId} from "../util/getRandomId";
+import {BuhtaComponent} from "../react/BuhtaComponent";
+import {appState} from "../appState";
+//import {BaseWindow} from "./BaseWindow";
+//import {AppWindow} from "./AppWindow";
 
 
 export interface IEventArgs {
@@ -13,7 +17,7 @@ export interface IEvent<TArgs extends IEventArgs> {
 }
 
 
-export class Component {
+export class Component {//} extends React.Component<any, any>{
 
 
     _id: string;
@@ -65,7 +69,7 @@ export class Component {
     setPropertyWithForceUpdate(propName: string, value: any) {
         let needUpdate = (this as any)[propName] !== value;
         (this as any)[propName] = value;
-        appStateforceUpdate(needUpdate);
+        this.refreshParent(needUpdate);
     }
 
     // --- owner ---
@@ -84,5 +88,40 @@ export class Component {
         this.init();
         return null;
     }
+
+    refreshParent(needForceUpdate: boolean = true) {
+        if (needForceUpdate) {
+            let parent = this.parent;
+            while (parent) {
+                if (parent.buhtaComponentInstance) {
+                    parent.buhtaComponentInstance.forceUpdate();
+                    return;
+                }
+                parent = parent.parent;
+            }
+        }
+    }
+
+    refreshWindow(needForceUpdate: boolean = true) {
+        if (needForceUpdate) {
+            let parent = this.parent;
+            let BaseWindow=require("./BaseWindow");
+            while (parent) {
+                if (parent.buhtaComponentInstance && parent instanceof BaseWindow) {
+                    parent.buhtaComponentInstance.forceUpdate();
+                    return;
+                }
+                parent = parent.parent;
+            }
+        }
+    }
+
+    refreshApp(needForceUpdate: boolean = true) {
+        if (needForceUpdate && appState && appState.appWindow && appState.appWindow.buhtaComponentInstance) {
+            appState.appWindow.buhtaComponentInstance.forceUpdate();
+        }
+    }
+
+    buhtaComponentInstance: BuhtaComponent;
 
 }

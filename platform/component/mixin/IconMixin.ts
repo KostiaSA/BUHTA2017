@@ -1,6 +1,6 @@
 import {MixinConstructor} from "./MixinConstructor";
 import {Component} from "../Component";
-import {appStateforceUpdate} from "../../util/appStateforceUpdate";
+//import {appStateforceUpdate} from "../../util/appStateforceUpdate";
 
 export function IconMixin<T extends MixinConstructor<Component>>(Base: T) {
     return class extends Base {

@@ -7,6 +7,13 @@ export function HeightWidthMixin<T extends MixinConstructor<Component>>(Base: T)
             super(...args);
         }
 
+        getHeightWidthMixinStyle():any{
+            return {
+                height: this.height,
+                width: this.width,
+            }
+        }
+
         // ------------------------------ height ------------------------------
         _height: number | string = this.height_default;
 
