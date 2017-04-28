@@ -99,9 +99,21 @@ export class BaseWindow extends Component {
                             это window top={this.top} {new Date().getTime()}
                         </span>
                     </div>
-                    <div style={{flex: "0 1 auto", padding: 5}}>
-                        <img src={"vendor/fugue/icons-shadowless/cross.png"} height="16" width="16"
-                             style={{opacity: 0.6, cursor: "pointer"}}/>
+                    <div style={{flex: "0 1 auto", padding: "5px 5px 5px 0px"}}>
+                        <img src={"platform/icons/window-minimize.png"} height="16" width="16"
+                             style={{opacity: 0.8, cursor: "pointer"}}/>
+                    </div>
+                    <div style={{flex: "0 1 auto", padding: "5px 5px 5px 0px"}}>
+                        <img src={"platform/icons/window-normalize.png"} height="16" width="16"
+                             style={{opacity: 0.8, cursor: "pointer"}}/>
+                    </div>
+                    <div style={{flex: "0 1 auto", padding: "5px 5px 5px 0px"}}>
+                        <img src={"platform/icons/window-maximize.png"} height="16" width="16"
+                             style={{opacity: 0.8, cursor: "pointer"}}/>
+                    </div>
+                    <div style={{flex: "0 1 auto", padding: "5px 5px 5px 0px"}}>
+                        <img src={"platform/icons/window-close.png"} height="16" width="16"
+                             style={{opacity: 0.8, cursor: "pointer"}}/>
                     </div>
 
                 </div>
