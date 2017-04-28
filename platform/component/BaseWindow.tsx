@@ -3,7 +3,7 @@ import {Component} from "./Component";
 import {DraggableResizable} from "../react/DraggableResizable";
 import {Desktop} from "./Desktop";
 import {getRandomId} from "../util/getRandomId";
-import {BuhtaComponent} from "../react/BuhtaComponent";
+import {ReactComponent} from "../react/ReactComponent";
 
 
 export interface IWindowStyle {
@@ -61,6 +61,9 @@ export class BaseWindow extends Component {
         this.init();
         return (
             <DraggableResizable
+                allowResize
+                allowDragX
+                allowDragY
                 key={this.id}
                 bindObject={this}
                 bindTop="top"
@@ -141,7 +144,7 @@ export class BaseWindow extends Component {
                         position: "relative"
                         //outline: "2px solid orange",
                     }}>
-                    {this.children.map((child, index) => <BuhtaComponent component={child} key={index}> </BuhtaComponent> )}
+                    {this.children.map((child, index) => <ReactComponent component={child} key={index}> </ReactComponent> )}
                 </div>
             </DraggableResizable>
         );

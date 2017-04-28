@@ -9,7 +9,7 @@ import {IconMixin} from "./mixin/IconMixin";
 import {HeightWidthMixin} from "./mixin/HeightWidthMixin";
 import {TabPanelItem} from "./TabPanelItem";
 //import {appStateforceUpdate} from "../util/appStateforceUpdate";
-import {BuhtaComponent} from "../react/BuhtaComponent";
+import {ReactComponent} from "../react/ReactComponent";
 
 
 // export interface IButtonStyle {
@@ -149,7 +149,7 @@ export class TabPanel extends EnabledMixin(
                     border:"0px solid red"
                 }}>
                     {/*{ panelItem.children.map((child, index) => child.getReactElement(index))}*/}
-                    {panelItem.children.map((child, index) => <BuhtaComponent component={child} key={index}> </BuhtaComponent> )}
+                    {panelItem.children.map((child, index) => <ReactComponent component={child} key={index}> </ReactComponent> )}
                 </div>
             )
 

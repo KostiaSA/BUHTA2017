@@ -4,18 +4,23 @@ import {HTMLProps} from "react";
 import {Component} from "../component/Component";
 
 
-export interface IBuhtaComponentProps {
+export interface IReactComponentProps {
     component: Component;
     key: string | number;
 }
 
-export class BuhtaComponent extends React.Component<IBuhtaComponentProps, any> {
+export class ReactComponent extends React.Component<IReactComponentProps, any> {
 
     componentDidMount() {
+        this.props.component.afterRender(true);
+    }
+
+    componentDidUpdate() {
+        this.props.component.afterRender(false);
     }
 
     render(): any {
-        //console.log("BuhtaComponent render");
+        //console.log("ReactComponent render");
         (this.props.component as any).buhtaComponentInstance=this;
         return this.props.component.getReactElement();
     }

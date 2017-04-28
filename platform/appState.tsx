@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {AppWindow} from "./component/AppWindow";
-import {BuhtaComponent} from "./react/BuhtaComponent";
+import {ReactComponent} from "./react/ReactComponent";
 
 export class AppState {
 
@@ -10,8 +10,8 @@ export class AppState {
     startApp() {
         this.appWindow = new AppWindow();
         //ReactDOM.render(<AppWindow/>, document.getElementById("content"));
-        ReactDOM.render(<BuhtaComponent component={this.appWindow}
-                                        key={0}></BuhtaComponent>, document.getElementById("content"));
+        ReactDOM.render(<ReactComponent component={this.appWindow}
+                                        key={0}></ReactComponent>, document.getElementById("content"));
     }
 
     // forceUpdate() {

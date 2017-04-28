@@ -7,7 +7,8 @@ import {TopLeftMixin} from "./mixin/TopLeftMixin";
 import {TextMixin} from "./mixin/TextMixin";
 import {IconMixin} from "./mixin/IconMixin";
 import {HeightWidthMixin} from "./mixin/HeightWidthMixin";
-import {Span} from "../react/Span";
+import {CSSProperties, KeyboardEvent, SyntheticEvent} from "react";
+import {DraggableResizable} from "../react/DraggableResizable";
 
 
 export interface IInputStyle {
@@ -106,11 +107,50 @@ export class Input extends EnabledMixin(
     // ------------------------------ getReactElement ------------------------------
 
     internalValue: string;
+    inputElement: HTMLElement;
 
-    handleValueChange = (event: any) => {
+    popupVisible: boolean;
+    popupHeight:number=300;
+    popupWidth:number=300;
+    popupElement: HTMLElement;
+
+    handleInputValueChange = (event: any) => {
         this.internalValue = event.target.value;
         this.refresh();
     };
+
+    handleInputKeyPress = (event: KeyboardEvent<any>) => {
+        //this.internalValue = event.code;
+        //console.log(event.charCode);
+        //this.refresh();
+    };
+
+    handleInputKeyDown = (event: KeyboardEvent<any>) => {
+        //this.internalValue = event.code;
+        if (event.key === "ArrowDown") {
+            this.popupVisible = true;
+            console.log(event.key);
+        }
+        if (event.key === "Escape") {
+            this.popupVisible = false;
+            console.log(event.key);
+        }
+        this.refresh();
+    };
+
+    afterRender(isFirstRender: boolean) {
+        super.afterRender(isFirstRender);
+        console.log("afterRender", isFirstRender);
+        if (this.popupVisible){
+            ($(this.popupElement) as any).position({
+                of: $(this.inputElement),
+                my: "left top",
+                at: "left bottom",
+                collision: "none none"
+            });
+        }
+    }
+
 
     getReactElement(index?: number | string): JSX.Element | null {
         this.init();
@@ -121,7 +161,7 @@ export class Input extends EnabledMixin(
             "disabled": !this.enabled,
         });
 
-        let mainSpanStyle = {
+        let mainSpanStyle: CSSProperties = {
             ...this.getTopLeftMixinStyle(),
             overflow: "hidden",
             padding: 0,
@@ -130,15 +170,48 @@ export class Input extends EnabledMixin(
             cursor: this.enabled ? "pointer" : "default",
         };
 
+        let popupStyle: CSSProperties = {
+            backgroundColor:"white",
+            position: "fixed",
+            zIndex: 1000,
+            display: this.popupVisible ? "block" : "none",
+            border: "1px solid red",
+            top: 0,
+            left: 0,
+            height: 100,
+            width: 100
+
+        };
+
         return (
             <span
                 style={mainSpanStyle}
             >
                 <input
+                    ref={(e) => {
+                        this.inputElement = e
+                    }}
                     type="text"
                     value={this.internalValue}
-                    onChange={this.handleValueChange}
+                    onChange={this.handleInputValueChange}
+                    onKeyPress={this.handleInputKeyPress}
+                    onKeyDown={this.handleInputKeyDown}
                 />
+                <DraggableResizable
+                    bindObject={this}
+                    bindHeight="popupHeight"
+                    bindWidth="popupWidth"
+                    allowResize
+                    ref={(e:any) => {
+                        if (e) {
+                            this.popupElement = e.native;
+                            console.log("this.popupElement = e.native", e, e.native)
+                        }
+                    }}
+                    style={popupStyle}
+                >
+                    это попап
+                </DraggableResizable>
             </span>
         );
 

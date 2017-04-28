@@ -9,6 +9,9 @@ export interface IDraggableResizableProps extends HTMLProps<any> {
     bindLeft?: string;
     bindHeight?: string;
     bindWidth?: string;
+    allowDragX?: boolean;
+    allowDragY?: boolean;
+    allowResize?: boolean;
 }
 
 
@@ -16,32 +19,43 @@ export class DraggableResizable extends React.Component<IDraggableResizableProps
 
 
     componentDidMount() {
-        $(this.native).draggable({
-            drag: (event: any, ui: any) => {
-                if (this.props.bindObject) {
-                    if (this.props.bindLeft)
-                        this.props.bindObject[this.props.bindLeft] = ui.position.left;
-                    if (this.props.bindTop)
-                        this.props.bindObject[this.props.bindTop] = ui.position.top;
-                }
-                //console.log(event, ui);
+        if (this.props.allowDragX || this.props.allowDragY) {
+            let axis: string | boolean = false;
+            if (this.props.allowDragX && !this.props.allowDragY)
+                axis = "x";
+            else if (!this.props.allowDragX && this.props.allowDragY)
+                axis = "y";
 
-                //appStateforceUpdate();
-            }
-        });
+            $(this.native).draggable({
+                axix: axis,
+                drag: (event: any, ui: any) => {
+                    if (this.props.bindObject) {
+                        if (this.props.bindLeft)
+                            this.props.bindObject[this.props.bindLeft] = ui.position.left;
+                        if (this.props.bindTop)
+                            this.props.bindObject[this.props.bindTop] = ui.position.top;
+                    }
+                    //console.log(event, ui);
 
-        $(this.native).resizable({
-            resize: (event: any, ui: any) => {
-                if (this.props.bindObject) {
-                    if (this.props.bindHeight)
-                        this.props.bindObject[this.props.bindHeight] = ui.size.height;
-                    if (this.props.bindWidth)
-                        this.props.bindObject[this.props.bindWidth] = ui.size.width;
+                    //appStateforceUpdate();
                 }
-                //console.log(event, ui);
-                //appStateforceUpdate();
-            }
-        });
+            });
+        }
+
+        if (this.props.allowResize) {
+            $(this.native).resizable({
+                resize: (event: any, ui: any) => {
+                    if (this.props.bindObject) {
+                        if (this.props.bindHeight)
+                            this.props.bindObject[this.props.bindHeight] = ui.size.height;
+                        if (this.props.bindWidth)
+                            this.props.bindObject[this.props.bindWidth] = ui.size.width;
+                    }
+                    //console.log(event, ui);
+                    //appStateforceUpdate();
+                }
+            });
+        }
     }
 
     native: HTMLElement;
@@ -56,9 +70,8 @@ export class DraggableResizable extends React.Component<IDraggableResizableProps
         return (
             <div
                 {...props}
-
                 ref={(e) => {
-                    this.native = e
+                    this.native = e;
                 }}
             >
                 {this.props.children}

@@ -4,7 +4,7 @@ import * as ReactDOM from "react-dom";
 import {Component} from "./Component";
 import {Desktop} from "./Desktop";
 import {observer} from "mobx-react";
-import {BuhtaComponent} from "../react/BuhtaComponent";
+import {ReactComponent} from "../react/ReactComponent";
 
 
 export class AppWindow extends Component {
@@ -35,7 +35,7 @@ export class AppWindow extends Component {
         return (
             <div style={{height: "97%", width: "97%", border: "1px solid red"}}>
                 привет AppWindow! {new Date().getTime()}
-                <BuhtaComponent component={this.desktop} key={0}></BuhtaComponent>
+                <ReactComponent component={this.desktop} key={0}></ReactComponent>
             </div>
         )
 

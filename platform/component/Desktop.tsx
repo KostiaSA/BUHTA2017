@@ -3,7 +3,7 @@ import {Component} from "./Component";
 import {BaseWindow} from "./BaseWindow";
 import {TestWindow1} from "../../app/TestWindow1";
 //import {appStateforceUpdate} from "../util/appStateforceUpdate";
-import {BuhtaComponent} from "../react/BuhtaComponent";
+import {ReactComponent} from "../react/ReactComponent";
 
 export class Desktop extends Component {
 
@@ -32,7 +32,7 @@ export class Desktop extends Component {
             <div key={index}
                  style={{position: "relative", overflow: "auto", height: 900, width: 900, border: "1px solid green"}}>
                 это десктоп {new Date().getTime()}
-                {this.children.map((child, index) => <BuhtaComponent component={child} key={index}> </BuhtaComponent> )}
+                {this.children.map((child, index) => <ReactComponent component={child} key={index}> </ReactComponent> )}
             </div>);
     }
 
