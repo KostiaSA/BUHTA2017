@@ -12,6 +12,7 @@ export interface IDraggableResizableProps extends HTMLProps<any> {
     allowDragX?: boolean;
     allowDragY?: boolean;
     allowResize?: boolean;
+    onDrag?:()=>void;
 }
 
 
@@ -35,8 +36,10 @@ export class DraggableResizable extends React.Component<IDraggableResizableProps
                         if (this.props.bindTop)
                             this.props.bindObject[this.props.bindTop] = ui.position.top;
                     }
+                    if (this.props.onDrag)
+                        this.props.onDrag();
                     //console.log(event, ui);
-
+                    //this.forceUpdate();
                     //appStateforceUpdate();
                 }
             });

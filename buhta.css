@@ -75,6 +75,18 @@ body {
     border-top: 2px solid rgba(21, 179, 113, 0.5);
 }
 
+
+
+textarea, input{
+    border: 1px solid silver;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+    border-bottom: 2px solid orange;
+}
+
+
 .react-resizable {
     position: relative;
 }

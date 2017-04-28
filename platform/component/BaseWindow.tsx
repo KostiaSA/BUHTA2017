@@ -71,8 +71,11 @@ export class BaseWindow extends Component {
                 bindHeight="height"
                 bindWidth="width"
                 onClick={() => {
-                    console.log("win-click");
+                    console.log("win-click->"+this.constructor.name);
                     this.bringToFront();
+                }}
+                onDrag={() => {
+                    this.refresh();
                 }}
                 style={{
                     display: "flex",

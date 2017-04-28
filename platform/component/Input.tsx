@@ -39,7 +39,7 @@ export class Input extends EnabledMixin(
     }
 
     protected get height_default(): number | string {
-        return 22;
+        return 20;
     }
 
 
@@ -110,8 +110,8 @@ export class Input extends EnabledMixin(
     inputElement: HTMLElement;
 
     popupVisible: boolean;
-    popupHeight:number=300;
-    popupWidth:number=300;
+    popupHeight: number = 300;
+    popupWidth: number = 300;
     popupElement: HTMLElement;
 
     handleInputValueChange = (event: any) => {
@@ -141,7 +141,7 @@ export class Input extends EnabledMixin(
     afterRender(isFirstRender: boolean) {
         super.afterRender(isFirstRender);
         console.log("afterRender", isFirstRender);
-        if (this.popupVisible){
+        if (this.popupVisible) {
             ($(this.popupElement) as any).position({
                 of: $(this.inputElement),
                 my: "left top",
@@ -170,16 +170,23 @@ export class Input extends EnabledMixin(
             cursor: this.enabled ? "pointer" : "default",
         };
 
+        let inputStyle: CSSProperties = {
+            height: this.height,
+            width: this.width,
+            paddingLeft: 5,
+            paddingRight: 3
+        };
+
         let popupStyle: CSSProperties = {
-            backgroundColor:"white",
+            backgroundColor: "white",
             position: "fixed",
             zIndex: 1000,
             display: this.popupVisible ? "block" : "none",
-            border: "1px solid red",
+            border: "1px solid silver",
             top: 0,
             left: 0,
-            height: 100,
-            width: 100
+            height: this.popupHeight,
+            width: this.popupWidth
 
         };
 
@@ -188,6 +195,7 @@ export class Input extends EnabledMixin(
                 style={mainSpanStyle}
             >
                 <input
+                    style={inputStyle}
                     ref={(e) => {
                         this.inputElement = e
                     }}
@@ -202,7 +210,7 @@ export class Input extends EnabledMixin(
                     bindHeight="popupHeight"
                     bindWidth="popupWidth"
                     allowResize
-                    ref={(e:any) => {
+                    ref={(e: any) => {
                         if (e) {
                             this.popupElement = e.native;
                             console.log("this.popupElement = e.native", e, e.native)
