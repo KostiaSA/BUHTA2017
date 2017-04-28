@@ -131,7 +131,7 @@ export class Input extends EnabledMixin(
         };
 
         return (
-            <Span
+            <span
                 style={mainSpanStyle}
             >
                 <input
@@ -139,7 +139,7 @@ export class Input extends EnabledMixin(
                     value={this.internalValue}
                     onChange={this.handleValueChange}
                 />
-            </Span>
+            </span>
         );
 
     }
