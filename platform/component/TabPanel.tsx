@@ -111,7 +111,7 @@ export class TabPanel extends EnabledMixin(
                     onClick={() => {
                         if (this.activeTab !== panelItem) {
                             this.activeTab = panelItem;
-                            this.refreshParent();
+                            this.refresh();
                         }
                     }}
 

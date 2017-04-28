@@ -69,7 +69,7 @@ export class Component {//} extends React.Component<any, any>{
     setPropertyWithForceUpdate(propName: string, value: any) {
         let needUpdate = (this as any)[propName] !== value;
         (this as any)[propName] = value;
-        this.refreshParent(needUpdate);
+        this.refresh(needUpdate);
     }
 
     // --- owner ---
@@ -89,6 +89,15 @@ export class Component {//} extends React.Component<any, any>{
         return null;
     }
 
+    refresh(needForceUpdate: boolean = true) {
+        if (needForceUpdate) {
+            if (this.buhtaComponentInstance)
+                this.buhtaComponentInstance.forceUpdate();
+            else
+                this.refreshParent();
+        }
+    }
+
     refreshParent(needForceUpdate: boolean = true) {
         if (needForceUpdate) {
             let parent = this.parent;
@@ -105,7 +114,7 @@ export class Component {//} extends React.Component<any, any>{
     refreshWindow(needForceUpdate: boolean = true) {
         if (needForceUpdate) {
             let parent = this.parent;
-            let BaseWindow=require("./BaseWindow");
+            let BaseWindow = require("./BaseWindow");
             while (parent) {
                 if (parent.buhtaComponentInstance && parent instanceof BaseWindow) {
                     parent.buhtaComponentInstance.forceUpdate();

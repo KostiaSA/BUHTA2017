@@ -109,7 +109,7 @@ export class Input extends EnabledMixin(
 
     handleValueChange = (event: any) => {
         this.internalValue = event.target.value;
-        this.refreshParent();
+        this.refresh();
     };
 
     getReactElement(index?: number | string): JSX.Element | null {
