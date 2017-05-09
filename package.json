@@ -22,6 +22,7 @@
     "@types/react-dom": "^0.14.19",
     "@types/typescript": "^2.0.0",
     "ag-grid": "^9.1.0",
+    "ag-grid-react": "^9.1.0",
     "classnames": "^2.2.5",
     "mobx": "^2.7.0",
     "mobx-react": "^4.0.3",
@@ -30,6 +31,6 @@
     "react-dom": "^15.4.2",
     "react-draggable": "^2.2.3",
     "react-resizable": "^1.6.0",
-    "typescript": "^2.2.2"
+    "typescript": "^2.3.2"
   }
 }
