@@ -54,8 +54,6 @@ export class DraggableResizable extends React.Component<IDraggableResizableProps
                         if (this.props.bindWidth)
                             this.props.bindObject[this.props.bindWidth] = ui.size.width;
                     }
-                    //console.log(event, ui);
-                    //appStateforceUpdate();
                 }
             });
         }

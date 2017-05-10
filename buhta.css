@@ -122,3 +122,37 @@ textarea:focus, input:focus{
 .buhta-button:active {
     background-color: #d4d4d4;
 }
+
+
+/* ag-grid */
+
+.ag-fresh {
+    line-height: 1.3;
+    font-size: 12.8px;
+    font-family: 'Ubuntu', sans-serif;
+    color: #222;
+    /* this is for the rowGroupPanel, that appears along the top of the grid */
+    /* this is for the column drops that appear in the toolPanel */
+}
+
+.ag-fresh .ag-root {
+     border: 1px solid silver;
+}
+
+.ag-fresh .ag-cell-focus {
+    border: 1px solid #eca12f;
+    outline: none;
+}
+
+.ag-fresh .ag-row-odd {
+    background-color: white;
+}
+
+.ag-fresh .ag-ltr .ag-cell-no-focus {
+    border-right: 1px dotted #e2e2e2;
+}
+
+.ag-fresh .ag-cell-no-focus {
+    border-bottom: 1px solid #e2e2e2;
+}
+

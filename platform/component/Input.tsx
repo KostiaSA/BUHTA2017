@@ -245,9 +245,9 @@ export class Input extends EnabledMixin(
     //     code.emitStringValue(this, "comboItemsArray", "none");
     // }
 
-    private __setOptions_comboItemsArray() {
-        this.comboItemsArray = this._comboItemsArray;
-    }
+    // private __setOptions_comboItemsArray() {
+    //     this.comboItemsArray = this._comboItemsArray;
+    // }
 
     // private __getPropertyEditor_comboItemsArray(): PropertyEditor {
     //     let pe = new StringPropertyEditor();
@@ -262,7 +262,7 @@ export class Input extends EnabledMixin(
     internalValue: string;
     inputElement: HTMLElement;
 
-    popupVisible: boolean;
+    popupVisible: boolean = true;
     popupHeight: number = 300;
     popupWidth: number = 300;
     popupElement: HTMLElement;
@@ -282,6 +282,9 @@ export class Input extends EnabledMixin(
         //this.internalValue = event.code;
         if (event.key === "ArrowDown") {
             this.popupVisible = true;
+            this.comboGridApi.setRowData(this.comboItemsArray);
+            this.comboGridApi.doLayout();
+
             console.log(event.key);
         }
         if (event.key === "Escape") {
@@ -299,7 +302,7 @@ export class Input extends EnabledMixin(
                 of: $(this.inputElement),
                 my: "left top",
                 at: "left bottom",
-                collision: "none none"
+                collision: "none none",
             });
         }
     }
@@ -310,11 +313,12 @@ export class Input extends EnabledMixin(
 
         let fromCol: AgGridColDef = {
             headerName: "от кого",
-            field: "отправитель",
+            field: "title",
             maxWidth: 300,
-            cellStyle: {whiteSpace: "normal"},
+            //cellStyle: {whiteSpace: "normal"},
             cellRendererFramework: AgGrid_CellRenderer,
         };
+        cols.push(fromCol);
         cols.push(fromCol);
 
         return cols;
@@ -328,8 +332,12 @@ export class Input extends EnabledMixin(
     gridReadyHandler = (event: { api: GridApi, columnApi: ColumnApi }) => {
         this.comboGridApi = event.api;
         this.comboGridColumnApi = event.columnApi;
-        //console.log("gridReadyHandler", event);
+        this.comboGridApi.setRowData(this.comboItemsArray);
+        this.comboGridApi.doLayout();
+
         //event.comboGridApi.sizeColumnsToFit();
+        //this.comboGridApi.doLayout();
+        //console.log("gridReadyHandler==========================================================");
     };
 
 
@@ -363,9 +371,9 @@ export class Input extends EnabledMixin(
             position: "fixed",
             zIndex: 1000,
             display: this.popupVisible ? "block" : "none",
-            border: "1px solid silver",
-            top: 0,
-            left: 0,
+            //border: "1px solid silver",
+            //top: 0,
+            //left: 0,
             height: this.popupHeight,
             width: this.popupWidth
 
@@ -387,6 +395,7 @@ export class Input extends EnabledMixin(
                     onKeyDown={this.handleInputKeyDown}
                 />
                 <DraggableResizable
+                    className="ag-fresh"
                     bindObject={this}
                     bindHeight="popupHeight"
                     bindWidth="popupWidth"
@@ -400,7 +409,10 @@ export class Input extends EnabledMixin(
                     style={popupStyle}
                 >
                     <AgGridReact
-                        rowHeight={58}
+                        suppressCellSelection={false}
+                        className="ag-fresh"
+                        rowHeight={22}
+                        headerHeight={0}
                         columnDefs={this.getColumnDefs()}
                         suppressColumnVirtualisation={true}
                         enableSorting={true}

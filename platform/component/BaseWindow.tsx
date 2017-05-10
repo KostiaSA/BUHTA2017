@@ -44,8 +44,8 @@ export class BaseWindow extends Component {
     }
 
     set height(value: number | string) {
-        this._height=value;
-        console.log("new win height",value);
+        this._height = value;
+        console.log("new win height", value);
         //this.setPropertyWithForceUpdate("_height", value);
     }
 
@@ -55,6 +55,7 @@ export class BaseWindow extends Component {
     bringToFront() {
         (this.parent as Desktop).bringWindowToFront(this);
     }
+
 
     getReactElement(index?: number | string): JSX.Element | null {
         console.log("getReactElement-window");
@@ -71,7 +72,7 @@ export class BaseWindow extends Component {
                 bindHeight="height"
                 bindWidth="width"
                 onClick={() => {
-                    console.log("win-click->"+this.constructor.name);
+                    console.log("win-click->" + this.constructor.name);
                     this.bringToFront();
                 }}
                 onDrag={() => {
@@ -87,7 +88,7 @@ export class BaseWindow extends Component {
                     width: this.width,
                     height: this.height,
                     border: "2px solid " + this.style.borderColor,
-                    borderRadius:2,
+                    borderRadius: 2,
                     //boxShadow: "0 0 9px -1px #000",
                     zIndex: 91
                 }}>
@@ -147,7 +148,8 @@ export class BaseWindow extends Component {
                         position: "relative"
                         //outline: "2px solid orange",
                     }}>
-                    {this.children.map((child, index) => <ReactComponent component={child} key={index}> </ReactComponent> )}
+                    {this.children.map((child, index) => <ReactComponent component={child}
+                                                                         key={index}> </ReactComponent>)}
                 </div>
             </DraggableResizable>
         );
