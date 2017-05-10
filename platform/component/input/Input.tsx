@@ -1,19 +1,20 @@
 import * as React from "react";
 import * as classNames from "classnames";
-import {Component} from "./Component";
-import {EnabledMixin} from "./mixin/EnabledMixin";
-import {OnClickMixin} from "./mixin/OnClickMixin";
-import {TopLeftMixin} from "./mixin/TopLeftMixin";
-import {TextMixin} from "./mixin/TextMixin";
-import {IconMixin} from "./mixin/IconMixin";
-import {HeightWidthMixin} from "./mixin/HeightWidthMixin";
+import {Component} from "../Component";
+import {EnabledMixin} from "../mixin/EnabledMixin";
+import {OnClickMixin} from "../mixin/OnClickMixin";
+import {TopLeftMixin} from "../mixin/TopLeftMixin";
+import {TextMixin} from "../mixin/TextMixin";
+import {IconMixin} from "../mixin/IconMixin";
+import {HeightWidthMixin} from "../mixin/HeightWidthMixin";
 import {CSSProperties, KeyboardEvent, SyntheticEvent} from "react";
-import {DraggableResizable} from "../react/DraggableResizable";
+import {DraggableResizable} from "../../react/DraggableResizable";
 import {AgGridReact} from "ag-grid-react";
 import {isArray, isBoolean, isNumber, isString} from "util";
-import {AgGridColDef} from "../react/AgGridColDef";
+import {AgGridColDef} from "../../react/AgGridColDef";
 import GridApi = ag.grid.GridApi;
 import ColumnApi = ag.grid.ColumnApi;
+import {IComboBoxDataSource} from "./IComboBoxDataSource";
 
 
 export interface IInputStyle {
@@ -213,33 +214,44 @@ export class Input extends EnabledMixin(
     //     return pe;
     // }
 
-    // ------------------------------ comboItemsArray ------------------------------
-    _comboItemsArray: any[];
-    get comboItemsArray(): any[] {
-        return this._comboItemsArray;
+    // ------------------------------ lookupDataSource ------------------------------
+    _lookupDataSource: IComboBoxDataSource;
+    get lookupDataSource(): IComboBoxDataSource {
+        return this._lookupDataSource;
     }
 
-    set comboItemsArray(value: any[]) {
-        this._comboItemsArray = value;
-        if (this.comboType === "array" && isArray(value)) {
-            let comboSource = [];
-            for (let item of value) {
-                if (isString(item)) {   // массив строк
-                    comboSource.push(item);
-                }
-                else if (isArray(item)) {   // [35,"ООО Удача"] - value,label
-                    let comboItem: IComboBoxItem = {
-                        value: item[0],
-                        label: item[1],
-                    };
-                    comboSource.push(comboItem);
-                }
-                else
-                    comboSource.push(item);  // объект в формате IComboBoxItem
-            }
-            //this.jqxWidget({source: comboSource} as jqwidgets.ComboBoxOptions);
-        }
+    set lookupDataSource(value: IComboBoxDataSource) {
+        this._lookupDataSource = value;
     }
+
+
+    // // ------------------------------ comboItemsArray ------------------------------
+    // _comboItemsArray: any[];
+    // get comboItemsArray(): any[] {
+    //     return this._comboItemsArray;
+    // }
+    //
+    // set comboItemsArray(value: any[]) {
+    //     this._comboItemsArray = value;
+    //     if (this.comboType === "array" && isArray(value)) {
+    //         let comboSource = [];
+    //         for (let item of value) {
+    //             if (isString(item)) {   // массив строк
+    //                 comboSource.push(item);
+    //             }
+    //             else if (isArray(item)) {   // [35,"ООО Удача"] - value,label
+    //                 let comboItem: IComboBoxItem = {
+    //                     value: item[0],
+    //                     label: item[1],
+    //                 };
+    //                 comboSource.push(comboItem);
+    //             }
+    //             else
+    //                 comboSource.push(item);  // объект в формате IComboBoxItem
+    //         }
+    //         //this.jqxWidget({source: comboSource} as jqwidgets.ComboBoxOptions);
+    //     }
+    // }
 
     // private __emitCode_comboItemsArray(code: EmittedCode) {
     //     code.emitStringValue(this, "comboItemsArray", "none");
@@ -262,28 +274,67 @@ export class Input extends EnabledMixin(
     internalValue: string;
     inputElement: HTMLElement;
 
-    popupVisible: boolean = true;
+    popupVisible: boolean = false;
     popupHeight: number = 300;
     popupWidth: number = 300;
     popupElement: HTMLElement;
 
+
+
+    private inputValueChangeInterval:any;
+
     handleInputValueChange = (event: any) => {
         this.internalValue = event.target.value;
+        if (this.lookupDataSource) {
+            if (this.inputValueChangeInterval)
+                clearTimeout(this.inputValueChangeInterval);
+
+            this.inputValueChangeInterval=setTimeout(()=>{
+                this.showCombobox();
+
+            },this.lookupDataSource.getLookupDelayMs());
+        }
         this.refresh();
     };
 
-    handleInputKeyPress = (event: KeyboardEvent<any>) => {
-        //this.internalValue = event.code;
-        //console.log(event.charCode);
-        //this.refresh();
-    };
+     handleInputKeyPress = (event: any) => {
+    //     this.internalValue = event.target.value;
+    //     //console.log(event.charCode);
+    //     //this.refresh();
+    //     this.showCombobox();
+     };
+
+
+    showCombobox(){
+        if (this.lookupDataSource) {
+            this.popupVisible = true;
+            this.refresh();
+            this.lookupDataSource.getRows(this.internalValue, 200)
+                .then((rows: any[]) => {
+                    this.comboGridRowData = rows;
+                    let cols: AgGridColDef[] = [];
+                    let fromCol: AgGridColDef = {
+                        headerName: "-",
+                        field: this.lookupDataSource.getTitleFieldName(),
+                        //maxWidth: 300,
+                        //cellStyle: {whiteSpace: "normal"},
+                        cellRendererFramework: AgGrid_CellRenderer,
+                    };
+                    cols.push(fromCol);
+                    this.comboGridApi.setColumnDefs(cols);
+                    this.comboGridApi.setRowData(rows);
+                    this.comboGridApi.doLayout();
+                    this.refresh();
+                });
+        }
+
+    }
 
     handleInputKeyDown = (event: KeyboardEvent<any>) => {
         //this.internalValue = event.code;
         if (event.key === "ArrowDown") {
-            this.popupVisible = true;
-            this.comboGridApi.setRowData(this.comboItemsArray);
-            this.comboGridApi.doLayout();
+
+            this.showCombobox();
 
             console.log(event.key);
         }
@@ -309,34 +360,31 @@ export class Input extends EnabledMixin(
 
 
     getColumnDefs(): ag.grid.ColDef[] {
-        let cols: AgGridColDef[] = [];
-
-        let fromCol: AgGridColDef = {
-            headerName: "от кого",
-            field: "title",
-            maxWidth: 300,
-            //cellStyle: {whiteSpace: "normal"},
-            cellRendererFramework: AgGrid_CellRenderer,
-        };
-        cols.push(fromCol);
-
-        return cols;
+        //     let cols: AgGridColDef[] = [];
+        //
+        //     let fromCol: AgGridColDef = {
+        //         headerName: "от кого",
+        //         field: "title",
+        //         maxWidth: 300,
+        //         //cellStyle: {whiteSpace: "normal"},
+        //         cellRendererFramework: AgGrid_CellRenderer,
+        //     };
+        //     cols.push(fromCol);
+        //
+        return [];
     }
 
     comboGridApi: GridApi;
     comboGridColumnApi: ColumnApi;
-    comboGridRowData: any[] = [];
+    private comboGridRowData: any[] = [];
 
 
     gridReadyHandler = (event: { api: GridApi, columnApi: ColumnApi }) => {
         this.comboGridApi = event.api;
         this.comboGridColumnApi = event.columnApi;
-        this.comboGridApi.setRowData(this.comboItemsArray);
-        this.comboGridApi.doLayout();
-        this.comboGridApi.sizeColumnsToFit();
-
-        //event.comboGridApi.sizeColumnsToFit();
         //this.comboGridApi.doLayout();
+        //this.comboGridApi.sizeColumnsToFit();
+
         //console.log("gridReadyHandler==========================================================");
     };
 
@@ -366,8 +414,7 @@ export class Input extends EnabledMixin(
             paddingRight: 3
         };
 
-
-        let gridHeight = this.comboItemsArray.length * 22 + 3;
+        let gridHeight = this.comboGridRowData.length * 22 + 3;
         if (gridHeight > 300)
             gridHeight = 300;
 
@@ -419,18 +466,22 @@ export class Input extends EnabledMixin(
                         className="ag-fresh"
                         rowHeight={22}
                         headerHeight={0}
-                        columnDefs={this.getColumnDefs()}
+
                         suppressColumnVirtualisation={true}
                         enableSorting={true}
                         enableFilter={false}
-                        rowData={this.comboGridRowData}
                         onGridReady={this.gridReadyHandler}
                         rowStyle={{cursor: "pointer"}}
                         onGridSizeChanged={() => {
                             if (this.comboGridApi) this.comboGridApi.sizeColumnsToFit()
                         }}
                         onRowDataChanged={() => {
-                            if (this.comboGridApi) this.comboGridApi.sizeColumnsToFit()
+                            //this.refresh();
+                            // if (this.comboGridApi) {
+                            //
+                            //     this.comboGridApi.doLayout();
+                            //     this.comboGridApi.sizeColumnsToFit();
+                            // }
                         }}
                         onRowClicked={(event: any) => {
                             //appState.openIncomeMessagePage(event.data.документКлюч,this.props.navigatorBranch)
