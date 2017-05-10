@@ -39,8 +39,11 @@ export class StringArrayComboBoxDataSource implements IComboBoxDataSource {
         filterStr = filterStr.toLowerCase();
         let ret: any[] = [];
         for (let item of this.list) {
-            if (item.toString().toLowerCase().indexOf(filterStr) > -1)
-                ret.push(this.dict[item.toString()]);
+            if (item.toString().toLowerCase().indexOf(filterStr) > -1) {
+                let obj = this.dict[item.toString()];
+                obj.filterStr = filterStr;
+                ret.push(obj);
+            }
         }
         if (ret.length === 0)
             ret.push({value: "<пусто>", title: "<пусто>", image: undefined});

@@ -15,7 +15,7 @@ import {AgGridColDef} from "../../react/AgGridColDef";
 import GridApi = ag.grid.GridApi;
 import ColumnApi = ag.grid.ColumnApi;
 import {IComboBoxDataSource} from "./IComboBoxDataSource";
-
+let Highlighter = require("react-highlight-words");
 
 export interface IInputStyle {
     //headerHeight: number;
@@ -47,8 +47,13 @@ export interface IComboBoxItem {
 class AgGrid_CellRenderer extends React.Component<any, any> {
 
     render() {
-        let style: CSSProperties = {};
-        return <span style={style}>{this.props.value}</span>;
+        //console.log(this.props);
+        return (
+            <Highlighter
+                highlightClassName="search-mark"
+                searchWords={[this.props.data.filterStr]}
+                textToHighlight={this.props.value}
+            />);
     }
 }
 
@@ -280,8 +285,7 @@ export class Input extends EnabledMixin(
     popupElement: HTMLElement;
 
 
-
-    private inputValueChangeInterval:any;
+    private inputValueChangeInterval: any;
 
     handleInputValueChange = (event: any) => {
         this.internalValue = event.target.value;
@@ -289,23 +293,23 @@ export class Input extends EnabledMixin(
             if (this.inputValueChangeInterval)
                 clearTimeout(this.inputValueChangeInterval);
 
-            this.inputValueChangeInterval=setTimeout(()=>{
+            this.inputValueChangeInterval = setTimeout(() => {
                 this.showCombobox();
 
-            },this.lookupDataSource.getLookupDelayMs());
+            }, this.lookupDataSource.getLookupDelayMs());
         }
         this.refresh();
     };
 
-     handleInputKeyPress = (event: any) => {
-    //     this.internalValue = event.target.value;
-    //     //console.log(event.charCode);
-    //     //this.refresh();
-    //     this.showCombobox();
-     };
+    handleInputKeyPress = (event: any) => {
+        //     this.internalValue = event.target.value;
+        //     //console.log(event.charCode);
+        //     //this.refresh();
+        //     this.showCombobox();
+    };
 
 
-    showCombobox(){
+    showCombobox() {
         if (this.lookupDataSource) {
             this.popupVisible = true;
             this.refresh();
@@ -328,6 +332,12 @@ export class Input extends EnabledMixin(
                 });
         }
 
+    }
+
+    hideCombobox() {
+        this.popupVisible = false;
+        this.inputElement.focus();
+        this.refresh();
     }
 
     handleInputKeyDown = (event: KeyboardEvent<any>) => {
@@ -358,21 +368,6 @@ export class Input extends EnabledMixin(
         }
     }
 
-
-    getColumnDefs(): ag.grid.ColDef[] {
-        //     let cols: AgGridColDef[] = [];
-        //
-        //     let fromCol: AgGridColDef = {
-        //         headerName: "от кого",
-        //         field: "title",
-        //         maxWidth: 300,
-        //         //cellStyle: {whiteSpace: "normal"},
-        //         cellRendererFramework: AgGrid_CellRenderer,
-        //     };
-        //     cols.push(fromCol);
-        //
-        return [];
-    }
 
     comboGridApi: GridApi;
     comboGridColumnApi: ColumnApi;
@@ -484,6 +479,10 @@ export class Input extends EnabledMixin(
                             // }
                         }}
                         onRowClicked={(event: any) => {
+                            console.log(event);
+                            this.internalValue = event.data[this.lookupDataSource.getTitleFieldName()];
+                            this.bindObject[this.bindProperty] == event.data[this.lookupDataSource.getValueFieldName()];
+                            this.hideCombobox();
                             //appState.openIncomeMessagePage(event.data.документКлюч,this.props.navigatorBranch)
                         }}
                     />

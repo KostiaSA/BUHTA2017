@@ -123,6 +123,9 @@ textarea:focus, input:focus{
     background-color: #d4d4d4;
 }
 
+.search-mark{
+    background: rgba(255, 165, 0, 0.5);
+}
 
 /* ag-grid */
 
