@@ -319,7 +319,6 @@ export class Input extends EnabledMixin(
             cellRendererFramework: AgGrid_CellRenderer,
         };
         cols.push(fromCol);
-        cols.push(fromCol);
 
         return cols;
     }
@@ -334,6 +333,7 @@ export class Input extends EnabledMixin(
         this.comboGridColumnApi = event.columnApi;
         this.comboGridApi.setRowData(this.comboItemsArray);
         this.comboGridApi.doLayout();
+        this.comboGridApi.sizeColumnsToFit();
 
         //event.comboGridApi.sizeColumnsToFit();
         //this.comboGridApi.doLayout();
@@ -366,6 +366,11 @@ export class Input extends EnabledMixin(
             paddingRight: 3
         };
 
+
+        let gridHeight = this.comboItemsArray.length * 22 + 3;
+        if (gridHeight > 300)
+            gridHeight = 300;
+
         let popupStyle: CSSProperties = {
             backgroundColor: "white",
             position: "fixed",
@@ -374,8 +379,9 @@ export class Input extends EnabledMixin(
             //border: "1px solid silver",
             //top: 0,
             //left: 0,
-            height: this.popupHeight,
-            width: this.popupWidth
+            height: gridHeight,//  this.popupHeight,
+            width: this.popupWidth,
+            //maxHeight:200
 
         };
 

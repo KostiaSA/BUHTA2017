@@ -135,6 +135,10 @@ textarea:focus, input:focus{
     /* this is for the column drops that appear in the toolPanel */
 }
 
+.ag-fresh .ag-body {
+    background-color: white;
+}
+
 .ag-fresh .ag-root {
      border: 1px solid silver;
 }
