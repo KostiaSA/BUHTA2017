@@ -144,8 +144,12 @@ textarea:focus, input:focus{
 }
 
 .ag-fresh .ag-cell-focus {
-    border: 1px solid #eca12f;
+    border-left: 1px solid transparent;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid #e2e2e2;
+    border-right: 1px solid #e2e2e2;
     outline: none;
+    background-color: cornsilk ;
 }
 
 .ag-fresh .ag-row-odd {

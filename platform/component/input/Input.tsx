@@ -309,7 +309,7 @@ export class Input extends EnabledMixin(
     };
 
 
-    showCombobox(filterStr:string) {
+    showCombobox(filterStr: string) {
         if (this.lookupDataSource) {
             this.popupVisible = true;
             this.refresh();
@@ -318,6 +318,7 @@ export class Input extends EnabledMixin(
                     this.comboGridRowData = rows;
                     let cols: AgGridColDef[] = [];
                     let fromCol: AgGridColDef = {
+                        colId: "col0",
                         headerName: "-",
                         field: this.lookupDataSource.getTitleFieldName(),
                         //maxWidth: 300,
@@ -343,10 +344,7 @@ export class Input extends EnabledMixin(
     handleInputKeyDown = (event: KeyboardEvent<any>) => {
         //this.internalValue = event.code;
         if (event.key === "ArrowDown") {
-
-            //this.showCombobox();
-
-            console.log(event.key);
+            this.comboGridApi.setFocusedCell(0, "col0");
         }
         if (event.key === "Escape") {
             this.popupVisible = false;
@@ -377,6 +375,9 @@ export class Input extends EnabledMixin(
     gridReadyHandler = (event: { api: GridApi, columnApi: ColumnApi }) => {
         this.comboGridApi = event.api;
         this.comboGridColumnApi = event.columnApi;
+
+        //this.comboGridApi.addEventListener()
+
         //this.comboGridApi.doLayout();
         //this.comboGridApi.sizeColumnsToFit();
 
@@ -384,7 +385,7 @@ export class Input extends EnabledMixin(
     };
 
 
-    downButtonClick= () => {
+    downButtonClick = () => {
         this.showCombobox("");
     };
 
@@ -435,13 +436,8 @@ export class Input extends EnabledMixin(
             position: "fixed",
             zIndex: 1000,
             display: this.popupVisible ? "block" : "none",
-            //border: "1px solid silver",
-            //top: 0,
-            //left: 0,
             height: gridHeight,//  this.popupHeight,
             width: this.popupWidth,
-            //maxHeight:200
-
         };
 
         return (
@@ -493,6 +489,33 @@ export class Input extends EnabledMixin(
                         onGridSizeChanged={() => {
                             if (this.comboGridApi) this.comboGridApi.sizeColumnsToFit()
                         }}
+
+                        onCellFocused={(e: any) => {
+                            $(this.popupElement).find(".ag-cell").off("keydown.buhta");
+                            $(this.popupElement).find(".ag-cell").on("keydown.buhta", (event) => {
+                                //console.log(event.keyCode);
+
+                                if (event.keyCode === 13) {
+
+                                    let focusedRowIndex = this.comboGridApi.getFocusedCell().rowIndex;
+                                    let renderedRows = this.comboGridApi.getRenderedNodes();
+
+                                    for (let row of renderedRows) {
+                                        if (row.rowIndex === focusedRowIndex) {
+                                            this.internalValue = row.data[this.lookupDataSource.getTitleFieldName()];
+                                            this.bindObject[this.bindProperty] == row.data[this.lookupDataSource.getValueFieldName()];
+                                            this.hideCombobox();
+                                            break;
+                                        }
+                                    }
+
+                                }
+                                if (event.keyCode === 27) {
+                                    this.hideCombobox();
+                                }
+                            });
+                        }}
+
                         onRowDataChanged={() => {
                             //this.refresh();
                             // if (this.comboGridApi) {
