@@ -294,7 +294,7 @@ export class Input extends EnabledMixin(
                 clearTimeout(this.inputValueChangeInterval);
 
             this.inputValueChangeInterval = setTimeout(() => {
-                this.showCombobox();
+                this.showCombobox(this.internalValue);
 
             }, this.lookupDataSource.getLookupDelayMs());
         }
@@ -309,11 +309,11 @@ export class Input extends EnabledMixin(
     };
 
 
-    showCombobox() {
+    showCombobox(filterStr:string) {
         if (this.lookupDataSource) {
             this.popupVisible = true;
             this.refresh();
-            this.lookupDataSource.getRows(this.internalValue, 200)
+            this.lookupDataSource.getRows(filterStr, 200)
                 .then((rows: any[]) => {
                     this.comboGridRowData = rows;
                     let cols: AgGridColDef[] = [];
@@ -344,7 +344,7 @@ export class Input extends EnabledMixin(
         //this.internalValue = event.code;
         if (event.key === "ArrowDown") {
 
-            this.showCombobox();
+            //this.showCombobox();
 
             console.log(event.key);
         }
@@ -384,6 +384,11 @@ export class Input extends EnabledMixin(
     };
 
 
+    downButtonClick= () => {
+        this.showCombobox("");
+    };
+
+
     getReactElement(index?: number | string): JSX.Element | null {
         this.init();
         console.log("Input-getReactElement()", this.enabled);
@@ -407,6 +412,18 @@ export class Input extends EnabledMixin(
             width: this.width,
             paddingLeft: 5,
             paddingRight: 3
+        };
+
+        let downButtonStyle: CSSProperties = {
+            height: 22,
+            width: 20,
+            paddingLeft: 0,
+            paddingRight: 0,
+            border: "1px solid silver",
+            display: "inline-block",
+            position: "relative",
+            top: 1,
+            left: -1
         };
 
         let gridHeight = this.comboGridRowData.length * 22 + 3;
@@ -442,6 +459,12 @@ export class Input extends EnabledMixin(
                     onKeyPress={this.handleInputKeyPress}
                     onKeyDown={this.handleInputKeyDown}
                 />
+                <span className="buhta-button" style={downButtonStyle} onClick={this.downButtonClick}>
+                    <img src={"vendor/fugue/icons-shadowless/control-270.png"} height="16" width="16"
+                         style={{marginLeft: 2, marginRight: 0, top: 3, position: "relative"}}/>
+
+                </span>
+
                 <DraggableResizable
                     className="ag-fresh"
                     bindObject={this}
