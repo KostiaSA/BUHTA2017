@@ -387,6 +387,9 @@ export class Input extends EnabledMixin(
 
     downButtonClick = () => {
         this.showCombobox("");
+        setTimeout(()=>{
+            this.comboGridApi.setFocusedCell(0, "col0");
+        },1);
     };
 
 
