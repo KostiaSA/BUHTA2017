@@ -79,7 +79,7 @@ export class Button extends EnabledMixin(
                     cursor: this.enabled ? "pointer" : "default",
                 }}
                 >
-                    {this.text}
+                    {this.designMode ? "$" + this.text : this.text}
                 </span>
             </td>
         );

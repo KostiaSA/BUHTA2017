@@ -39,6 +39,22 @@ export class Component {//} extends React.Component<any, any>{
         this._parent = value;
     }
 
+    // --- designMode ---
+    _designMode: boolean;
+    get designMode(): boolean {
+        //return this._designMode || (this.parent && this.parent.designMode);
+        if (this._designMode)
+            return true;
+        else if (this.parent)
+            return this.parent.designMode;
+        else
+            return false;
+    }
+
+    set designMode(value: boolean) {
+        this._designMode = value;
+    }
+
     initialized: boolean;
 
     init() {

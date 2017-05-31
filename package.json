@@ -32,6 +32,7 @@
     "react-draggable": "^2.2.3",
     "react-highlight-words": "^0.7.2",
     "react-resizable": "^1.6.0",
+    "react-splitter-layout": "^0.2.1",
     "typescript": "^2.3.2"
   }
 }

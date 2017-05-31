@@ -152,6 +152,10 @@ textarea:focus, input:focus{
     background-color: cornsilk ;
 }
 
+.ag-fresh .ag-cell:hover {
+    background-color: rgba(135, 206, 250, 0.1) ;
+}
+
 .ag-fresh .ag-row-odd {
     background-color: white;
 }
@@ -164,3 +168,13 @@ textarea:focus, input:focus{
     border-bottom: 1px solid #e2e2e2;
 }
 
+
+/* splitter */
+
+.splitter-layout>.layout-splitter {
+    flex: 0 0 auto;
+    width: 3px;
+    height: 100%;
+    cursor: col-resize;
+    background-color: rgba(204, 204, 204, 0.6);
+}

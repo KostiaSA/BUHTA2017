@@ -4,17 +4,23 @@ import {BaseWindow} from "./BaseWindow";
 import {TestWindow1} from "../../app/TestWindow1";
 //import {appStateforceUpdate} from "../util/appStateforceUpdate";
 import {ReactComponent} from "../react/ReactComponent";
+import {TestWindow2} from "../../app/TestWindow2";
+import {DesignerWindow} from "../designer/DesignerWindow";
 
 export class Desktop extends Component {
 
     win1: BaseWindow = new BaseWindow();
-    win2: TestWindow1 = new TestWindow1();
+    win2: TestWindow2 = new TestWindow2();
+    win3: TestWindow1 = new TestWindow1();
+    win4: DesignerWindow = new DesignerWindow();
 
     init() {
         if (this.initialized) return;
         super.init();
-        this.childrenAdd(this.win1);
-        this.childrenAdd(this.win2);
+        // this.childrenAdd(this.win1);
+        // this.childrenAdd(this.win2);
+        // this.childrenAdd(this.win3);
+        this.childrenAdd(this.win4);
     }
 
     bringWindowToFront(win: BaseWindow) {

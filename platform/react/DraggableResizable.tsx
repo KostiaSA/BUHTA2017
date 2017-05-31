@@ -12,6 +12,7 @@ export interface IDraggableResizableProps extends HTMLProps<any> {
     allowDragX?: boolean;
     allowDragY?: boolean;
     allowResize?: boolean;
+    dragHandle?:string;
     onDrag?:()=>void;
 }
 
@@ -28,6 +29,7 @@ export class DraggableResizable extends React.Component<IDraggableResizableProps
                 axis = "y";
 
             $(this.native).draggable({
+                handle:this.props.dragHandle,
                 axix: axis,
                 drag: (event: any, ui: any) => {
                     if (this.props.bindObject) {

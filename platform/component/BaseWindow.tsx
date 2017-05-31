@@ -4,6 +4,7 @@ import {DraggableResizable} from "../react/DraggableResizable";
 import {Desktop} from "./Desktop";
 import {getRandomId} from "../util/getRandomId";
 import {ReactComponent} from "../react/ReactComponent";
+import {SnapGrid} from "../react/SnapGrid";
 
 
 export interface IWindowStyle {
@@ -60,8 +61,14 @@ export class BaseWindow extends Component {
     getReactElement(index?: number | string): JSX.Element | null {
         console.log("getReactElement-window");
         this.init();
+
+        let snapGrid: any = null;
+        if (this.designMode)
+            snapGrid = <SnapGrid/>;
+
         return (
             <DraggableResizable
+                dragHandle=".drag-handle"
                 allowResize
                 allowDragX
                 allowDragY
@@ -102,22 +109,25 @@ export class BaseWindow extends Component {
                         //borderBottom: "1px solid " + this.style.borderColor,
                         backgroundColor: this.style.borderColor,
                     }}>
-                    <div style={{
-                        flex: "1 1 auto",
-                        overflow: "hidden",
-                        padding: 5,
-                        whiteSpace: "nowrap",
-                        cursor: "move"
-                    }}>
-                        <img src={this.icon} height="16" width="16"/>
-                        <span style={{
-                            top: -4,
-                            left: 5,
-                            position: "relative",
+                    <div
+                        className="drag-handle"
+                        style={{
+                            flex: "1 1 auto",
+                            overflow: "hidden",
+                            padding: 5,
                             whiteSpace: "nowrap",
-                            color: "white",
-                            fontWeight: "bold",
-                        }}
+                            cursor: "move"
+                        }}>
+                        <img src={this.icon} height="16" width="16"/>
+                        <span
+                            style={{
+                                top: -4,
+                                left: 5,
+                                position: "relative",
+                                whiteSpace: "nowrap",
+                                color: "white",
+                                fontWeight: "bold",
+                            }}
                         >
                             это window top={this.top} {new Date().getTime()}
                         </span>
@@ -148,6 +158,7 @@ export class BaseWindow extends Component {
                         position: "relative"
                         //outline: "2px solid orange",
                     }}>
+                    {snapGrid}
                     {this.children.map((child, index) => <ReactComponent component={child}
                                                                          key={index}> </ReactComponent>)}
                 </div>

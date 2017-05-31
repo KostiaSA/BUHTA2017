@@ -10,6 +10,7 @@ import {HeightWidthMixin} from "./mixin/HeightWidthMixin";
 import {TabPanelItem} from "./TabPanelItem";
 //import {appStateforceUpdate} from "../util/appStateforceUpdate";
 import {ReactComponent} from "../react/ReactComponent";
+import {SnapGrid} from "../react/SnapGrid";
 
 
 // export interface IButtonStyle {
@@ -135,6 +136,10 @@ export class TabPanel extends EnabledMixin(
                 </span>
             );
 
+            let snapGrid: any = null;
+            if (this.designMode)
+                snapGrid = <SnapGrid/>;
+
 
             tabsContent.push(
                 <div style={{
@@ -149,6 +154,7 @@ export class TabPanel extends EnabledMixin(
                     border:"0px solid red"
                 }}>
                     {/*{ panelItem.children.map((child, index) => child.getReactElement(index))}*/}
+                    {snapGrid}
                     {panelItem.children.map((child, index) => <ReactComponent component={child} key={index}> </ReactComponent> )}
                 </div>
             )
