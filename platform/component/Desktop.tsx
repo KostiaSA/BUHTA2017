@@ -13,14 +13,18 @@ export class Desktop extends Component {
     win2: TestWindow2 = new TestWindow2();
     win3: TestWindow1 = new TestWindow1();
     win4: DesignerWindow = new DesignerWindow();
+    //win5: DesignerWindow = new DesignerWindow();
+    //win6: DesignerWindow = new DesignerWindow();
 
     init() {
         if (this.initialized) return;
         super.init();
         // this.childrenAdd(this.win1);
         // this.childrenAdd(this.win2);
-        // this.childrenAdd(this.win3);
+        this.childrenAdd(this.win3);
         this.childrenAdd(this.win4);
+        //this.childrenAdd(this.win5);
+        //this.childrenAdd(this.win6);
     }
 
     bringWindowToFront(win: BaseWindow) {

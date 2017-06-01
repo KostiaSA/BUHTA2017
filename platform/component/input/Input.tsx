@@ -473,7 +473,7 @@ export class Input extends EnabledMixin(
                     ref={(e: any) => {
                         if (e) {
                             this.popupElement = e.native;
-                            console.log("this.popupElement = e.native", e, e.native)
+                            //console.log("this.popupElement = e.native", e, e.native)
                         }
                     }}
                     style={popupStyle}

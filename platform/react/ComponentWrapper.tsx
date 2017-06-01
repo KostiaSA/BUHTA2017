@@ -86,9 +86,11 @@ export class ComponentWrapper extends React.Component<IComponentWrapperProps, an
             <div
                 {...props}
                 onMouseDown={(e: SyntheticEvent<any>) => {
-                    this.props.component.designer.selectComponent(this.props.component);
-                    e.stopPropagation();
-                    e.preventDefault();
+                    if (this.props.component.designMode) {
+                        this.props.component.designer.selectComponent(this.props.component);
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
                 }}
 
                 ref={(e) => {

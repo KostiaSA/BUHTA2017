@@ -23,6 +23,8 @@ export class AppState {
 
 export let appState = new AppState();
 setTimeout(() => {
+
+    //process.env.NODE_ENV = "production";
     appState.startApp();
 
 }, 100);
