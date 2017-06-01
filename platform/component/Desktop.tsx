@@ -12,7 +12,7 @@ export class Desktop extends Component {
     win1: BaseWindow = new BaseWindow();
     win2: TestWindow2 = new TestWindow2();
     win3: TestWindow1 = new TestWindow1();
-    win4: DesignerWindow = new DesignerWindow();
+    designerWindow: DesignerWindow = new DesignerWindow();
     //win5: DesignerWindow = new DesignerWindow();
     //win6: DesignerWindow = new DesignerWindow();
 
@@ -22,7 +22,9 @@ export class Desktop extends Component {
         // this.childrenAdd(this.win1);
         // this.childrenAdd(this.win2);
         this.childrenAdd(this.win3);
-        this.childrenAdd(this.win4);
+
+        this.designerWindow.designedComponentPath="app/TestWindow1.ts";
+        this.childrenAdd(this.designerWindow);
         //this.childrenAdd(this.win5);
         //this.childrenAdd(this.win6);
     }

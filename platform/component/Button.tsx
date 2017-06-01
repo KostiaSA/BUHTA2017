@@ -10,6 +10,7 @@ import {HeightWidthMixin} from "./mixin/HeightWidthMixin";
 import {CSSProperties, SyntheticEvent} from "react";
 import {DraggableResizable} from "../react/DraggableResizable";
 import {ComponentWrapper} from "../react/ComponentWrapper";
+import {isFunction} from "util";
 
 
 export interface IButtonStyle {
@@ -138,6 +139,11 @@ export class Button extends EnabledMixin(
                 className={btnClass}
                 disabled={!this.enabled}
                 style={mainSpanStyle}
+                onClick={() => {
+                    if (isFunction(this.onClick)) {
+                        this.onClick({sender: this});
+                    }
+                }}
             >
                 <table style={{height: this.height}}>
                     <tbody>

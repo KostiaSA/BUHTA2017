@@ -5,6 +5,8 @@ import {getRandomId} from "../util/getRandomId";
 import {ComponentAsReactElement} from "../react/ComponentAsReactElement";
 import {appState} from "../appState";
 import {IComponentDesigner} from "../designer/DesignerWindow";
+import {EmittedCode} from "../designer/EmittedCode";
+import {getAllObjectProps} from "../util/getAllObjectProps";
 //import {BaseWindow} from "./BaseWindow";
 //import {AppWindow} from "./AppWindow";
 
@@ -55,13 +57,18 @@ export class Component {//} extends React.Component<any, any>{
         this._designMode = value;
     }
 
+    _designer: IComponentDesigner;
     get designer(): IComponentDesigner {
-        if ((this as any as IComponentDesigner).isComponentDesignerImplementer)
-            return (this as any as IComponentDesigner);
+        if (this._designer)
+            return this._designer;
         else if (this.parent)
             return this.parent.designer;
         else
             return undefined as any;
+    }
+
+    set designer(value: IComponentDesigner) {
+        this._designer = value;
     }
 
     initialized: boolean;
@@ -102,8 +109,9 @@ export class Component {//} extends React.Component<any, any>{
         if (!this.parent)
             return this;
         else {
-            if (this.parent.constructor.name === "FormDesigner_Panel")
+            if (this.parent.constructor.name === "Desktop") {
                 return this;
+            }
             else
                 return this.parent.owner;
         }
@@ -160,6 +168,37 @@ export class Component {//} extends React.Component<any, any>{
 
     }
 
+    get name(): string {
+        for (let propName of Object.keys(this.owner)) {
+            if ((this.owner as any)[propName] === this)
+                return propName;
+        }
+
+        if (this.owner === this)
+            return this.constructor.name;
+
+        console.error("ошибка платформы Component.get name() for " + this.constructor.name, this, this.owner);
+        return "ошибка_" + this.constructor.name;
+    }
+
+    emitCode(code: EmittedCode) {
+
+        for (let propName of getAllObjectProps(this)) {
+            if (propName.startsWith("__emitCode_")) {
+                ((this as any)[propName]).call(this, code);
+            }
+        }
+
+        this.children.forEach((child: Component, index: number) => {
+            //console.log(child.constructor.name);
+            code.emitDeclaration(child.name, child.constructor.name);
+            child.emitCode(code);
+            if (this === this.owner)
+                code.inits.push("        " + "this.childrenAdd(this." + child.name + ");");
+            else
+                code.inits.push("        " + "this." + this.name + ".childrenAdd(this." + child.name + ");");
+        });
+    }
 
     buhtaComponentInstance: ComponentAsReactElement;
 
