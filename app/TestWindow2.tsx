@@ -16,6 +16,7 @@ export class TestWindow2 extends BaseWindow {
     tab2: SplitPanelItem = new SplitPanelItem();
 
     but1onTab1: Button = new Button();
+    but2onTab1: Button = new Button();
 
     caption:string="это caption";
 
@@ -44,6 +45,11 @@ export class TestWindow2 extends BaseWindow {
         //this.but1onTab1.enabled = false;
         this.tab1.childrenAdd(this.but1onTab1);
 
+        this.but2onTab1.top = 55;
+        this.but2onTab1.left = 10;
+        this.but2onTab1.text = "but2onTab1-да!";
+        //this.but1onTab1.enabled = false;
+        this.tab1.childrenAdd(this.but2onTab1);
     }
 
 

@@ -11,6 +11,9 @@ import {HeightWidthMixin} from "./mixin/HeightWidthMixin";
 import {ReactComponent} from "../react/ReactComponent";
 import {SplitPanelItem} from "./SplitPanelItem";
 import {SnapGrid} from "../react/SnapGrid";
+import {DraggableResizable} from "../react/DraggableResizable";
+import {SyntheticEvent} from "react";
+import {ComponentWrapper} from "../react/ComponentWrapper";
 let SplitterLayout = require("react-splitter-layout").default;
 
 // export interface IButtonStyle {
@@ -62,7 +65,7 @@ export class SplitPanel extends EnabledMixin(
                 <div style={{
                     overflow: "auto",
                     height: "100%",
-                    backgroundColor:"white"
+                    backgroundColor: "white"
                     //border: "1px solid red"
                 }}>
                     {snapGrid}
@@ -77,21 +80,22 @@ export class SplitPanel extends EnabledMixin(
 
         }
 
-
         return (
-            <div
+            <ComponentWrapper
+                component={this}
+                key={this.id}
+                disabled={!this.enabled}
                 className={panelClass}
                 style={{
                     ...this.getTopLeftMixinStyle(),
                     ...this.getHeightWidthMixinStyle(),
                     overflow: "hidden",
-                    border: "1px solid silver"
+                    border: "1px solid silver",
                 }}>
-
-                <SplitterLayout>
+                <SplitterLayout secondaryInitialSize={150}>
                     {itemsContent}
                 </SplitterLayout>
-            </div>
+            </ComponentWrapper>
         );
 
     }

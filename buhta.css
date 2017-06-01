@@ -106,7 +106,7 @@ textarea:focus, input:focus{
     cursor: se-resize;
 }
 
-.buhta-button, .buhta-button.disabled:hover, .buhta-button.disabled:active {
+.buhta-button, .buhta-button-design-mode, .buhta-button.disabled:hover, .buhta-button.disabled:active {
     border: 1px solid #d4d4d4;
     background-color: #eaeaea;
 }
@@ -122,6 +122,11 @@ textarea:focus, input:focus{
 .buhta-button:active {
     background-color: #d4d4d4;
 }
+
+.buhta-button-design-mode.disabled {
+    opacity: 0.5;
+}
+
 
 .search-mark{
     background: rgba(255, 165, 0, 0.5);

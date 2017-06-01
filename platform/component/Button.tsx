@@ -7,6 +7,9 @@ import {TopLeftMixin} from "./mixin/TopLeftMixin";
 import {TextMixin} from "./mixin/TextMixin";
 import {IconMixin} from "./mixin/IconMixin";
 import {HeightWidthMixin} from "./mixin/HeightWidthMixin";
+import {CSSProperties, SyntheticEvent} from "react";
+import {DraggableResizable} from "../react/DraggableResizable";
+import {ComponentWrapper} from "../react/ComponentWrapper";
 
 
 export interface IButtonStyle {
@@ -52,10 +55,11 @@ export class Button extends EnabledMixin(
 
     getReactElement(index?: number | string): JSX.Element | null {
         this.init();
-        console.log("Button-getReactElement()", this.enabled);
+        //console.log("Button-getReactElement()", this.enabled);
 
         let btnClass = classNames({
-            "buhta-button": true,
+            "buhta-button": !this.designMode,
+            "buhta-button-design-mode": this.designMode,
             "disabled": !this.enabled,
         });
 
@@ -76,7 +80,7 @@ export class Button extends EnabledMixin(
                     marginLeft: 6,
                     marginRight: 6,
                     top: -1,
-                    cursor: this.enabled ? "pointer" : "default",
+                    cursor: this.enabled && !this.designMode ? "pointer" : "default",
                 }}
                 >
                     {this.designMode ? "$" + this.text : this.text}
@@ -99,31 +103,52 @@ export class Button extends EnabledMixin(
         // );
 
 //        {...this.getTopLeftMixinStyle()},
-        let mainSpanStyle = {
+        let mainSpanStyle: CSSProperties = {
             ...this.getTopLeftMixinStyle(),
             overflow: "hidden",
             padding: 0,
             whiteSpace: "nowrap",
             width: this.width,
-            cursor: this.enabled ? "pointer" : "default",
+            cursor: this.enabled && !this.designMode ? "pointer" : "default",
         };
 
+
+        // let buttonSpan = (
+        //     <span
+        //         onClick={(e: SyntheticEvent<any>) => {
+        //             if (this.onClick && this.enabled)
+        //                 this.onClick({sender: this});
+        //         }}
+        //         className={btnClass}
+        //         disabled={!this.enabled}
+        //         style={mainSpanStyle}>
+        //         <table style={{height: this.height}}>
+        //             <tbody>
+        //                {trTag}
+        //             </tbody>
+        //         </table>
+        //     </span>
+        // );
+
+//        if (this.designMode)
         return (
-            <span
-                onClick={() => {
-                    if (this.onClick && this.enabled)
-                        this.onClick({sender: this});
-                }}
+            <ComponentWrapper
+                component={this}
+                key={this.id}
                 className={btnClass}
                 disabled={!this.enabled}
-                style={mainSpanStyle}>
+                style={mainSpanStyle}
+            >
                 <table style={{height: this.height}}>
                     <tbody>
-                       {trTag}
+                    {trTag}
                     </tbody>
                 </table>
-            </span>
+            </ComponentWrapper>
         );
+        // else
+        //     return buttonSpan;
+
 
     }
 

@@ -4,6 +4,7 @@ import * as ReactDOM from "react-dom";
 import {getRandomId} from "../util/getRandomId";
 import {ReactComponent} from "../react/ReactComponent";
 import {appState} from "../appState";
+import {IComponentDesigner} from "../designer/DesignerWindow";
 //import {BaseWindow} from "./BaseWindow";
 //import {AppWindow} from "./AppWindow";
 
@@ -42,7 +43,6 @@ export class Component {//} extends React.Component<any, any>{
     // --- designMode ---
     _designMode: boolean;
     get designMode(): boolean {
-        //return this._designMode || (this.parent && this.parent.designMode);
         if (this._designMode)
             return true;
         else if (this.parent)
@@ -53,6 +53,15 @@ export class Component {//} extends React.Component<any, any>{
 
     set designMode(value: boolean) {
         this._designMode = value;
+    }
+
+    get designer(): IComponentDesigner {
+        if ((this as any as IComponentDesigner).isComponentDesignerImplementer)
+            return (this as any as IComponentDesigner);
+        else if (this.parent)
+            return this.parent.designer;
+        else
+            return undefined as any;
     }
 
     initialized: boolean;

@@ -11,7 +11,17 @@ import {TestWindow1} from "../../app/TestWindow1";
 import {TestWindow2} from "../../app/TestWindow2";
 
 
-export class DesignerWindow extends BaseWindow {
+export interface IComponentDesigner {
+    isComponentDesignerImplementer: boolean;
+    selectedComponents: Component[];
+    designedComponent: Component;
+    isComponentSelected(component: Component): boolean;
+    selectComponent(component: Component): void;
+    addComponentToSelection(component: Component): void;
+}
+
+
+export class DesignerWindow extends BaseWindow implements IComponentDesigner {
 
 
     tabs: TabPanel = new TabPanel();
@@ -37,6 +47,25 @@ export class DesignerWindow extends BaseWindow {
         this.setPropertyWithForceUpdate("_designedComponent", value);
     }
 
+    get isComponentDesignerImplementer(): boolean {
+        return true;
+    }
+
+    selectedComponents: Component[] = [];
+
+    isComponentSelected(component: Component): boolean {
+        return this.selectedComponents.indexOf(component) >= 0;
+    }
+
+    selectComponent(component: Component) {
+        this.selectedComponents = [component];
+        this.refresh();
+    }
+
+    addComponentToSelection(component: Component) {
+        this.selectedComponents.push(component);
+        this.refresh();
+    }
 
     init() {
         if (this.initialized) return;
@@ -44,7 +73,7 @@ export class DesignerWindow extends BaseWindow {
 
         this.top = 10;
         this.left = 10;
-        this.width = 800;
+        this.width = 1000;
         this.height = 800;
 
         this.tabs.top = 100;
@@ -66,6 +95,7 @@ export class DesignerWindow extends BaseWindow {
         this.designerSplitPanel.right = 10;
         this.designerSplitPanel.bottom = 10;
 
+        //this.designerSurface.wi
         this.designerSplitPanel.childrenAdd(this.designerSurface);
         this.designerSplitPanel.childrenAdd(this.designerPropertyEditor);
 
@@ -84,6 +114,7 @@ export class DesignerWindow extends BaseWindow {
         this.designerSurface.childrenAdd(this.surface);
 
         this.designedComponent = new TestWindow2();
+        this.designedComponent.parent=this;
         this.designedComponent.designMode = true;
         this.designedComponent.init();
     }

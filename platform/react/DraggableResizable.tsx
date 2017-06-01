@@ -40,7 +40,7 @@ export class DraggableResizable extends React.Component<IDraggableResizableProps
                     }
                     if (this.props.onDrag)
                         this.props.onDrag();
-                    //console.log(event, ui);
+                    //console.log("drag-left", ui.position.left);
                     //this.forceUpdate();
                     //appStateforceUpdate();
                 }
@@ -64,12 +64,14 @@ export class DraggableResizable extends React.Component<IDraggableResizableProps
     native: HTMLElement;
 
     render(): any {
-        console.log("DraggableResizable render");
+        //console.log("DraggableResizable render");
         let props: any = {};
         for (let propName of Object.keys(this.props)) {
             if (propName !== "children" && propName !== "ref" && !propName.startsWith("bind"))
                 props[propName] = (this.props as any)[propName];
         }
+
+
         return (
             <div
                 {...props}
@@ -83,3 +85,5 @@ export class DraggableResizable extends React.Component<IDraggableResizableProps
 
     }
 }
+
+// style={{border:"1px solid blue"}}
