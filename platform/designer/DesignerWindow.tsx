@@ -9,6 +9,7 @@ import {DesignerSurfacePanel} from "./DesignerSurfacePanel";
 import {Component} from "../component/Component";
 import {TestWindow1} from "../../app/TestWindow1";
 import {TestWindow2} from "../../app/TestWindow2";
+import {PropertiesEditor} from "./PropertriesEditor";
 
 
 export interface IComponentDesigner {
@@ -18,6 +19,7 @@ export interface IComponentDesigner {
     isComponentSelected(component: Component): boolean;
     selectComponent(component: Component): void;
     addComponentToSelection(component: Component): void;
+    componentChanged(component: Component): void;
 }
 
 
@@ -35,6 +37,8 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
     but1: Button = new Button();
 
     surface: DesignerSurfacePanel = new DesignerSurfacePanel();
+
+    propertiesEditor: PropertiesEditor = new PropertiesEditor();
 
 
     // ------------------------------ designedComponent ------------------------------
@@ -59,7 +63,13 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
 
     selectComponent(component: Component) {
         this.selectedComponents = [component];
+        this.propertiesEditor.editedObject = component;
         this.refresh();
+    }
+
+    componentChanged(component: Component) {
+        this.propertiesEditor.refresh();
+        this.surface.refresh();
     }
 
     addComponentToSelection(component: Component) {
@@ -73,7 +83,7 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
 
         this.top = 10;
         this.left = 10;
-        this.width = 1000;
+        this.width = 800;
         this.height = 800;
 
         this.tabs.top = 100;
@@ -101,6 +111,12 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
 
         this.designerTab.childrenAdd(this.designerSplitPanel);
 
+        this.propertiesEditor.top = 10;
+        this.propertiesEditor.left = 10;
+        this.propertiesEditor.right = 10;
+        this.propertiesEditor.bottom = 10;
+        this.designerPropertyEditor.childrenAdd(this.propertiesEditor);
+
 
         this.but1.text = "это surface";
         this.but1.top = 10;
@@ -114,7 +130,7 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         this.designerSurface.childrenAdd(this.surface);
 
         this.designedComponent = new TestWindow2();
-        this.designedComponent.parent=this;
+        this.designedComponent.parent = this;
         this.designedComponent.designMode = true;
         this.designedComponent.init();
     }

@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 //import {appStateforceUpdate} from "../util/appStateforceUpdate";
 import {getRandomId} from "../util/getRandomId";
-import {ReactComponent} from "../react/ReactComponent";
+import {ComponentAsReactElement} from "../react/ComponentAsReactElement";
 import {appState} from "../appState";
 import {IComponentDesigner} from "../designer/DesignerWindow";
 //import {BaseWindow} from "./BaseWindow";
@@ -161,6 +161,6 @@ export class Component {//} extends React.Component<any, any>{
     }
 
 
-    buhtaComponentInstance: ReactComponent;
+    buhtaComponentInstance: ComponentAsReactElement;
 
 }

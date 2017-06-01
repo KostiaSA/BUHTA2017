@@ -47,6 +47,9 @@ export class ComponentWrapper extends React.Component<IComponentWrapperProps, an
                 drag: (event: any, ui: any) => {
                     (this.props.component as any).left = ui.position.left;
                     (this.props.component as any).top = ui.position.top;
+                },
+                stop: (event: any) => {
+                    this.props.component.designer.componentChanged(this.props.component);
                 }
             });
         }
@@ -56,6 +59,9 @@ export class ComponentWrapper extends React.Component<IComponentWrapperProps, an
                 resize: (event: any, ui: any) => {
                     (this.props.component as any).height = ui.size.height;
                     (this.props.component as any).width = ui.size.width;
+                },
+                stop: (event: any) => {
+                    this.props.component.designer.componentChanged(this.props.component);
                 }
             });
         }

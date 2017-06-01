@@ -1,5 +1,7 @@
 import {MixinConstructor} from "./MixinConstructor";
 import {Component} from "../Component";
+import {PropertyEditor, Категория_РазмерПозиция} from "../../designer/PropertyEditor";
+
 //import {appStateforceUpdate} from "../../util/appStateforceUpdate";
 
 export function TopLeftMixin<T extends MixinConstructor<Component>>(Base: T) {
@@ -8,9 +10,9 @@ export function TopLeftMixin<T extends MixinConstructor<Component>>(Base: T) {
             super(...args);
         }
 
-        getTopLeftMixinStyle():any{
+        getTopLeftMixinStyle(): any {
             return {
-                position: this.top || this.left|| this.bottom|| this.right ? "absolute" : "relative",
+                position: this.top || this.left || this.bottom || this.right ? "absolute" : "relative",
                 top: this.top,
                 left: this.left,
                 bottom: this.bottom,
@@ -36,13 +38,14 @@ export function TopLeftMixin<T extends MixinConstructor<Component>>(Base: T) {
         //     code.emitNumberValue(this, "top", this.top_default);
         // }
 
-        // protected  __getPropertyEditor_top(): PropertyEditor {
-        //     let pe = new NumberPropertyEditor();
-        //     pe.default = this.top_default;
-        //     pe.propertyName = "top";
-        //     pe.category = Категория_РазмерПозиция;
-        //     return pe;
-        // }
+        protected  __getPropertyEditor_top(): PropertyEditor {
+            let NumberPropertyEditor = require("../../designer/NumberPropertyEditor").NumberPropertyEditor;
+            let pe = new NumberPropertyEditor();
+            pe.default = this.top_default;
+            pe.propertyName = "top";
+            pe.category = Категория_РазмерПозиция;
+            return pe;
+        }
 
         // ------------------------------ left ------------------------------
         get left_default(): number {
@@ -61,14 +64,16 @@ export function TopLeftMixin<T extends MixinConstructor<Component>>(Base: T) {
         // protected  __emitCode_left(code: EmittedCode) {
         //     code.emitNumberValue(this, "left", this.left_default);
         // }
-        //
-        // protected  __getPropertyEditor_left(): PropertyEditor {
-        //     let pe = new NumberPropertyEditor();
-        //     pe.default = this.left_default;
-        //     pe.propertyName = "left";
-        //     pe.category = Категория_РазмерПозиция;
-        //     return pe;
-        // }
+
+
+        protected  __getPropertyEditor_left(): PropertyEditor {
+            let NumberPropertyEditor = require("../../designer/NumberPropertyEditor").NumberPropertyEditor;
+            let pe = new NumberPropertyEditor();
+            pe.default = this.left_default;
+            pe.propertyName = "left";
+            pe.category = Категория_РазмерПозиция;
+            return pe;
+        }
 
         // ------------------------------ bottom ------------------------------
         protected get bottom_default(): number {
@@ -88,13 +93,14 @@ export function TopLeftMixin<T extends MixinConstructor<Component>>(Base: T) {
         //     code.emitNumberValue(this, "bottom", this.bottom_default);
         // }
 
-        // protected  __getPropertyEditor_bottom(): PropertyEditor {
-        //     let pe = new NumberPropertyEditor();
-        //     pe.default = this.bottom_default;
-        //     pe.propertyName = "bottom";
-        //     pe.category = Категория_РазмерПозиция;
-        //     return pe;
-        // }
+        protected  __getPropertyEditor_bottom(): PropertyEditor {
+            let NumberPropertyEditor = require("../../designer/NumberPropertyEditor").NumberPropertyEditor;
+            let pe = new NumberPropertyEditor();
+            pe.default = this.bottom_default;
+            pe.propertyName = "bottom";
+            pe.category = Категория_РазмерПозиция;
+            return pe;
+        }
 
         // ------------------------------ right ------------------------------
         get right_default(): number {
@@ -113,13 +119,14 @@ export function TopLeftMixin<T extends MixinConstructor<Component>>(Base: T) {
         // protected  __emitCode_right(code: EmittedCode) {
         //     code.emitNumberValue(this, "right", this.right_default);
         // }
-        //
-        // protected  __getPropertyEditor_right(): PropertyEditor {
-        //     let pe = new NumberPropertyEditor();
-        //     pe.default = this.right_default;
-        //     pe.propertyName = "right";
-        //     pe.category = Категория_РазмерПозиция;
-        //     return pe;
-        // }
+
+        protected  __getPropertyEditor_right(): PropertyEditor {
+            let NumberPropertyEditor = require("../../designer/NumberPropertyEditor").NumberPropertyEditor;
+            let pe = new NumberPropertyEditor();
+            pe.default = this.right_default;
+            pe.propertyName = "right";
+            pe.category = Категория_РазмерПозиция;
+            return pe;
+        }
     }
 }

@@ -3,7 +3,7 @@ import {Component} from "./Component";
 import {DraggableResizable} from "../react/DraggableResizable";
 import {Desktop} from "./Desktop";
 import {getRandomId} from "../util/getRandomId";
-import {ReactComponent} from "../react/ReactComponent";
+import {ComponentAsReactElement} from "../react/ComponentAsReactElement";
 import {SnapGrid} from "../react/SnapGrid";
 
 
@@ -159,8 +159,8 @@ export class BaseWindow extends Component {
                         //outline: "2px solid orange",
                     }}>
                     {snapGrid}
-                    {this.children.map((child, index) => <ReactComponent component={child}
-                                                                         key={index}> </ReactComponent>)}
+                    {this.children.map((child, index) => <ComponentAsReactElement component={child}
+                                                                                  key={index}> </ComponentAsReactElement>)}
                 </div>
             </DraggableResizable>
         );

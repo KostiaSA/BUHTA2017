@@ -9,7 +9,7 @@ import {IconMixin} from "./mixin/IconMixin";
 import {HeightWidthMixin} from "./mixin/HeightWidthMixin";
 import {TabPanelItem} from "./TabPanelItem";
 //import {appStateforceUpdate} from "../util/appStateforceUpdate";
-import {ReactComponent} from "../react/ReactComponent";
+import {ComponentAsReactElement} from "../react/ComponentAsReactElement";
 import {SnapGrid} from "../react/SnapGrid";
 
 
@@ -155,7 +155,7 @@ export class TabPanel extends EnabledMixin(
                 }}>
                     {/*{ panelItem.children.map((child, index) => child.getReactElement(index))}*/}
                     {snapGrid}
-                    {panelItem.children.map((child, index) => <ReactComponent component={child} key={index}> </ReactComponent> )}
+                    {panelItem.children.map((child, index) => <ComponentAsReactElement component={child} key={index}> </ComponentAsReactElement> )}
                 </div>
             )
 

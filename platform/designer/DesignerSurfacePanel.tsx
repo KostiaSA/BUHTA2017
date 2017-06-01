@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as classNames from "classnames";
-import {ReactComponent} from "../react/ReactComponent";
+import {ComponentAsReactElement} from "../react/ComponentAsReactElement";
 import {EnabledMixin} from "../component/mixin/EnabledMixin";
 import {TopLeftMixin} from "../component/mixin/TopLeftMixin";
 import {HeightWidthMixin} from "../component/mixin/HeightWidthMixin";
@@ -36,10 +36,10 @@ export class DesignerSurfacePanel extends EnabledMixin(
         let children: JSX.Element[] = [];
         if (this.designerWindow.designedComponent) {
             children = this.designerWindow.designedComponent.children.map((child, index) =>
-                <ReactComponent
+                <ComponentAsReactElement
                     component={child}
                     key={index}>
-                </ReactComponent>);
+                </ComponentAsReactElement>);
         }
 
         return (

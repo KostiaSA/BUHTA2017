@@ -10,11 +10,12 @@ import {HeightWidthMixin} from "../mixin/HeightWidthMixin";
 import {CSSProperties, KeyboardEvent, SyntheticEvent} from "react";
 import {DraggableResizable} from "../../react/DraggableResizable";
 import {AgGridReact} from "ag-grid-react";
-import {isArray, isBoolean, isNumber, isString} from "util";
+import {isArray, isBoolean, isFunction, isNumber, isString} from "util";
 import {AgGridColDef} from "../../react/AgGridColDef";
 import GridApi = ag.grid.GridApi;
 import ColumnApi = ag.grid.ColumnApi;
 import {IComboBoxDataSource} from "./IComboBoxDataSource";
+import {PropertyEditor, Категория_Прочее, Категория_События} from "../../designer/PropertyEditor";
 let Highlighter = require("react-highlight-words");
 
 export interface IInputStyle {
@@ -85,7 +86,7 @@ export class Input extends EnabledMixin(
 
     set bindObject(value: any) {
         this._bindObject = value;
-        if (this.bindProperty && this.bindProperty) {
+        if (this.bindObject && this.bindProperty) {
             this.internalValue = this.bindObject[this.bindProperty];
         }
         // if (this.$) {
@@ -113,7 +114,7 @@ export class Input extends EnabledMixin(
 
     set bindProperty(value: string) {
         this._bindProperty = value;
-        if (this.bindProperty && this.bindProperty) {
+        if (this.bindObject && this.bindProperty) {
             this.internalValue = this.bindObject[this.bindProperty];
         }
         // if (this.$) {
@@ -274,6 +275,35 @@ export class Input extends EnabledMixin(
     // }
 
 
+    // ------------------------------ onChange ------------------------------
+    protected _onChange: string | Function;
+    get onChange(): string | Function {
+        return this._onChange;
+    }
+
+    set onChange(value: string | Function) {
+        this.setPropertyWithForceUpdate("_onChange", value);
+    }
+
+    protected get onChange_default(): string | Function {
+        return undefined as any;
+    }
+
+    // emitCode_onChange(code: EmittedCode) {
+    //     code.emitBooleanValue(this, "onChange", true);
+    // }
+
+    protected  __getPropertyEditor_onChange(): PropertyEditor {
+        let StringPropertyEditor = require("../../designer/StringPropertyEditor").StringPropertyEditor;
+
+        let pe = new StringPropertyEditor();
+        pe.default = this.onChange_default;
+        pe.propertyName = "onChange";
+        pe.category = Категория_События;
+        return pe;
+    }
+
+
     // ------------------------------ getReactElement ------------------------------
 
     internalValue: string;
@@ -286,6 +316,21 @@ export class Input extends EnabledMixin(
 
 
     private inputValueChangeInterval: any;
+
+    handleBlur = (event: any) => {
+        let oldValue = this.bindObject[this.bindProperty];
+        let needFireOnChange = false;
+        if (this.internalValue !== oldValue) {
+            this.bindObject[this.bindProperty] = this.internalValue;
+            needFireOnChange = true;
+        }
+        if (needFireOnChange) {
+            if (isFunction(this._onChange)) {
+                (this._onChange as any)();
+            }
+            // todo сделать вызов, если onChange - строка
+        }
+    };
 
     handleInputValueChange = (event: any) => {
         this.internalValue = event.target.value;
@@ -387,9 +432,9 @@ export class Input extends EnabledMixin(
 
     downButtonClick = () => {
         this.showCombobox("");
-        setTimeout(()=>{
+        setTimeout(() => {
             this.comboGridApi.setFocusedCell(0, "col0");
-        },1);
+        }, 1);
     };
 
 
@@ -455,6 +500,7 @@ export class Input extends EnabledMixin(
                     type="text"
                     value={this.internalValue}
                     onChange={this.handleInputValueChange}
+                    onBlur={this.handleBlur}
                     onKeyPress={this.handleInputKeyPress}
                     onKeyDown={this.handleInputKeyDown}
                 />

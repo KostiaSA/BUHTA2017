@@ -4,12 +4,12 @@ import {HTMLProps} from "react";
 import {Component} from "../component/Component";
 
 
-export interface IReactComponentProps {
+export interface IComponentAsReactElementProps {
     component: Component;
     key: string | number;
 }
 
-export class ReactComponent extends React.Component<IReactComponentProps, any> {
+export class ComponentAsReactElement extends React.Component<IComponentAsReactElementProps, any> {
 
     componentDidMount() {
         this.props.component.afterRender(true);
@@ -20,7 +20,7 @@ export class ReactComponent extends React.Component<IReactComponentProps, any> {
     }
 
     render(): any {
-        //console.log("ReactComponent render");
+        //console.log("ComponentAsReactElement render");
         (this.props.component as any).buhtaComponentInstance=this;
         return this.props.component.getReactElement();
     }

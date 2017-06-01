@@ -8,7 +8,7 @@ import {TextMixin} from "./mixin/TextMixin";
 import {IconMixin} from "./mixin/IconMixin";
 import {HeightWidthMixin} from "./mixin/HeightWidthMixin";
 //import {appStateforceUpdate} from "../util/appStateforceUpdate";
-import {ReactComponent} from "../react/ReactComponent";
+import {ComponentAsReactElement} from "../react/ComponentAsReactElement";
 import {SplitPanelItem} from "./SplitPanelItem";
 import {SnapGrid} from "../react/SnapGrid";
 import {DraggableResizable} from "../react/DraggableResizable";
@@ -70,10 +70,10 @@ export class SplitPanel extends EnabledMixin(
                 }}>
                     {snapGrid}
                     {panelItem.children.map((child, index) =>
-                        <ReactComponent
+                        <ComponentAsReactElement
                             component={child}
                             key={index}>
-                        </ReactComponent>)}
+                        </ComponentAsReactElement>)}
                 </div>
             )
 

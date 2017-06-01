@@ -3,7 +3,7 @@ import {Component} from "./Component";
 import {BaseWindow} from "./BaseWindow";
 import {TestWindow1} from "../../app/TestWindow1";
 //import {appStateforceUpdate} from "../util/appStateforceUpdate";
-import {ReactComponent} from "../react/ReactComponent";
+import {ComponentAsReactElement} from "../react/ComponentAsReactElement";
 import {TestWindow2} from "../../app/TestWindow2";
 import {DesignerWindow} from "../designer/DesignerWindow";
 
@@ -42,7 +42,7 @@ export class Desktop extends Component {
             <div key={index}
                  style={{position: "relative", overflow: "auto", height: 900, width: 900, border: "1px solid green"}}>
                 это десктоп {new Date().getTime()}
-                {this.children.map((child, index) => <ReactComponent component={child} key={index}> </ReactComponent> )}
+                {this.children.map((child, index) => <ComponentAsReactElement component={child} key={index}> </ComponentAsReactElement> )}
             </div>);
     }
 

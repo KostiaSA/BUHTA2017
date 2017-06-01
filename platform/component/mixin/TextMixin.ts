@@ -1,5 +1,6 @@
 import {MixinConstructor} from "./MixinConstructor";
 import {Component} from "../Component";
+import {PropertyEditor, Категория_Прочее} from "../../designer/PropertyEditor";
 //import {appStateforceUpdate} from "../../util/appStateforceUpdate";
 
 export function TextMixin<T extends MixinConstructor<Component>>(Base: T) {
@@ -27,17 +28,15 @@ export function TextMixin<T extends MixinConstructor<Component>>(Base: T) {
         //     code.emitBooleanValue(this, "text", true);
         // }
 
-        // protected  __setOptions_text() {
-        //     this.text = this._text;
-        // }
-        //
-        // protected  __getPropertyEditor_text(): PropertyEditor {
-        //     let pe = new BooleanPropertyEditor();
-        //     pe.default=this.text_default;
-        //     pe.propertyName = "text";
-        //     pe.category = Категория_Прочее;
-        //     return pe;
-        // }
+        protected  __getPropertyEditor_text(): PropertyEditor {
+            let StringPropertyEditor = require("../../designer/StringPropertyEditor").StringPropertyEditor;
+
+            let pe = new StringPropertyEditor();
+            pe.default=this.text_default;
+            pe.propertyName = "text";
+            pe.category = Категория_Прочее;
+            return pe;
+        }
 
     }
 }

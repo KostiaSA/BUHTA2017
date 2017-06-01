@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {AppWindow} from "./component/AppWindow";
-import {ReactComponent} from "./react/ReactComponent";
+import {ComponentAsReactElement} from "./react/ComponentAsReactElement";
 
 export class AppState {
 
@@ -10,8 +10,8 @@ export class AppState {
     startApp() {
         this.appWindow = new AppWindow();
         //ReactDOM.render(<AppWindow/>, document.getElementById("content"));
-        ReactDOM.render(<ReactComponent component={this.appWindow}
-                                        key={0}></ReactComponent>, document.getElementById("content"));
+        ReactDOM.render(<ComponentAsReactElement component={this.appWindow}
+                                                 key={0}></ComponentAsReactElement>, document.getElementById("content"));
     }
 
     // forceUpdate() {
