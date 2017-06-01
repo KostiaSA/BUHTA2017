@@ -4,13 +4,13 @@ import {BaseWindow} from "./BaseWindow";
 import {TestWindow1} from "../../app/TestWindow1";
 //import {appStateforceUpdate} from "../util/appStateforceUpdate";
 import {ComponentAsReactElement} from "../react/ComponentAsReactElement";
-import {TestWindow2} from "../../app/TestWindow2";
+//import {TestWindow2} from "../../app/TestWindow2";
 import {DesignerWindow} from "../designer/DesignerWindow";
 
 export class Desktop extends Component {
 
     win1: BaseWindow = new BaseWindow();
-    win2: TestWindow2 = new TestWindow2();
+  //  win2: TestWindow2 = new TestWindow2();
     win3: TestWindow1 = new TestWindow1();
     designerWindow: DesignerWindow = new DesignerWindow();
     //win5: DesignerWindow = new DesignerWindow();

@@ -1,6 +1,7 @@
 import {MixinConstructor} from "./MixinConstructor";
 import {Component} from "../Component";
 import {PropertyEditor, Категория_Прочее} from "../../designer/PropertyEditor";
+import {EmittedCode} from "../../designer/EmittedCode";
 //import {appStateforceUpdate} from "../../util/appStateforceUpdate";
 
 export function TextMixin<T extends MixinConstructor<Component>>(Base: T) {
@@ -24,9 +25,9 @@ export function TextMixin<T extends MixinConstructor<Component>>(Base: T) {
             return undefined as any;
         }
 
-        // emitCode_text(code: EmittedCode) {
-        //     code.emitBooleanValue(this, "text", true);
-        // }
+        protected __emitCode_text(code: EmittedCode) {
+            code.emitStringValue(this, "text", true);
+        }
 
         protected  __getPropertyEditor_text(): PropertyEditor {
             let StringPropertyEditor = require("../../designer/StringPropertyEditor").StringPropertyEditor;

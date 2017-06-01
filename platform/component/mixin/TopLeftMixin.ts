@@ -1,6 +1,7 @@
 import {MixinConstructor} from "./MixinConstructor";
 import {Component} from "../Component";
 import {PropertyEditor, Категория_РазмерПозиция} from "../../designer/PropertyEditor";
+import {EmittedCode} from "../../designer/EmittedCode";
 
 //import {appStateforceUpdate} from "../../util/appStateforceUpdate";
 
@@ -34,9 +35,9 @@ export function TopLeftMixin<T extends MixinConstructor<Component>>(Base: T) {
             this.setPropertyWithForceUpdate("_top", value);
         }
 
-        // protected __emitCode_top(code: EmittedCode) {
-        //     code.emitNumberValue(this, "top", this.top_default);
-        // }
+        protected __emitCode_top(code: EmittedCode) {
+            code.emitNumberValue(this, "top", this.top_default);
+        }
 
         protected  __getPropertyEditor_top(): PropertyEditor {
             let NumberPropertyEditor = require("../../designer/NumberPropertyEditor").NumberPropertyEditor;
@@ -61,9 +62,9 @@ export function TopLeftMixin<T extends MixinConstructor<Component>>(Base: T) {
             this.setPropertyWithForceUpdate("_left", value);
         }
 
-        // protected  __emitCode_left(code: EmittedCode) {
-        //     code.emitNumberValue(this, "left", this.left_default);
-        // }
+        protected  __emitCode_left(code: EmittedCode) {
+            code.emitNumberValue(this, "left", this.left_default);
+        }
 
 
         protected  __getPropertyEditor_left(): PropertyEditor {
@@ -89,9 +90,9 @@ export function TopLeftMixin<T extends MixinConstructor<Component>>(Base: T) {
             this.setPropertyWithForceUpdate("_bottom", value);
         }
 
-        // protected __emitCode_bottom(code: EmittedCode) {
-        //     code.emitNumberValue(this, "bottom", this.bottom_default);
-        // }
+        protected __emitCode_bottom(code: EmittedCode) {
+            code.emitNumberValue(this, "bottom", this.bottom_default);
+        }
 
         protected  __getPropertyEditor_bottom(): PropertyEditor {
             let NumberPropertyEditor = require("../../designer/NumberPropertyEditor").NumberPropertyEditor;
@@ -116,9 +117,9 @@ export function TopLeftMixin<T extends MixinConstructor<Component>>(Base: T) {
             this.setPropertyWithForceUpdate("_right", value);
         }
 
-        // protected  __emitCode_right(code: EmittedCode) {
-        //     code.emitNumberValue(this, "right", this.right_default);
-        // }
+        protected  __emitCode_right(code: EmittedCode) {
+            code.emitNumberValue(this, "right", this.right_default);
+        }
 
         protected  __getPropertyEditor_right(): PropertyEditor {
             let NumberPropertyEditor = require("../../designer/NumberPropertyEditor").NumberPropertyEditor;

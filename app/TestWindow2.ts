@@ -10,13 +10,14 @@ import {SplitPanelItem} from "../platform/component/SplitPanelItem";
 
 
 export class TestWindow2 extends BaseWindow {
-
+    //=== BEGIN-DESIGNER-DECLARE-CODE ===//
     tabs: SplitPanel = new SplitPanel();
     tab1: SplitPanelItem = new SplitPanelItem();
     tab2: SplitPanelItem = new SplitPanelItem();
 
     but1onTab1: Button = new Button();
     but2onTab1: Button = new Button();
+    //=== END-DESIGNER-DECLARE-CODE ===//
 
     caption:string="это caption";
 
@@ -24,6 +25,7 @@ export class TestWindow2 extends BaseWindow {
         if (this.initialized) return;
         super.init();
 
+        //=== BEGIN-DESIGNER-INIT-CODE ===//
         this.top = 60;
         this.left = 60;
         this.width = 600;
@@ -50,6 +52,7 @@ export class TestWindow2 extends BaseWindow {
         this.but2onTab1.text = "but2onTab1-да!";
         //this.but1onTab1.enabled = false;
         this.tab1.childrenAdd(this.but2onTab1);
+        //=== END-DESIGNER-INIT-CODE ===//
     }
 
 

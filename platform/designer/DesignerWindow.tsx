@@ -9,8 +9,6 @@ import {SplitPanelItem} from "../component/SplitPanelItem";
 import {Button} from "../component/Button";
 import {DesignerSurfacePanel} from "./DesignerSurfacePanel";
 import {Component} from "../component/Component";
-import {TestWindow1} from "../../app/TestWindow1";
-import {TestWindow2} from "../../app/TestWindow2";
 import {PropertiesEditor} from "./PropertriesEditor";
 import {EmittedCode} from "./EmittedCode";
 import {replaceAll} from "../util/replaceAll";
@@ -242,7 +240,7 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         let jsFileName = p.dir + "/" + p.name + ".js";
 
         console.log(this.designedComponentPath, bakFileName);
-        fs.renameSync(this.designedComponentPath, bakFileName);
+        //fs.renameSync(this.designedComponentPath, bakFileName);
         //fs.writeFileSync(this.designedComponentPath, code);
 
         console.log(code);
