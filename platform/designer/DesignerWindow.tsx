@@ -243,9 +243,9 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
 
         console.log(this.designedComponentPath, bakFileName);
         fs.renameSync(this.designedComponentPath, bakFileName);
-        fs.writeFileSync(this.designedComponentPath, code);
+        //fs.writeFileSync(this.designedComponentPath, code);
 
-        //console.log(code);
+        console.log(code);
 
         let ts = require("typescript");
 

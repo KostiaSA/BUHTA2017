@@ -8,7 +8,7 @@ import {StringArrayComboBoxDataSource} from "../platform/component/input/StringA
 
 
 export class TestWindow1 extends BaseWindow {
-
+    //=== BEGIN-DESIGNER-DECLARE-CODE ===//
     input1: Input = new Input();
 
     but1: Button = new Button();
@@ -19,6 +19,7 @@ export class TestWindow1 extends BaseWindow {
     tab3: TabPanelItem = new TabPanelItem();
 
     but1onTab1: Button = new Button();
+    //=== END-DESIGNER-DECLARE-CODE ===//
 
     caption:string="это caption";
 
