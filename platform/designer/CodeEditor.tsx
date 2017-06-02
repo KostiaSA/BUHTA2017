@@ -7,6 +7,7 @@ import IEditorConstructionOptions = monaco.editor.IEditorConstructionOptions;
 import {Component} from "../component/Component";
 import {TopLeftMixin} from "../component/mixin/TopLeftMixin";
 import {HeightWidthMixin} from "../component/mixin/HeightWidthMixin";
+import {MonacoEditor} from "../react/MonacoEditor";
 
 
 export class CodeEditor extends TopLeftMixin(
@@ -43,7 +44,45 @@ export class CodeEditor extends TopLeftMixin(
 
     getReactElement(index?: number | string): JSX.Element | null {
         this.init();
-        return <div>code editor</div>;
+
+        return (
+            <MonacoEditor
+                style={{...this.getTopLeftMixinStyle(),...this.getHeightWidthMixinStyle()}}
+                value={this.code}
+                options={this.getMonacoEditorOptions()}
+                requireConfig={{}}
+                theme={""}
+
+            />
+        )
+
+        // return (
+        //     <div
+        //         style={{...this.getTopLeftMixinStyle(),...this.getHeightWidthMixinStyle()}}
+        //         ref={(e) => {
+        //
+        //         console.log("MONACO------------------------------------------",e);
+        //
+        //         if (this.monacoEditor || !e)
+        //             return;
+        //
+        //         // workaround monaco-css not understanding the environment
+        //         (window as any).module = undefined;
+        //         // workaround monaco-typescript not understanding the environment
+        //         (window as any).process.browser = true;
+        //
+        //         let __this = this;
+        //
+        //         (window as any).amdRequire(["vs/editor/editor.main"], function () {
+        //       //      debugger
+        //             __this.monacoEditor = (window as any).monaco.editor.create(e, __this.getMonacoEditorOptions());
+        //
+        //         });
+        //
+        //
+        //     }
+        //     }>code editor</div>
+        // );
     }
 
     // ------------------------------ render ------------------------------
