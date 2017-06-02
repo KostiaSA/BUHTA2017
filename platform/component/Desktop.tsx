@@ -21,12 +21,13 @@ export class Desktop extends Component {
         super.init();
         // this.childrenAdd(this.win1);
         // this.childrenAdd(this.win2);
-        this.childrenAdd(this.win3);
 
         this.designerWindow.designedComponentPath="app/TestWindow2.ts";
         this.childrenAdd(this.designerWindow);
         //this.childrenAdd(this.win5);
         //this.childrenAdd(this.win6);
+
+        this.childrenAdd(this.win3);
     }
 
     bringWindowToFront(win: BaseWindow) {

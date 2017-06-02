@@ -5,6 +5,7 @@ import {TabPanel} from "../platform/component/TabPanel";
 import {TabPanelItem} from "../platform/component/TabPanelItem";
 import {Input} from "../platform/component/input/Input";
 import {StringArrayComboBoxDataSource} from "../platform/component/input/StringArrayComboBoxDataSource";
+import {DesignerTreeDataTable} from "../platform/designer/DesignerTreeDataTable";
 
 
 export class TestWindow1 extends BaseWindow {
@@ -57,6 +58,13 @@ export class TestWindow1 extends BaseWindow {
         this.but1.onClick = (sender) => {
             console.log("click");
             this.but1.text += "*";
+
+            let x=new DesignerTreeDataTable();
+            x.designedComponent=this;
+            x.getRows().then((rows)=>{
+                console.log("DesignerTreeDataTable",rows);
+            });
+
             //this.but1.enabled = false;
         };
         this.childrenAdd(this.but1);
