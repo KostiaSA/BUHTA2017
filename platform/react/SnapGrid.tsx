@@ -10,6 +10,7 @@ export class SnapGrid extends React.Component<HTMLProps<any>, any> {
     }
 
     updateCanvas() {
+        //console.log("DRAW-SNAP-GRID",this.ref);
         const ctx = this.ref.getContext("2d");
         ctx.fillStyle="gray";
         for (let x = 4; x < this.ref.width; x += 8)
@@ -20,7 +21,7 @@ export class SnapGrid extends React.Component<HTMLProps<any>, any> {
     ref: any;
 
     render(): any {
-        console.log("SnapGrid render");
+        //console.log("SnapGrid render");
 
         let props: any = {};
         for (let propName of Object.keys(this.props)) {
@@ -30,7 +31,7 @@ export class SnapGrid extends React.Component<HTMLProps<any>, any> {
 
         return (
             <div style={{position: "absolute", left: 0, top: 0, right:0, bottom:0, overflow: "hidden"}}>
-                <canvas ref={(e) => this.ref = e} height="1600px" width="1600px"
+                <canvas ref={(e) => this.ref = e} height="1100px" width="2000px"
                         style={{position: "absolute", left: 0, top: 0, backgroundColor: "transparent"}}></canvas>
             </div>
         )

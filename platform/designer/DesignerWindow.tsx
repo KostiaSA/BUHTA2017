@@ -166,13 +166,13 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
 
         this.codeEditor.code = fs.readFileSync(this.designedComponentPath, "utf8");
 
-        let formModule = require("../../" + this.designedComponentPath.replace(".ts", ".js"));
+        let componentModule = require("../../" + this.designedComponentPath.replace(".ts", ".js"));
 
 
         let formClassName: string = "";
         // ищем объект дизайнера - это первый class, который наследован от Component
-        for (let moduleClass of Object.keys(formModule)) {
-            if (Component.isPrototypeOf(formModule[moduleClass])) {
+        for (let moduleClass of Object.keys(componentModule)) {
+            if (Component.isPrototypeOf(componentModule[moduleClass])) {
                 formClassName = moduleClass;
             }
         }
@@ -181,7 +181,7 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         }
 
 
-        this.designedComponent = new formModule[formClassName]() as Component;
+        this.designedComponent = new componentModule[formClassName]() as Component;
         this.designedComponent.designMode = true;
         this.designedComponent.init();
 
