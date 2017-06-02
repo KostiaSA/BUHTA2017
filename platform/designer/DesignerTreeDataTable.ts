@@ -19,24 +19,27 @@ export class DesignerTreeDataTable extends DataTable<DataColumn, DesignerTreeDat
     parentComponent: DataColumn;
 
     init() {
+        if (this.initialized) return;
+        super.init();
+
         this.idColumn = this.component;
         this.parentIdColumn = this.parentComponent;
         this.treeView = true;
 
         this.component = new DataColumn();
         this.component.dataType = "object";
-        this.component.name = "comp";
+        this.component.fieldName = "comp";
         this.component.hidden = true;
         this.childrenAdd(this.component);
 
         this.componentName = new DataColumn();
         this.componentName.dataType = "string";
-        this.componentName.name = "comp_name";
+        this.componentName.fieldName = "comp_name";
         this.childrenAdd(this.componentName);
 
         this.parentComponent = new DataColumn();
         this.parentComponent.dataType = "object";
-        this.parentComponent.name = "comp_parent";
+        this.parentComponent.fieldName = "comp_parent";
         this.parentComponent.hidden = true;
         this.childrenAdd(this.parentComponent);
     }

@@ -3,7 +3,7 @@ import {Component} from "../component/Component";
 import {DataColumn} from "./DataColumn";
 import {DataTable} from "./DataTable";
 
-export class DataRow extends Component {
+export class DataRow {
     __table__: DataTable<any, any>;
     __column__: DataColumn;
     __added__: boolean;

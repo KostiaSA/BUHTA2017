@@ -3,15 +3,25 @@ import {DataColumn} from "./DataColumn";
 import {DataRow} from "./DataRow";
 import {Component} from "../component/Component";
 
-export class DataTable<C extends DataColumn, R extends DataRow> extends Component{
+export class DataTable<Col extends DataColumn, Row extends DataRow> extends Component {
     name: string;
 
-    treeView:boolean;
+    treeView: boolean;
 
-    idColumn:DataColumn;
-    parentIdColumn:DataColumn;
+    idColumn: DataColumn;
+    parentIdColumn: DataColumn;
 
-    async getRows():Promise<R[]>{
-        throw this.constructor.name+".getRows(): abstract error";
+    async getRows(): Promise<Row[]> {
+        throw this.constructor.name + ".getRows(): abstract error";
+    }
+
+    getColumns(): Col[] {
+        let cols: Col[] = [];
+        for (let child of this.children) {
+            if (child instanceof DataColumn){
+                cols.push(child as Col);
+            }
+        }
+        return cols;
     }
 }

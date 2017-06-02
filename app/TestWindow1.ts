@@ -6,11 +6,14 @@ import {TabPanelItem} from "../platform/component/TabPanelItem";
 import {Input} from "../platform/component/input/Input";
 import {StringArrayComboBoxDataSource} from "../platform/component/input/StringArrayComboBoxDataSource";
 import {DesignerTreeDataTable} from "../platform/designer/DesignerTreeDataTable";
+import {Grid} from "../platform/component/Grid";
 
 
 export class TestWindow1 extends BaseWindow {
     //=== BEGIN-DESIGNER-DECLARE-CODE ===//
     input1: Input = new Input();
+
+    grid1: Grid = new Grid();
 
     but1: Button = new Button();
     but2: Button = new Button();
@@ -59,15 +62,31 @@ export class TestWindow1 extends BaseWindow {
             console.log("click");
             this.but1.text += "*";
 
-            let x=new DesignerTreeDataTable();
-            x.designedComponent=this;
-            x.getRows().then((rows)=>{
-                console.log("DesignerTreeDataTable",rows);
-            });
+            this.grid1.loadData();
+
+            // let x=new DesignerTreeDataTable();
+            // x.designedComponent=this;
+            // x.getRows().then((rows)=>{
+            //     console.log("DesignerTreeDataTable",rows);
+            // });
 
             //this.but1.enabled = false;
         };
         this.childrenAdd(this.but1);
+
+        this.grid1.top = 60;
+        this.grid1.left = 10;
+        this.grid1.width = 600;
+        this.grid1.height = 400;
+
+        let ds=new DesignerTreeDataTable();
+        ds.init();
+        ds.designedComponent=this;
+        this.grid1.dataSource=ds;
+        this.childrenAdd(this.grid1);
+
+
+
 
         this.but2.top = 10;
         this.but2.right = 25;
@@ -79,7 +98,7 @@ export class TestWindow1 extends BaseWindow {
         this.tabs.left = 10;
         this.tabs.right = 10;
         this.tabs.bottom = 10;
-        this.childrenAdd(this.tabs);
+        //this.childrenAdd(this.tabs);
 
         this.tab1.text = "закладка 1";
         this.tab1.icon = "vendor/fugue/icons-shadowless/user.png";

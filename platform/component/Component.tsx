@@ -22,7 +22,6 @@ export interface IEvent<TArgs extends IEventArgs> {
 
 export class Component {//} extends React.Component<any, any>{
 
-
     _id: string;
     get id(): string {
         if (!this._id) {
