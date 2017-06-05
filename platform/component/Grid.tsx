@@ -76,11 +76,12 @@ export class Grid extends EnabledMixin(
             }
         }
 
-        this.gridApi.setColumnDefs(cols);
 
         let rows = await this.dataSource.getRows();
 
         if (this.dataSource.treeView) {
+            if (cols[0])
+                cols[0].cellRenderer = "group";
             this.createNodesFromParentKey(rows);
         }
         else {
@@ -89,6 +90,7 @@ export class Grid extends EnabledMixin(
 
         console.log(".............................", cols, this.nodes);
 
+        this.gridApi.setColumnDefs(cols);
         this.gridApi.setRowData(this.nodes);
         this.gridApi.doLayout();
 
@@ -119,7 +121,14 @@ export class Grid extends EnabledMixin(
 
         let cls = classNames({
             "buhta-grid": true,
+            "ag-fresh": true,
         });
+
+
+        let gridOptions = {
+            getNodeChildDetails: this.getNodeChildDetails
+
+        };
 
 
         return (
@@ -135,6 +144,7 @@ export class Grid extends EnabledMixin(
                     border: "1px solid silver",
                 }}>
                 <AgGridReact
+                    gridOptions={gridOptions}
                     suppressCellSelection={false}
                     className="ag-fresh"
                     rowHeight={22}
@@ -195,6 +205,26 @@ export class Grid extends EnabledMixin(
 
     }
 
+    getNodeChildDetails = (row: DataRow): any => {
+        if (!row.__children__ || row.__children__.length == 0)
+            return null;
+        else
+            return {
+                group: true,
+                expanded: true,
+                // provide ag-Grid with the children of this group
+                children: row.__children__,
+                // this is not used, however it is available to the cellRenderers,
+                // if you provide a custom cellRenderer, you might use it. it's more
+                // relavent if you are doing multi levels of groupings, not just one
+                // as in this example.
+                //field: 'group',
+                // the key is used by the default group cellRenderer
+                key: row.__key__
+            };
+    };
+
+
     nodes: DataRow[] = [];
     protected nodeList: { [key: string]: DataRow } = {};
 
@@ -236,21 +266,6 @@ export class Grid extends EnabledMixin(
             //if (node.parentKey !== null && node.parentKey.toString)
             //  node.parentKey = node.parentKey.toString();
 
-            row.getNodeChildDetails = (row: DataRow) => {
-                return {
-                    group: true,
-                    expanded: true,
-                    // provide ag-Grid with the children of this group
-                    children: row.__children__,
-                    // this is not used, however it is available to the cellRenderers,
-                    // if you provide a custom cellRenderer, you might use it. it's more
-                    // relavent if you are doing multi levels of groupings, not just one
-                    // as in this example.
-                    //field: 'group',
-                    // the key is used by the default group cellRenderer
-                    key: row.__key__
-                };
-            };
 
             this.nodeList[row.__key__] = row;
 
@@ -272,7 +287,6 @@ export class Grid extends EnabledMixin(
         }
 
         // заполняем root
-        debugger
         for (let key in this.nodeList) {
             let node = this.nodeList[key];
             if (!node.__parentKey__) {

@@ -24,7 +24,6 @@ export class DataRow {
     __children__: DataRow[];
     __parent__: DataRow;
     __position__: number; // порядок сортировки
-    getNodeChildDetails: (row: DataRow) => void;
 
     __getValue__(fieldName: string): any {
         return (this as any)[fieldName];
