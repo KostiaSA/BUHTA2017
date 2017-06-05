@@ -46,7 +46,6 @@ export class BaseWindow extends Component {
 
     set height(value: number | string) {
         this._height = value;
-        console.log("new win height", value);
         //this.setPropertyWithForceUpdate("_height", value);
     }
 

@@ -58,11 +58,11 @@ export class DesignerTreeDataTable extends DataTable<DataColumn, DesignerTreeDat
     processComponent(comp: Component, rows: DesignerTreeDataRow[]) {
         let row = new DesignerTreeDataRow();
         row.component = comp;
-        row.componentName = comp.name;
+        row.componentName = comp.constructor.name + "  (" + comp.name + ")";
         row.parentComponent = comp.parent;
         if (comp.parent) {
             console.log("processComponent", comp.name, comp.parent);
-            row.parentComponentName = comp.parent.name;
+            row.parentComponentName =comp.parent.constructor.name + "  (" + comp.parent.name + ")";
         }
         rows.push(row);
 

@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as classNames from "classnames";
-import {Component} from "./Component";
+import {Component, IEvent, IEventArgs} from "./Component";
 import {EnabledMixin} from "./mixin/EnabledMixin";
 import {OnClickMixin} from "./mixin/OnClickMixin";
 import {TopLeftMixin} from "./mixin/TopLeftMixin";
@@ -24,22 +24,12 @@ import {DataRow} from "../data/DataRow";
 import {AgGridColDef} from "../react/AgGridColDef";
 import {isNumber, isString} from "util";
 import {numberCompare} from "../util/numberCompare";
+import {EmittedCode} from "../designer/EmittedCode";
 
-
-// export class InternalTreeNode {
-//     constructor() {
-//     }
-//
-//     sourceIndex: number;
-//     key: string;
-//     parentKey: string;
-//
-//     // для treeMode;
-//     parent: InternalTreeNode;
-//     children: InternalTreeNode[] = [];
-//     expanded: boolean;
-//     level: number;
-// }
+export interface IRowFocusedEventArgs extends IEventArgs {
+    sender: Grid;
+    focusedRow: DataRow;
+}
 
 
 export class Grid extends EnabledMixin(
@@ -49,13 +39,29 @@ export class Grid extends EnabledMixin(
         ))) {
 
 
+    // ------------------------------ onRowFocused ------------------------------
+
+
+    _onRowFocused: IEvent<IRowFocusedEventArgs>;
+    get onRowFocused(): IEvent<IRowFocusedEventArgs> {
+        return this._onRowFocused;
+    }
+
+    set onRowFocused(value: IEvent<IRowFocusedEventArgs>) {
+        this._onRowFocused = value;
+    }
+
+    protected  __emitCode_onRowFocused(code: EmittedCode) {
+        code.emitEventValue(this, "onRowFocused");
+    }
+
+
     init() {
         if (this.initialized) return;
         super.init();
     }
 
     dataSource: DataTable<DataColumn, DataRow>;
-
 
     async loadData() {
         if (!this.dataSource)
@@ -88,7 +94,7 @@ export class Grid extends EnabledMixin(
             this.nodes = rows;
         }
 
-        console.log(".............................", cols, this.nodes);
+        //console.log(".............................", cols, this.nodes);
 
         this.gridApi.setColumnDefs(cols);
         this.gridApi.setRowData(this.nodes);
@@ -104,6 +110,7 @@ export class Grid extends EnabledMixin(
     gridReadyHandler = (event: { api: GridApi, columnApi: ColumnApi }) => {
         this.gridApi = event.api;
         this.gridColumnApi = event.columnApi;
+        this.loadData();
 
         //this.comboGridApi.addEventListener()
 
@@ -160,6 +167,28 @@ export class Grid extends EnabledMixin(
                     }}
 
                     onCellFocused={(e: any) => {
+                        if (this.onRowFocused) {
+                            console.log(e,this.gridApi.getFocusedCell());
+                        }
+                        if (this.onRowFocused) {
+
+                            let focusedCell=this.gridApi.getFocusedCell();
+                            if (focusedCell) {
+                                let focusedRowIndex = focusedCell.rowIndex;
+                                let renderedRows = this.gridApi.getRenderedNodes();
+
+                                let focusedRowData: any;
+                                for (let row of renderedRows) {
+                                    if (row.rowIndex === focusedRowIndex) {
+                                        focusedRowData = row.data;
+                                        //console.log("onRowFocused", row, row.data);
+                                        break;
+                                    }
+                                }
+                                this.fireEvent(this.onRowFocused, {focusedRow: focusedRowData});
+                            }
+                        }
+
                         // $(this.popupElement).find(".ag-cell").off("keydown.buhta");
                         // $(this.popupElement).find(".ag-cell").on("keydown.buhta", (event) => {
                         //     //console.log(event.keyCode);
@@ -212,7 +241,6 @@ export class Grid extends EnabledMixin(
             return {
                 group: true,
                 expanded: true,
-                // provide ag-Grid with the children of this group
                 children: row.__children__,
                 // this is not used, however it is available to the cellRenderers,
                 // if you provide a custom cellRenderer, you might use it. it's more
@@ -244,9 +272,6 @@ export class Grid extends EnabledMixin(
 
 
         rows.forEach((row: DataRow, index: number) => {
-            //let node = new InternalTreeNode();
-            //dataSourceItem.$$dataSourceTreeNode = node;
-            //node.sourceIndex = index;
             if (!row.__key__) {
                 row.__key__ = row.__getValue__(keyFieldName);
             }
@@ -254,18 +279,11 @@ export class Grid extends EnabledMixin(
             if (!isString(row.__key__))
                 throw contextName + "key column '" + keyFieldName + "' must be string";
 
-            //if (node.key !== null && node.key.toString)
-            //  node.key = node.key.toString();
-
             if (!row.__parentKey__) {
                 row.__parentKey__ = row.__getValue__(parentKeyFieldName);
             }
             if (row.__parentKey__ && !isString(row.__parentKey__))
                 throw contextName + "parentKey column '" + keyFieldName + "' must be string";
-
-            //if (node.parentKey !== null && node.parentKey.toString)
-            //  node.parentKey = node.parentKey.toString();
-
 
             this.nodeList[row.__key__] = row;
 

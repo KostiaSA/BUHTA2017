@@ -11,9 +11,9 @@ import {SplitPanelItem} from "../platform/component/SplitPanelItem";
 
 export class TestWindow2 extends BaseWindow {
     //=== BEGIN-DESIGNER-DECLARE-CODE ===//
-    tabs: SplitPanel = new SplitPanel();
-    tab1: SplitPanelItem = new SplitPanelItem();
-    tab2: SplitPanelItem = new SplitPanelItem();
+    splitPanel: SplitPanel = new SplitPanel();
+    splitPanelItem1: SplitPanelItem = new SplitPanelItem();
+    splitPanelItem2: SplitPanelItem = new SplitPanelItem();
 
     but1onTab1: Button = new Button();
     but2onTab1: Button = new Button();
@@ -31,27 +31,27 @@ export class TestWindow2 extends BaseWindow {
         this.width = 600;
         this.height = 800;
 
-        this.tabs.top = 10;
-        this.tabs.left = 10;
-        this.tabs.right = 10;
-        this.tabs.bottom = 10;
-        this.childrenAdd(this.tabs);
+        this.splitPanel.top = 10;
+        this.splitPanel.left = 10;
+        this.splitPanel.right = 10;
+        this.splitPanel.bottom = 10;
+        this.childrenAdd(this.splitPanel);
 
-        this.tabs.childrenAdd(this.tab1);
+        this.splitPanel.childrenAdd(this.splitPanelItem1);
 
-        this.tabs.childrenAdd(this.tab2);
+        this.splitPanel.childrenAdd(this.splitPanelItem2);
 
         this.but1onTab1.top = 10;
         this.but1onTab1.left = 10;
         this.but1onTab1.text = "but1onTab1";
         //this.but1onTab1.enabled = false;
-        this.tab1.childrenAdd(this.but1onTab1);
+        this.splitPanelItem1.childrenAdd(this.but1onTab1);
 
         this.but2onTab1.top = 55;
         this.but2onTab1.left = 10;
         this.but2onTab1.text = "but2onTab1-да!";
         //this.but1onTab1.enabled = false;
-        this.tab1.childrenAdd(this.but2onTab1);
+        this.splitPanelItem1.childrenAdd(this.but2onTab1);
         //=== END-DESIGNER-INIT-CODE ===//
     }
 

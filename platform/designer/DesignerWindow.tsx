@@ -14,6 +14,9 @@ import {EmittedCode} from "./EmittedCode";
 import {replaceAll} from "../util/replaceAll";
 import {CompilerOptions, DiagnosticCategory, JsxEmit, ScriptTarget} from "typescript";
 import {CodeEditor} from "./CodeEditor";
+import {Grid, IRowFocusedEventArgs} from "../component/Grid";
+import {DesignerTreeDataRow, DesignerTreeDataTable} from "./DesignerTreeDataTable";
+import {DataRow} from "../data/DataRow";
 
 
 export interface IComponentDesigner {
@@ -33,17 +36,25 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
 
     tabs: TabPanel = new TabPanel();
     designerTab: TabPanelItem = new TabPanelItem();
+    treeTab: TabPanelItem = new TabPanelItem();
     codeTab: TabPanelItem = new TabPanelItem();
 
     designerSplitPanel: SplitPanel = new SplitPanel();
     designerSurface: SplitPanelItem = new SplitPanelItem();
     designerPropertyEditor: SplitPanelItem = new SplitPanelItem();
 
+    treeSplitPanel: SplitPanel = new SplitPanel();
+    treeGrid: SplitPanelItem = new SplitPanelItem();
+    treePropertyEditor: SplitPanelItem = new SplitPanelItem();
+
+
     but1: Button = new Button();
 
     surface: DesignerSurfacePanel = new DesignerSurfacePanel();
+    grid: Grid = new Grid();
 
     propertiesEditor: PropertiesEditor = new PropertiesEditor();
+    propertiesEditor2: PropertiesEditor = new PropertiesEditor();
     codeEditor: CodeEditor = new CodeEditor();
 
 
@@ -54,7 +65,7 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
     }
 
     set designedComponent(value: Component) {
-        value.designer=this;
+        value.designer = this;
         this.setPropertyWithForceUpdate("_designedComponent", value);
     }
 
@@ -82,6 +93,7 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
     selectComponent(component: Component) {
         this.selectedComponents = [component];
         this.propertiesEditor.editedObject = component;
+        this.propertiesEditor2.editedObject = component;
         this.refresh();
     }
 
@@ -123,6 +135,10 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         this.designerTab.icon = "vendor/fugue/icons-shadowless/user.png";
         this.tabs.childrenAdd(this.designerTab);
 
+        this.treeTab.text = "Структура";
+        this.treeTab.icon = "vendor/fugue/icons-shadowless/user.png";
+        this.tabs.childrenAdd(this.treeTab);
+
         this.codeTab.text = "Код";
         this.codeTab.icon = "vendor/fugue/icons-shadowless/cross.png";
         this.tabs.childrenAdd(this.codeTab);
@@ -144,6 +160,26 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         this.propertiesEditor.bottom = 10;
         this.designerPropertyEditor.childrenAdd(this.propertiesEditor);
 
+        //////////////////
+        this.treeSplitPanel.top = 10;
+        this.treeSplitPanel.left = 10;
+        this.treeSplitPanel.right = 10;
+        this.treeSplitPanel.bottom = 10;
+
+        this.treeSplitPanel.childrenAdd(this.treeGrid);
+        this.treeSplitPanel.childrenAdd(this.treePropertyEditor);
+
+        this.treeTab.childrenAdd(this.treeSplitPanel);
+
+        this.propertiesEditor2.top = 10;
+        this.propertiesEditor2.left = 10;
+        this.propertiesEditor2.right = 10;
+        this.propertiesEditor2.bottom = 10;
+        this.treePropertyEditor.childrenAdd(this.propertiesEditor2);
+
+        //////////////////
+
+
         this.codeEditor.top = 10;
         this.codeEditor.left = 10;
         this.codeEditor.right = 10;
@@ -163,6 +199,16 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
 
         //////////////////////////////////
 
+        this.grid.top = 10;
+        this.grid.left = 10;
+        this.grid.right = 10;
+        this.grid.bottom = 10;
+        this.grid.onRowFocused = (event: IRowFocusedEventArgs) => {
+            this.selectComponent((event.focusedRow as DesignerTreeDataRow).component);
+
+            console.log("this.grid.onRowFocused", x);
+        };
+        this.treeGrid.childrenAdd(this.grid);
 
         this.codeEditor.code = fs.readFileSync(this.designedComponentPath, "utf8");
 
@@ -184,6 +230,11 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         this.designedComponent = new componentModule[formClassName]() as Component;
         this.designedComponent.designMode = true;
         this.designedComponent.init();
+
+        let ds = new DesignerTreeDataTable();
+        ds.init();
+        ds.designedComponent = this.designedComponent;
+        this.grid.dataSource = ds;
 
 
         //this.designedComponent = new TestWindow2();
@@ -284,7 +335,7 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
             alert(errors.join("\n"));
         }
         //else
-          //  fs.writeFileSync(jsFileName, res.outputText);
+        //  fs.writeFileSync(jsFileName, res.outputText);
 
         console.log(res.outputText);
 

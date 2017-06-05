@@ -7,6 +7,7 @@ import {appState} from "../appState";
 import {IComponentDesigner} from "../designer/DesignerWindow";
 import {EmittedCode} from "../designer/EmittedCode";
 import {getAllObjectProps} from "../util/getAllObjectProps";
+import {isFunction, isString} from "util";
 //import {BaseWindow} from "./BaseWindow";
 //import {AppWindow} from "./AppWindow";
 
@@ -200,5 +201,25 @@ export class Component {//} extends React.Component<any, any>{
     }
 
     buhtaComponentInstance: ComponentAsReactElement;
+
+    fireEvent(func: any, args: any) {
+        if (isString(func)) {
+            if (!(this.owner as any)[func]) {
+                console.error("ошибка Component.fireEvent(): function '" + func + "' not found, " + this.constructor.name, this, this.owner);
+
+            }
+            else {
+                args.sender = this;
+                (this.owner as any)[func](args);
+            }
+        }
+        else if (isFunction(func)) {
+            args.sender = this;
+            func(args);
+        }
+        else {
+            console.error("ошибка Component.fireEvent():'func' must be string or function " + this.constructor.name, this, this.owner);
+        }
+    }
 
 }

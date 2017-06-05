@@ -77,8 +77,8 @@ export class TestWindow1 extends BaseWindow {
 
         this.grid1.top = 100;
         this.grid1.left = 10;
-        this.grid1.width = 600;
-        this.grid1.height = 400;
+        this.grid1.right = 10;
+        this.grid1.bottom = 10;
 
         let ds=new DesignerTreeDataTable();
         ds.init();
