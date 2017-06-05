@@ -205,8 +205,6 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         this.grid.bottom = 10;
         this.grid.onRowFocused = (event: IRowFocusedEventArgs) => {
             this.selectComponent((event.focusedRow as DesignerTreeDataRow).component);
-
-            console.log("this.grid.onRowFocused", x);
         };
         this.treeGrid.childrenAdd(this.grid);
 
