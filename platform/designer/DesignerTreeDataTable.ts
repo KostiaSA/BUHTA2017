@@ -8,6 +8,7 @@ export class DesignerTreeDataRow extends DataRow {
     component: Component;
     componentName: string;
     parentComponent: Component;
+    parentComponentName: string;
 }
 
 export class DesignerTreeDataTable extends DataTable<DataColumn, DesignerTreeDataRow> {
@@ -17,31 +18,40 @@ export class DesignerTreeDataTable extends DataTable<DataColumn, DesignerTreeDat
     component: DataColumn;
     componentName: DataColumn;
     parentComponent: DataColumn;
+    parentComponentName: DataColumn;
 
     init() {
         if (this.initialized) return;
         super.init();
 
-        this.idColumn = this.component;
-        this.parentIdColumn = this.parentComponent;
         this.treeView = true;
 
         this.component = new DataColumn();
         this.component.dataType = "object";
-        this.component.fieldName = "comp";
+        this.component.fieldName = "component";
         this.component.hidden = true;
         this.childrenAdd(this.component);
 
         this.componentName = new DataColumn();
         this.componentName.dataType = "string";
-        this.componentName.fieldName = "comp_name";
+        this.componentName.fieldName = "componentName";
         this.childrenAdd(this.componentName);
 
         this.parentComponent = new DataColumn();
         this.parentComponent.dataType = "object";
-        this.parentComponent.fieldName = "comp_parent";
+        this.parentComponent.fieldName = "parentComponent";
         this.parentComponent.hidden = true;
         this.childrenAdd(this.parentComponent);
+
+        this.parentComponentName = new DataColumn();
+        this.parentComponentName.dataType = "string";
+        this.parentComponentName.fieldName = "parentComponentName";
+        this.parentComponent.hidden = true;
+        this.childrenAdd(this.parentComponentName);
+
+        this.idColumn = this.componentName;
+        this.parentIdColumn = this.parentComponentName;
+
     }
 
 
@@ -50,6 +60,10 @@ export class DesignerTreeDataTable extends DataTable<DataColumn, DesignerTreeDat
         row.component = comp;
         row.componentName = comp.name;
         row.parentComponent = comp.parent;
+        if (comp.parent) {
+            console.log("processComponent", comp.name, comp.parent);
+            row.parentComponentName = comp.parent.name;
+        }
         rows.push(row);
 
         for (let child of comp.children) {

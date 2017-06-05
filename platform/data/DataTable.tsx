@@ -10,6 +10,8 @@ export class DataTable<Col extends DataColumn, Row extends DataRow> extends Comp
 
     idColumn: DataColumn;
     parentIdColumn: DataColumn;
+    autoExpandNodesToLevel:number;
+    positionColumn: DataColumn; // для сортировки
 
     async getRows(): Promise<Row[]> {
         throw this.constructor.name + ".getRows(): abstract error";

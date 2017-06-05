@@ -7,6 +7,7 @@ import {Input} from "../platform/component/input/Input";
 import {StringArrayComboBoxDataSource} from "../platform/component/input/StringArrayComboBoxDataSource";
 import {DesignerTreeDataTable} from "../platform/designer/DesignerTreeDataTable";
 import {Grid} from "../platform/component/Grid";
+import {TestWindow2} from "./TestWindow2";
 
 
 export class TestWindow1 extends BaseWindow {
@@ -74,14 +75,15 @@ export class TestWindow1 extends BaseWindow {
         };
         this.childrenAdd(this.but1);
 
-        this.grid1.top = 60;
+        this.grid1.top = 100;
         this.grid1.left = 10;
         this.grid1.width = 600;
         this.grid1.height = 400;
 
         let ds=new DesignerTreeDataTable();
         ds.init();
-        ds.designedComponent=this;
+        ds.designedComponent=new TestWindow2();
+        ds.designedComponent.init();
         this.grid1.dataSource=ds;
         this.childrenAdd(this.grid1);
 
