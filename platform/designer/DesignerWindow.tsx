@@ -289,6 +289,7 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
             }
             if (line.indexOf("//=== BEGIN-DESIGNER-INIT-CODE ===//") > 0) {
                 newCode.push(line);
+                newCode.push(e.getCreatesCode());
                 newCode.push(e.getInitsCode());
                 newCode = empty;
                 continue;

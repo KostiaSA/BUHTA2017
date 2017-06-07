@@ -189,6 +189,7 @@ export class Component {//} extends React.Component<any, any>{
         this.children.forEach((child: Component, index: number) => {
             //console.log(child.constructor.name);
             code.emitDeclaration(child.name, child.constructor.name);
+            code.emitCreate(child.name, child.constructor.name);
             child.emitCode(code);
             if (this === this.owner)
                 code.inits.push("        " + "this.childrenAdd(this." + child.name + ");");

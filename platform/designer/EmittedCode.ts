@@ -6,10 +6,15 @@ export class EmittedImport {
 export class EmittedCode {
     imports: EmittedImport[] = [];
     declares: string[] = [];
+    creates: string[] = [];
     inits: string[] = [];
 
     emitDeclaration(varName: string, type: string) {
-        this.declares.push("    " + varName + ":" + type + " = new " + type + "();");
+        this.declares.push("    " + varName + ":" + type +  ";");
+    }
+
+    emitCreate(varName: string, type: string) {
+        this.creates.push("        this." + varName + " = new " + type + "();");
     }
 
     emitNumberValue(component: any, varName: string, defaultValue?: any) {
@@ -71,6 +76,16 @@ export class EmittedCode {
         let code: string[] = [];
         //code.push("    " + "//=== код дизайнера (объявление свойств начало) ===//");
         for (let str of this.declares) {
+            code.push(str);
+        }
+        //code.push("    " + "//=== код дизайнера (объявление свойств конец) ===//");
+        return code.join("\n");
+    }
+
+    getCreatesCode(): string {
+        let code: string[] = [];
+        //code.push("    " + "//=== код дизайнера (объявление свойств начало) ===//");
+        for (let str of this.creates) {
             code.push(str);
         }
         //code.push("    " + "//=== код дизайнера (объявление свойств конец) ===//");

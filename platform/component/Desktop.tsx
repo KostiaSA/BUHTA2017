@@ -22,8 +22,8 @@ export class Desktop extends Component {
         // this.childrenAdd(this.win1);
         // this.childrenAdd(this.win2);
 
-//        this.designerWindow.designedComponentPath="app/TestWindow2.ts";
-        this.designerWindow.designedComponentPath="platform/designer/DesignerWindow.tsx";
+        this.designerWindow.designedComponentPath="app/TestWindow2.ts";
+//        this.designerWindow.designedComponentPath="platform/designer/DesignerWindow.tsx";
         this.childrenAdd(this.designerWindow);
         //this.childrenAdd(this.win5);
         //this.childrenAdd(this.win6);
