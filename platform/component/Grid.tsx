@@ -76,9 +76,11 @@ export class Grid extends EnabledMixin(
             return;
 
         let cols: AgGridColDef[] = [];
+        let colIndex = -1;
         for (let dataColumn of this.dataSource.getColumns()) {
             if (!dataColumn.hidden) {
-                console.log("dataColumn=================", dataColumn);
+                colIndex++;
+                //console.log("dataColumn=================", dataColumn);
                 let agCol: any = {
                     // colId: "col0",
                     headerName: dataColumn.name,
@@ -109,9 +111,14 @@ export class Grid extends EnabledMixin(
                             else {
                                 strToRender = row.__getValue__(dataColumn.name);
                             }
-                            // if (row.__icon__){
-                            //
-                            // }
+
+                            // иконка только у первой колонки
+                            if (row.__icon__ && params.column.colDef.cellRenderer === cols[0].cellRenderer) {
+                                strToRender = ReactDOMServer.renderToStaticMarkup(
+                                        <img src={row.__icon__}
+                                             style={{paddingLeft: 4}}/>
+                                    ) + strToRender;
+                            }
                             return strToRender;
                         }
                     }
