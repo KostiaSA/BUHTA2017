@@ -215,8 +215,7 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
     loadDesignedComponent(){
         this.codeEditor.code = fs.readFileSync(this.designedComponentPath, "utf8");
 
-        let componentModule = require("../../" + this.designedComponentPath.replace(".ts", ".js"));
-
+        let componentModule = require("../../" + this.designedComponentPath.replace(".tsx", ".js").replace(".ts", ".js"));
 
         let formClassName: string = "";
         // ищем объект дизайнера - это первый class, который наследован от Component
@@ -259,16 +258,6 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
     addComponentToSelection(component: Component) {
         this.selectedComponents.push(component);
         this.refresh();
-    }
-
-    init() {
-
-
-
-        //this.designedComponent = new TestWindow2();
-        //this.designedComponent.parent = this;
-        //this.designedComponent.designMode = true;
-        //this.designedComponent.init();
     }
 
     save() {
