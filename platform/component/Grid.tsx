@@ -1,5 +1,7 @@
 import * as React from "react";
+import * as ReactDOMServer from "react-dom/server";
 import * as classNames from "classnames";
+
 import {Component, IEvent, IEventArgs} from "./Component";
 import {EnabledMixin} from "./mixin/EnabledMixin";
 import {OnClickMixin} from "./mixin/OnClickMixin";
@@ -31,6 +33,16 @@ export interface IRowFocusedEventArgs extends IEventArgs {
     focusedRow: DataRow;
 }
 
+export interface IGridCellRendererArgs {
+    column: DataColumn;
+    row: DataRow;
+    agGridParams: any;
+}
+
+export interface IGridCellRenderer {
+    (args: IGridCellRendererArgs): string | JSX.Element;
+}
+
 
 export class Grid extends EnabledMixin(
     TopLeftMixin(
@@ -58,6 +70,7 @@ export class Grid extends EnabledMixin(
 
     dataSource: DataTable<DataColumn, DataRow>;
 
+
     async loadData() {
         if (!this.dataSource)
             return;
@@ -65,10 +78,43 @@ export class Grid extends EnabledMixin(
         let cols: AgGridColDef[] = [];
         for (let dataColumn of this.dataSource.getColumns()) {
             if (!dataColumn.hidden) {
-                let agCol: AgGridColDef = {
+                console.log("dataColumn=================", dataColumn);
+                let agCol: any = {
                     // colId: "col0",
                     headerName: dataColumn.name,
                     field: dataColumn.name,
+                    cellRenderer: (params: any) => {
+                        return params.innerRenderer(params)
+                    },
+                    cellRendererParams: {
+                        innerRenderer: (params: any) => {
+                            let row = params.data as DataRow;
+                            let strToRender: string;
+                            if (dataColumn.gridCellRenderer) {
+                                let rendererResult = dataColumn.gridCellRenderer({
+                                    column: dataColumn,
+                                    row: row,
+                                    agGridParams: params
+                                });
+                                if (isString(rendererResult))
+                                    strToRender = rendererResult as any;
+                                if ((rendererResult as any).$$typeof === Symbol.for("react.element")) {
+
+                                    strToRender = ReactDOMServer.renderToStaticMarkup(rendererResult as any);
+                                }
+                                else
+                                    strToRender = "error in gridCellRenderer!";
+
+                            }
+                            else {
+                                strToRender = row.__getValue__(dataColumn.name);
+                            }
+                            // if (row.__icon__){
+                            //
+                            // }
+                            return strToRender;
+                        }
+                    }
                     //maxWidth: 300,
                     //cellStyle: {whiteSpace: "normal"},
                     //cellRendererFramework: AgGrid_CellRenderer,
@@ -79,6 +125,7 @@ export class Grid extends EnabledMixin(
 
 
         let rows = await this.dataSource.getRows();
+
 
         if (this.dataSource.treeView) {
             if (cols[0])
@@ -162,11 +209,11 @@ export class Grid extends EnabledMixin(
 
                     onCellFocused={(e: any) => {
                         if (this.onRowFocused) {
-                            console.log(e,this.gridApi.getFocusedCell());
+                            console.log(e, this.gridApi.getFocusedCell());
                         }
                         if (this.onRowFocused) {
 
-                            let focusedCell=this.gridApi.getFocusedCell();
+                            let focusedCell = this.gridApi.getFocusedCell();
                             if (focusedCell) {
                                 let focusedRowIndex = focusedCell.rowIndex;
                                 let renderedRows = this.gridApi.getRenderedNodes();

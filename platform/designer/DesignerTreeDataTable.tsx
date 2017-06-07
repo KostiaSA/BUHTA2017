@@ -1,7 +1,9 @@
+import * as React from "react";
 import {DataTable} from "../data/DataTable";
 import {DataColumn} from "../data/DataColumn";
 import {DataRow} from "../data/DataRow";
 import {Component} from "../component/Component";
+import {IGridCellRendererArgs} from "../component/Grid";
 
 
 export class DesignerTreeDataRow extends DataRow {
@@ -44,7 +46,11 @@ export class DesignerTreeDataTable extends DataTable<DataColumn, DesignerTreeDat
         this.parentComponentName = new DataColumn();
         this.parentComponentName.dataType = "string";
         this.parentComponentName.fieldName = "parentComponentName";
-        this.parentComponent.hidden = true;
+        //this.parentComponentName.hidden = true;
+        this.parentComponentName.gridCellRenderer=(args:IGridCellRendererArgs)=>{
+            return <div>"это парент div"</div>;
+        };
+
         this.childrenAdd(this.parentComponentName);
 
         this.idColumn = this.componentName;
@@ -54,10 +60,13 @@ export class DesignerTreeDataTable extends DataTable<DataColumn, DesignerTreeDat
     processComponent(comp: Component, rows: DesignerTreeDataRow[]) {
         let row = new DesignerTreeDataRow();
         row.component = comp;
-        row.componentName = comp.constructor.name + "  (" + comp.name + ")";
+//        row.componentName = comp.constructor.name + "  (" + comp.name + ")";
+        row.componentName = comp.getDesignerLabel();
+        row.__icon__ = comp.getDesignerImage();
         row.parentComponent = comp.parent;
         if (comp.parent) {
-            row.parentComponentName =comp.parent.constructor.name + "  (" + comp.parent.name + ")";
+            //row.parentComponentName =comp.parent.constructor.name + "  (" + comp.parent.name + ")";
+            row.parentComponentName = comp.parent.getDesignerLabel();
         }
         rows.push(row);
 

@@ -27,6 +27,19 @@ export class Component {//} extends React.Component<any, any>{
 
     }
 
+
+    getDesignerLabel(): string {
+        return this.constructor.name;
+    }
+
+    getDesignerImage(): string {
+        return "vendor/fugue/icons/puzzle.png";
+    }
+
+    getDesignerCategory(): string {
+        return "КОМПОНЕНТЫ";
+    }
+
     _id: string;
     get id(): string {
         if (!this._id) {
