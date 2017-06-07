@@ -69,8 +69,14 @@ export class TabPanel extends EnabledMixin(
     _activeTab: TabPanelItem;
 
     get activeTab(): TabPanelItem {
-        if (!this._activeTab && this.children.length > 0)
-            this._activeTab = this.children[0] as TabPanelItem;
+        if (!this._activeTab && this.children.length > 0) {
+
+            for (let tab of this.children){
+                if ((tab as TabPanelItem).visible)
+                    return tab as TabPanelItem;
+            }
+            //this._activeTab = this.children[0] as TabPanelItem;
+        }
         return this._activeTab;
     }
 
@@ -139,7 +145,7 @@ export class TabPanel extends EnabledMixin(
                         borderRight: "1px solid rgb(214, 214, 214)",
                         borderTopLeftRadius: 3,
                         borderTopRightRadius: 3,
-                        display: "inline-block",
+                        display: panelItem.visible ? "inline-block" : "none",
                         height: 28,
                         paddingTop: "10 0 0 5",
                         position: "relative",
@@ -162,19 +168,20 @@ export class TabPanel extends EnabledMixin(
 
             tabsContent.push(
                 <div style={{
-                    display: panelItem === this.activeTab ? "block" : "none",
+                    display: panelItem === this.activeTab && this.activeTab.visible ? "block" : "none",
                     //height: "100%",
                     overflow: "auto",
-                    position:"absolute",
-                    top:0,
-                    left:0,
-                    right:0,
-                    bottom:0,
-                    border:"0px solid red"
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    border: "0px solid red"
                 }}>
                     {/*{ panelItem.children.map((child, index) => child.getReactElement(index))}*/}
                     {snapGrid}
-                    {panelItem.children.map((child, index) => <ComponentAsReactElement component={child} key={index}> </ComponentAsReactElement> )}
+                    {panelItem.children.map((child, index) => <ComponentAsReactElement component={child}
+                                                                                       key={index}> </ComponentAsReactElement>)}
                 </div>
             )
 
@@ -184,7 +191,7 @@ export class TabPanel extends EnabledMixin(
         let tabs = <div
             style={{flex: "0 1 auto", paddingLeft: 2, backgroundColor: "rgb(234, 234, 234)"}}>{tabsTitles}</div>;
 
-        let content = <div style={{flex: "1 1 auto",position:"relative"}}>{tabsContent}</div>;
+        let content = <div style={{flex: "1 1 auto", position: "relative"}}>{tabsContent}</div>;
 
         return (
             <div

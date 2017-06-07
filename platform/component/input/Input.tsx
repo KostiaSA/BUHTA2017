@@ -394,7 +394,7 @@ export class Input extends EnabledMixin(
 
     afterRender(isFirstRender: boolean) {
         super.afterRender(isFirstRender);
-        console.log("afterRender", isFirstRender);
+        //console.log("afterRender", isFirstRender);
         if (this.popupVisible) {
             ($(this.popupElement) as any).position({
                 of: $(this.inputElement),

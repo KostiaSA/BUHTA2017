@@ -11,11 +11,12 @@ export class SnapGrid extends React.Component<HTMLProps<any>, any> {
 
     updateCanvas() {
         //console.log("DRAW-SNAP-GRID",this.ref);
-        const ctx = this.ref.getContext("2d");
-        ctx.fillStyle="gray";
-        for (let x = 4; x < this.ref.width; x += 8)
-            for (let y = 4; y < this.ref.height; y += 8)
-                ctx.fillRect(x, y, 1, 1);
+        // const ctx = this.ref.getContext("2d");
+        // //ctx.fillStyle="gray";
+        // ctx.fillStyle="red";
+        // for (let x = 4; x < this.ref.width; x += 36)
+        //     for (let y = 4; y < this.ref.height; y += 36)
+        //         ctx.fillRect(x, y, 1, 1);
     }
 
     ref: any;

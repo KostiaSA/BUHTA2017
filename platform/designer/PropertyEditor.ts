@@ -1,5 +1,6 @@
 import {Component} from "../component/Component";
 
+export const Категория_Основное = "основное";
 export const Категория_РазмерПозиция = "размер и позиция";
 export const Категория_Стиль = "стиль";
 export const Категория_Содержимое = "содержимое";
@@ -10,6 +11,7 @@ export const Категория_Прочее = "прочее";
 export const Категория_События = "события";
 
 export const PropertyEditorCategories = [
+    Категория_Основное,
     Категория_РазмерПозиция,
     Категория_Стиль,
     Категория_Содержимое,

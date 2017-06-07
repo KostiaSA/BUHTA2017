@@ -7,6 +7,7 @@ import {TopLeftMixin} from "./mixin/TopLeftMixin";
 import {TextMixin} from "./mixin/TextMixin";
 import {IconMixin} from "./mixin/IconMixin";
 import {HeightWidthMixin} from "./mixin/HeightWidthMixin";
+import {VisibleMixin} from "./mixin/VisibleMixin";
 
 
 export function __registerBuhtaComponent__(): IComponentRegistration {
@@ -19,10 +20,11 @@ export function __registerBuhtaComponent__(): IComponentRegistration {
 }
 
 export class TabPanelItem extends EnabledMixin(
-    TextMixin(
-        IconMixin(
-            Component
-        ))) {
+    VisibleMixin(
+        TextMixin(
+            IconMixin(
+                Component
+            )))) {
 
     getToolBoxLabel(): string {
         return __registerBuhtaComponent__().title || super.getToolBoxLabel();

@@ -45,10 +45,13 @@ export interface IComponentRegistration {
 
 export class Component {//} extends React.Component<any, any>{
 
-    constructor(){
+    constructor() {
 
     }
 
+    isNonVisual(): boolean {
+        return false;
+    }
 
     getToolBoxLabel(): string {
         return this.constructor.name;
@@ -141,6 +144,13 @@ export class Component {//} extends React.Component<any, any>{
         this.refresh(needUpdate);
     }
 
+    setPropertyWithChangeCallback(propName: string, value: any, changeCallback: () => void) {
+        let needUpdate = (this as any)[propName] !== value;
+        (this as any)[propName] = value;
+        if (needUpdate)
+            changeCallback();
+    }
+
     // --- owner ---
     get owner(): Component {
         if (!this.parent)
@@ -159,7 +169,7 @@ export class Component {//} extends React.Component<any, any>{
     }
 
     refresh(needForceUpdate: boolean = true) {
-        if (needForceUpdate) {
+        if (needForceUpdate && !this.isNonVisual()) {
             if (this.buhtaComponentInstance)
                 this.buhtaComponentInstance.forceUpdate();
             else
@@ -168,7 +178,7 @@ export class Component {//} extends React.Component<any, any>{
     }
 
     refreshParent(needForceUpdate: boolean = true) {
-        if (needForceUpdate) {
+        if (needForceUpdate && !this.isNonVisual()) {
             let parent = this.parent;
             while (parent) {
                 if (parent.buhtaComponentInstance) {

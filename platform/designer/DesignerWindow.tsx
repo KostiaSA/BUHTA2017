@@ -181,7 +181,6 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         //=== END-DESIGNER-INIT-CODE ===//
 
 
-
     }
 
 
@@ -212,7 +211,7 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
     }
 
 
-    loadDesignedComponent(){
+    loadDesignedComponent() {
         this.codeEditor.code = fs.readFileSync(this.designedComponentPath, "utf8");
 
         let componentModule = require("../../" + this.designedComponentPath.replace(".tsx", ".js").replace(".ts", ".js"));
@@ -235,6 +234,8 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         let ds = new DesignerTreeDataTable();
         ds.designedComponent = this.designedComponent;
         this.grid.dataSource = ds;
+
+        this.designerTab.visible = !this.designedComponent.isNonVisual();
     }
 
     selectedComponents: Component[] = [];
