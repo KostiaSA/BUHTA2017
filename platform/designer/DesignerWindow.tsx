@@ -32,84 +32,62 @@ export interface IComponentDesigner {
 
 export class DesignerWindow extends BaseWindow implements IComponentDesigner {
 
-    saveButton: Button = new Button();
+    //=== BEGIN-DESIGNER-DECLARE-CODE ===//
+    saveButton: Button;
 
-    tabs: TabPanel = new TabPanel();
-    designerTab: TabPanelItem = new TabPanelItem();
-    treeTab: TabPanelItem = new TabPanelItem();
-    codeTab: TabPanelItem = new TabPanelItem();
+    tabs: TabPanel;
+    designerTab: TabPanelItem;
+    treeTab: TabPanelItem;
+    codeTab: TabPanelItem;
 
-    designerSplitPanel: SplitPanel = new SplitPanel();
-    designerSurface: SplitPanelItem = new SplitPanelItem();
-    designerPropertyEditor: SplitPanelItem = new SplitPanelItem();
+    designerSplitPanel: SplitPanel;
+    designerSurface: SplitPanelItem;
+    designerPropertyEditor: SplitPanelItem;
 
-    treeSplitPanel: SplitPanel = new SplitPanel();
-    treeGrid: SplitPanelItem = new SplitPanelItem();
-    treePropertyEditor: SplitPanelItem = new SplitPanelItem();
-
-
-    but1: Button = new Button();
-
-    surface: DesignerSurfacePanel = new DesignerSurfacePanel();
-    grid: Grid = new Grid();
-
-    propertiesEditor: PropertiesEditor = new PropertiesEditor();
-    propertiesEditor2: PropertiesEditor = new PropertiesEditor();
-    codeEditor: CodeEditor = new CodeEditor();
+    treeSplitPanel: SplitPanel;
+    treeGrid: SplitPanelItem;
+    treePropertyEditor: SplitPanelItem;
 
 
-    // ------------------------------ designedComponent ------------------------------
-    protected _designedComponent: Component;
-    get designedComponent(): Component {
-        return this._designedComponent;
-    }
+    but1: Button;
 
-    set designedComponent(value: Component) {
-        value.designer = this;
-        this.setPropertyWithForceUpdate("_designedComponent", value);
-    }
+    surface: DesignerSurfacePanel;
+    grid: Grid;
 
-    get isComponentDesignerImplementer(): boolean {
-        return true;
-    }
+    propertiesEditor: PropertiesEditor;
+    propertiesEditor2: PropertiesEditor;
+    codeEditor: CodeEditor;
+    //=== END-DESIGNER-DECLARE-CODE ===//
 
-    // ------------------------------ designedComponentPath ------------------------------
-    _designedComponentPath: string;
-    get designedComponentPath(): string {
-        return this._designedComponentPath;
-    }
+    constructor() {
+        super();
 
-    set designedComponentPath(value: string) {
-        this._designedComponentPath = replaceAll(value, "\\", "/");
-    }
+        //=== BEGIN-DESIGNER-INIT-CODE ===//
+        this.saveButton = new Button();
+
+        this.tabs = new TabPanel();
+        this.designerTab = new TabPanelItem();
+        this.treeTab = new TabPanelItem();
+        this.codeTab = new TabPanelItem();
+
+        this.designerSplitPanel = new SplitPanel();
+        this.designerSurface = new SplitPanelItem();
+        this.designerPropertyEditor = new SplitPanelItem();
+
+        this.treeSplitPanel = new SplitPanel();
+        this.treeGrid = new SplitPanelItem();
+        this.treePropertyEditor = new SplitPanelItem();
 
 
-    selectedComponents: Component[] = [];
+        this.but1 = new Button();
 
-    isComponentSelected(component: Component): boolean {
-        return this.selectedComponents.indexOf(component) >= 0;
-    }
+        this.surface = new DesignerSurfacePanel();
+        this.grid = new Grid();
 
-    selectComponent(component: Component) {
-        this.selectedComponents = [component];
-        this.propertiesEditor.editedObject = component;
-        this.propertiesEditor2.editedObject = component;
-        this.refresh();
-    }
+        this.propertiesEditor = new PropertiesEditor();
+        this.propertiesEditor2 = new PropertiesEditor();
+        this.codeEditor = new CodeEditor();
 
-    componentChanged(component: Component) {
-        this.propertiesEditor.refresh();
-        this.surface.refresh();
-    }
-
-    addComponentToSelection(component: Component) {
-        this.selectedComponents.push(component);
-        this.refresh();
-    }
-
-    init() {
-        if (this.initialized) return;
-        super.init();
 
         this.top = 10;
         this.left = 10;
@@ -148,7 +126,6 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         this.designerSplitPanel.right = 10;
         this.designerSplitPanel.bottom = 10;
 
-        //this.designerSurface.wi
         this.designerSplitPanel.childrenAdd(this.designerSurface);
         this.designerSplitPanel.childrenAdd(this.designerPropertyEditor);
 
@@ -160,7 +137,6 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         this.propertiesEditor.bottom = 10;
         this.designerPropertyEditor.childrenAdd(this.propertiesEditor);
 
-        //////////////////
         this.treeSplitPanel.top = 10;
         this.treeSplitPanel.left = 10;
         this.treeSplitPanel.right = 10;
@@ -176,9 +152,6 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         this.propertiesEditor2.right = 10;
         this.propertiesEditor2.bottom = 10;
         this.treePropertyEditor.childrenAdd(this.propertiesEditor2);
-
-        //////////////////
-
 
         this.codeEditor.top = 10;
         this.codeEditor.left = 10;
@@ -197,8 +170,6 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         this.surface.designerWindow = this;
         this.designerSurface.childrenAdd(this.surface);
 
-        //////////////////////////////////
-
         this.grid.top = 10;
         this.grid.left = 10;
         this.grid.right = 10;
@@ -207,7 +178,41 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
             this.selectComponent((event.focusedRow as DesignerTreeDataRow).component);
         };
         this.treeGrid.childrenAdd(this.grid);
+        //=== END-DESIGNER-INIT-CODE ===//
 
+
+
+    }
+
+
+    // ------------------------------ designedComponent ------------------------------
+    protected _designedComponent: Component;
+    get designedComponent(): Component {
+        return this._designedComponent;
+    }
+
+    set designedComponent(value: Component) {
+        value.designer = this;
+        this.setPropertyWithForceUpdate("_designedComponent", value);
+    }
+
+    get isComponentDesignerImplementer(): boolean {
+        return true;
+    }
+
+    // ------------------------------ designedComponentPath ------------------------------
+    _designedComponentPath: string;
+    get designedComponentPath(): string {
+        return this._designedComponentPath;
+    }
+
+    set designedComponentPath(value: string) {
+        this._designedComponentPath = replaceAll(value, "\\", "/");
+        this.loadDesignedComponent();
+    }
+
+
+    loadDesignedComponent(){
         this.codeEditor.code = fs.readFileSync(this.designedComponentPath, "utf8");
 
         let componentModule = require("../../" + this.designedComponentPath.replace(".ts", ".js"));
@@ -227,12 +232,37 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
 
         this.designedComponent = new componentModule[formClassName]() as Component;
         this.designedComponent.designMode = true;
-        this.designedComponent.init();
 
         let ds = new DesignerTreeDataTable();
-        ds.init();
         ds.designedComponent = this.designedComponent;
         this.grid.dataSource = ds;
+    }
+
+    selectedComponents: Component[] = [];
+
+    isComponentSelected(component: Component): boolean {
+        return this.selectedComponents.indexOf(component) >= 0;
+    }
+
+    selectComponent(component: Component) {
+        this.selectedComponents = [component];
+        this.propertiesEditor.editedObject = component;
+        this.propertiesEditor2.editedObject = component;
+        this.refresh();
+    }
+
+    componentChanged(component: Component) {
+        this.propertiesEditor.refresh();
+        this.surface.refresh();
+    }
+
+    addComponentToSelection(component: Component) {
+        this.selectedComponents.push(component);
+        this.refresh();
+    }
+
+    init() {
+
 
 
         //this.designedComponent = new TestWindow2();

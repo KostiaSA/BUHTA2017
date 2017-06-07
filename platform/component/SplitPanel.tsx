@@ -36,15 +36,9 @@ export class SplitPanel extends EnabledMixin(
         ))) {
 
 
-    init() {
-        if (this.initialized) return;
-        super.init();
-    }
-
     // ------------------------------ getReactElement ------------------------------
 
     getReactElement(index?: number | string): JSX.Element | null {
-        this.init();
         console.log("SplitPanel-getReactElement()", this.enabled);
 
         let panelClass = classNames({

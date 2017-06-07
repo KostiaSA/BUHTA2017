@@ -11,21 +11,23 @@ import {SplitPanelItem} from "../platform/component/SplitPanelItem";
 
 export class TestWindow2 extends BaseWindow {
     //=== BEGIN-DESIGNER-DECLARE-CODE ===//
-    splitPanel: SplitPanel = new SplitPanel();
-    splitPanelItem1: SplitPanelItem = new SplitPanelItem();
-    splitPanelItem2: SplitPanelItem = new SplitPanelItem();
-
-    but1onTab1: Button = new Button();
-    but2onTab1: Button = new Button();
+    splitPanel: SplitPanel;
+    splitPanelItem1: SplitPanelItem;
+    splitPanelItem2: SplitPanelItem;
+    but1onTab1: Button;
+    but2onTab1: Button;
     //=== END-DESIGNER-DECLARE-CODE ===//
 
-    caption:string="это caption";
-
-    init() {
-        if (this.initialized) return;
-        super.init();
-
+    constructor() {
+        super();
         //=== BEGIN-DESIGNER-INIT-CODE ===//
+        this.splitPanel = new SplitPanel();
+        this.splitPanelItem1 = new SplitPanelItem();
+        this.splitPanelItem2 = new SplitPanelItem();
+        this.but1onTab1 = new Button();
+        this.but2onTab1 = new Button();
+
+
         this.top = 60;
         this.left = 60;
         this.width = 600;
@@ -55,5 +57,6 @@ export class TestWindow2 extends BaseWindow {
         //=== END-DESIGNER-INIT-CODE ===//
     }
 
+    caption:string="это caption";
 
 }

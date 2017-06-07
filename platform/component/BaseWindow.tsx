@@ -22,17 +22,12 @@ export const DefaultWindowStyle: IWindowStyle = {
 
 export class BaseWindow extends Component {
 
-    style: IWindowStyle = DefaultWindowStyle;
-
-    //win1: BaseWindow = new BaseWindow();
-
-    init() {
-        if (this.initialized) return;
-        super.init();
-
-        //this.childrenAdd(this.win1);
-
+    constructor(){
+        super();
     }
+
+
+    style: IWindowStyle = DefaultWindowStyle;
 
     top: number = 50;
     left: number = 50;
@@ -59,7 +54,6 @@ export class BaseWindow extends Component {
 
     getReactElement(index?: number | string): JSX.Element | null {
         console.log("getReactElement-window");
-        this.init();
 
         let snapGrid: any = null;
         if (this.designMode)

@@ -20,10 +20,8 @@ export class DesignerTreeDataTable extends DataTable<DataColumn, DesignerTreeDat
     parentComponent: DataColumn;
     parentComponentName: DataColumn;
 
-    init() {
-        if (this.initialized) return;
-        super.init();
-
+    constructor() {
+        super();
         this.treeView = true;
 
         this.component = new DataColumn();
@@ -51,9 +49,7 @@ export class DesignerTreeDataTable extends DataTable<DataColumn, DesignerTreeDat
 
         this.idColumn = this.componentName;
         this.parentIdColumn = this.parentComponentName;
-
     }
-
 
     processComponent(comp: Component, rows: DesignerTreeDataRow[]) {
         let row = new DesignerTreeDataRow();

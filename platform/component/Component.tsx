@@ -23,6 +23,10 @@ export interface IEvent<TArgs extends IEventArgs> {
 
 export class Component {//} extends React.Component<any, any>{
 
+    constructor(){
+
+    }
+
     _id: string;
     get id(): string {
         if (!this._id) {
@@ -71,12 +75,6 @@ export class Component {//} extends React.Component<any, any>{
         this._designer = value;
     }
 
-    initialized: boolean;
-
-    init() {
-        this.initialized = true;
-    }
-
     native: HTMLElement;
 
     children: Component[] = [];
@@ -118,7 +116,6 @@ export class Component {//} extends React.Component<any, any>{
     }
 
     getReactElement(index?: number | string): JSX.Element | null {
-        this.init();
         return null;
     }
 

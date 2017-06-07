@@ -67,12 +67,6 @@ export class Input extends EnabledMixin(
 
     style: IInputStyle = DefaultInputStyle;
 
-
-    init() {
-        if (this.initialized) return;
-        super.init();
-    }
-
     protected get height_default(): number | string {
         return 20;
     }
@@ -439,7 +433,6 @@ export class Input extends EnabledMixin(
 
 
     getReactElement(index?: number | string): JSX.Element | null {
-        this.init();
         console.log("Input-getReactElement()", this.enabled);
 
         let inputClass = classNames({

@@ -18,15 +18,10 @@ export class DesignerSurfacePanel extends EnabledMixin(
 
     designerWindow: DesignerWindow;
 
-    init() {
-        if (this.initialized) return;
-        super.init();
-    }
 
     // ------------------------------ getReactElement ------------------------------
 
     getReactElement(index?: number | string): JSX.Element | null {
-        this.init();
         console.log("DesignerSurfacePanel-getReactElement()", this.enabled);
 
         let panelClass = classNames({

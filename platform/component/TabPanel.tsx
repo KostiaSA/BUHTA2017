@@ -34,12 +34,6 @@ export class TabPanel extends EnabledMixin(
 
     //style: IButtonStyle = DefaultButtonStyle;
 
-
-    init() {
-        if (this.initialized) return;
-        super.init();
-    }
-
     // protected get height_default(): number | string {
     //     return "100%";
     // }
@@ -62,7 +56,6 @@ export class TabPanel extends EnabledMixin(
     // ------------------------------ getReactElement ------------------------------
 
     getReactElement(index?: number | string): JSX.Element | null {
-        this.init();
         console.log("TabPanel-getReactElement()", this.enabled);
 
         let panelClass = classNames({

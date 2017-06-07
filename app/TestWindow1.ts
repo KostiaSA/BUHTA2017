@@ -12,25 +12,32 @@ import {TestWindow2} from "./TestWindow2";
 
 export class TestWindow1 extends BaseWindow {
     //=== BEGIN-DESIGNER-DECLARE-CODE ===//
-    input1: Input = new Input();
+    input1: Input;
 
-    grid1: Grid = new Grid();
+    grid1: Grid;
 
-    but1: Button = new Button();
-    but2: Button = new Button();
-    tabs: TabPanel = new TabPanel();
-    tab1: TabPanelItem = new TabPanelItem();
-    tab2: TabPanelItem = new TabPanelItem();
-    tab3: TabPanelItem = new TabPanelItem();
+    but1: Button;
+    but2: Button;
+    tabs: TabPanel;
+    tab1: TabPanelItem;
+    tab2: TabPanelItem;
+    tab3: TabPanelItem;
 
     but1onTab1: Button = new Button();
     //=== END-DESIGNER-DECLARE-CODE ===//
 
-    caption:string="это caption";
-
-    init() {
-        if (this.initialized) return;
-        super.init();
+    constructor() {
+        super();
+        //=== BEGIN-DESIGNER-INIT-CODE ===//
+        this.input1= new Input();
+        this.grid1= new Grid();
+        this.but1 = new Button();
+        this.but2 = new Button();
+        this.tabs = new TabPanel();
+        this.tab1 = new TabPanelItem();
+        this.tab2 = new TabPanelItem();
+        this.tab3 = new TabPanelItem();
+        this.but1onTab1 = new Button();
 
         this.top = 60;
         this.left = 60;
@@ -81,13 +88,9 @@ export class TestWindow1 extends BaseWindow {
         this.grid1.bottom = 10;
 
         let ds=new DesignerTreeDataTable();
-        ds.init();
         ds.designedComponent=new TestWindow2();
-        ds.designedComponent.init();
         this.grid1.dataSource=ds;
         this.childrenAdd(this.grid1);
-
-
 
 
         this.but2.top = 10;
@@ -120,7 +123,13 @@ export class TestWindow1 extends BaseWindow {
         //this.but1onTab1.enabled = false;
         this.tab1.childrenAdd(this.but1onTab1);
 
+        //=== END-DESIGNER-INIT-CODE ===//
     }
+
+    caption:string="это caption";
+
+
+
 
 
 }

@@ -9,16 +9,16 @@ import {DesignerWindow} from "../designer/DesignerWindow";
 
 export class Desktop extends Component {
 
-    win1: BaseWindow = new BaseWindow();
-  //  win2: TestWindow2 = new TestWindow2();
-    win3: TestWindow1 = new TestWindow1();
-    designerWindow: DesignerWindow = new DesignerWindow();
-    //win5: DesignerWindow = new DesignerWindow();
-    //win6: DesignerWindow = new DesignerWindow();
+    win1: BaseWindow;
+    win3: TestWindow1;
+    designerWindow: DesignerWindow;
 
-    init() {
-        if (this.initialized) return;
-        super.init();
+    constructor() {
+        super();
+        this.win1 = new BaseWindow();
+        this.win3 = new TestWindow1();
+        this.designerWindow = new DesignerWindow();
+
         // this.childrenAdd(this.win1);
         // this.childrenAdd(this.win2);
 
@@ -30,6 +30,7 @@ export class Desktop extends Component {
         this.childrenAdd(this.win3);
     }
 
+
     bringWindowToFront(win: BaseWindow) {
         if (this.children.slice(-1)[0] !== win) {
             this.children = [...this.children.filter((item) => item !== win), win];
@@ -38,7 +39,6 @@ export class Desktop extends Component {
     }
 
     getReactElement(index?: number | string): JSX.Element | null {
-        this.init();
 
         console.log("getReactElement-desktop");
         return (

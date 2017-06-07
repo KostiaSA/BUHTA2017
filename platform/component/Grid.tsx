@@ -56,11 +56,6 @@ export class Grid extends EnabledMixin(
     }
 
 
-    init() {
-        if (this.initialized) return;
-        super.init();
-    }
-
     dataSource: DataTable<DataColumn, DataRow>;
 
     async loadData() {
@@ -123,7 +118,6 @@ export class Grid extends EnabledMixin(
     // ------------------------------ getReactElement ------------------------------
 
     getReactElement(index?: number | string): JSX.Element | null {
-        this.init();
         console.log("Grid-getReactElement()", this.enabled);
 
         let cls = classNames({

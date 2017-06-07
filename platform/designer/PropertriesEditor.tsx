@@ -22,11 +22,6 @@ export class PropertiesEditor extends EnabledMixin(
         ))) {
 
 
-    init() {
-        if (this.initialized) return;
-        super.init();
-    }
-
     // ------------------------------ getReactElement ------------------------------
 
     // ------------------------------ editedObject ------------------------------
@@ -110,7 +105,6 @@ export class PropertiesEditor extends EnabledMixin(
     }
 
     getReactElement(index?: number | string): JSX.Element | null {
-        this.init();
 
         return (
             <div style={{border: "0px solid red"}}>

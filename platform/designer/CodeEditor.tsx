@@ -43,7 +43,6 @@ export class CodeEditor extends TopLeftMixin(
     }
 
     getReactElement(index?: number | string): JSX.Element | null {
-        this.init();
 
         return (
             <MonacoEditor

@@ -39,11 +39,6 @@ export class Button extends EnabledMixin(
     style: IButtonStyle = DefaultButtonStyle;
 
 
-    init() {
-        if (this.initialized) return;
-        super.init();
-    }
-
     protected get height_default(): number | string {
         return 28;
     }
@@ -55,7 +50,6 @@ export class Button extends EnabledMixin(
     // ------------------------------ getReactElement ------------------------------
 
     getReactElement(index?: number | string): JSX.Element | null {
-        this.init();
         //console.log("Button-getReactElement()", this.enabled);
 
         let btnClass = classNames({
