@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as classNames from "classnames";
-import {Component} from "./Component";
+import {Component, IComponentRegistration, Компоненты_Панели} from "./Component";
 import {EnabledMixin} from "./mixin/EnabledMixin";
 import {OnClickMixin} from "./mixin/OnClickMixin";
 import {TopLeftMixin} from "./mixin/TopLeftMixin";
@@ -26,11 +26,37 @@ import {SnapGrid} from "../react/SnapGrid";
 //
 // };
 
+export function __registerBuhtaComponent__(): IComponentRegistration {
+    return {
+        category: Компоненты_Панели,
+        componentClass: TabPanel,
+        image: "vendor/fugue/icons/ui-tab-content.png",
+        title: "TabPanel"
+    }
+}
+
 export class TabPanel extends EnabledMixin(
     TopLeftMixin(
         HeightWidthMixin(
             Component
         ))) {
+
+    getToolBoxLabel(): string {
+        return __registerBuhtaComponent__().title || super.getToolBoxLabel();
+    }
+
+    getDesignerLabel(): string {
+        return __registerBuhtaComponent__().title || super.getDesignerLabel();
+    }
+
+    getDesignerImage(): string {
+        return __registerBuhtaComponent__().image || super.getDesignerImage();
+    }
+
+    getDesignerCategory(): string {
+        return __registerBuhtaComponent__().category || super.getDesignerCategory();
+    }
+
 
     //style: IButtonStyle = DefaultButtonStyle;
 

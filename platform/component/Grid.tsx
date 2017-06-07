@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOMServer from "react-dom/server";
 import * as classNames from "classnames";
 
-import {Component, IEvent, IEventArgs} from "./Component";
+import {Component, IComponentRegistration, IEvent, IEventArgs, Компоненты_Списки} from "./Component";
 import {EnabledMixin} from "./mixin/EnabledMixin";
 import {OnClickMixin} from "./mixin/OnClickMixin";
 import {TopLeftMixin} from "./mixin/TopLeftMixin";
@@ -28,6 +28,16 @@ import {isNumber, isString} from "util";
 import {numberCompare} from "../util/numberCompare";
 import {EmittedCode} from "../designer/EmittedCode";
 
+export function __registerBuhtaComponent__(): IComponentRegistration {
+    return {
+        category: Компоненты_Списки,
+        componentClass: Grid,
+        image: "vendor/fugue/icons/ui-scroll-pane-table.png",
+        title: "Grid"
+    }
+}
+
+
 export interface IRowFocusedEventArgs extends IEventArgs {
     sender: Grid;
     focusedRow: DataRow;
@@ -49,6 +59,23 @@ export class Grid extends EnabledMixin(
         HeightWidthMixin(
             Component
         ))) {
+
+
+    getToolBoxLabel(): string {
+        return __registerBuhtaComponent__().title || super.getToolBoxLabel();
+    }
+
+    getDesignerLabel(): string {
+        return __registerBuhtaComponent__().title || super.getDesignerLabel();
+    }
+
+    getDesignerImage(): string {
+        return __registerBuhtaComponent__().image || super.getDesignerImage();
+    }
+
+    getDesignerCategory(): string {
+        return __registerBuhtaComponent__().category || super.getDesignerCategory();
+    }
 
 
     // ------------------------------ onRowFocused ------------------------------
@@ -116,7 +143,7 @@ export class Grid extends EnabledMixin(
                             if (row.__icon__ && params.column.colDef.cellRenderer === cols[0].cellRenderer) {
                                 strToRender = ReactDOMServer.renderToStaticMarkup(
                                         <img src={row.__icon__}
-                                             style={{paddingLeft: 4}}/>
+                                             style={{paddingRight: 4}}/>
                                     ) + strToRender;
                             }
                             return strToRender;

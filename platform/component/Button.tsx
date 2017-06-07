@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as classNames from "classnames";
-import {Component} from "./Component";
+import {Component, IComponentRegistration, Компоненты_Кнопки} from "./Component";
 import {EnabledMixin} from "./mixin/EnabledMixin";
 import {OnClickMixin} from "./mixin/OnClickMixin";
 import {TopLeftMixin} from "./mixin/TopLeftMixin";
@@ -11,6 +11,15 @@ import {CSSProperties, SyntheticEvent} from "react";
 import {DraggableResizable} from "../react/DraggableResizable";
 import {ComponentWrapper} from "../react/ComponentWrapper";
 import {isFunction} from "util";
+
+export function __registerBuhtaComponent__(): IComponentRegistration {
+    return {
+        category: Компоненты_Кнопки,
+        componentClass: Button,
+        image: "vendor/fugue/icons/ui-button.png",
+        title: "Button"
+    }
+}
 
 
 export interface IButtonStyle {
@@ -35,6 +44,23 @@ export class Button extends EnabledMixin(
                         //     HeightWidthMixin(
                         Component
                     )))))) {
+
+    getToolBoxLabel(): string {
+        return __registerBuhtaComponent__().title || super.getToolBoxLabel();
+    }
+
+    getDesignerLabel(): string {
+        return __registerBuhtaComponent__().title || super.getDesignerLabel();
+    }
+
+    getDesignerImage(): string {
+        return __registerBuhtaComponent__().image || super.getDesignerImage();
+    }
+
+    getDesignerCategory(): string {
+        return __registerBuhtaComponent__().category || super.getDesignerCategory();
+    }
+
 
     style: IButtonStyle = DefaultButtonStyle;
 

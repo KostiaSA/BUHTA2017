@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Component} from "./Component";
+import {Component, Компоненты_Окна} from "./Component";
 import {DraggableResizable} from "../react/DraggableResizable";
 import {Desktop} from "./Desktop";
 import {getRandomId} from "../util/getRandomId";
@@ -26,6 +26,21 @@ export class BaseWindow extends Component {
         super();
     }
 
+    getToolBoxLabel(): string {
+        return "Window";
+    }
+
+    getDesignerLabel(): string {
+        return "Window";
+    }
+
+    getDesignerImage(): string {
+        return "vendor/fugue/icons/application-blue.png";
+    }
+
+    getDesignerCategory(): string {
+        return Компоненты_Окна;
+    }
 
     style: IWindowStyle = DefaultWindowStyle;
 
