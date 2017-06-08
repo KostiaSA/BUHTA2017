@@ -1,4 +1,5 @@
 import {Project} from "./Project";
+import {ProjectFolder} from "./ProjectFolder";
 
 let fs = require("fs");
 let path = require("path");
@@ -31,9 +32,9 @@ export class ProjectItem {
 
         let ProjectComponent = require("./ProjectComponent").ProjectComponent;
         let ProjectFolder = require("./ProjectFolder").ProjectFolder;
-        let ProjectImage= require("./ProjectImage").ProjectImage;
+        let ProjectImage = require("./ProjectImage").ProjectImage;
 
-        let dir: string=this.getFullPath();
+        let dir: string = this.getFullPath();
         //console.log("loadItems", dir, this.name);
 
         fs.readdirSync(dir).forEach((file: string) => {
@@ -65,8 +66,7 @@ export class ProjectItem {
                     this.items.push(componentItem);
                     //console.log(componentItem.getRelativePath());
                 }
-                else
-                if (file.endsWith(".png") || file.endsWith(".jpg")) {
+                else if (file.endsWith(".png") || file.endsWith(".jpg")) {
                     let componentItem = new ProjectImage();
                     componentItem.parent = this;
                     componentItem.name = file;
@@ -75,6 +75,12 @@ export class ProjectItem {
                 }
             }
 
+        });
+
+        this.items.sort((a: ProjectItem, b: ProjectItem) => {
+            let aFolder = (a instanceof ProjectFolder) ? "0" : "1";
+            let bFolder = (b instanceof ProjectFolder) ? "0" : "1";
+            return (aFolder + a.name).localeCompare(bFolder + b.name);
         });
 
     }
