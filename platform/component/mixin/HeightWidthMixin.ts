@@ -19,7 +19,7 @@ export function HeightWidthMixin<T extends MixinConstructor<Component>>(Base: T)
         }
 
         // ------------------------------ height ------------------------------
-        _height: number | string = this.height_default;
+        _height: number | string = this.__getDefaultValue_height();
 
         get height(): number | string {
             return this._height;
@@ -29,15 +29,15 @@ export function HeightWidthMixin<T extends MixinConstructor<Component>>(Base: T)
             this.setPropertyWithForceUpdate("_height", value);
         }
 
-        protected get height_default(): number | string {
+        protected __getDefaultValue_height(): number | string {
             return undefined as any;
         }
 
         protected __emitCode_height(code: EmittedCode) {
             if (isString(this.height))
-                code.emitStringValue(this, "height", this.height_default);
+                code.emitStringValue(this, "height");
             else
-                code.emitNumberValue(this, "height", this.height_default);
+                code.emitNumberValue(this, "height");
         }
 
 
@@ -45,14 +45,14 @@ export function HeightWidthMixin<T extends MixinConstructor<Component>>(Base: T)
             let StringPropertyEditor = require("../../designer/StringPropertyEditor").StringPropertyEditor;
 
             let pe = new StringPropertyEditor();
-            pe.default = this.height_default;
+            //pe.default = this.height_default;
             pe.propertyName = "height";
             pe.category = Категория_РазмерПозиция;
             return pe;
         }
 
         // ------------------------------ width ------------------------------
-        _width: number | string = this.width_default;
+        _width: number | string = this.__getDefaultValue_width();
         get width(): number | string {
             return this._width;
         }
@@ -74,21 +74,21 @@ export function HeightWidthMixin<T extends MixinConstructor<Component>>(Base: T)
             // }
         }
 
-        protected get width_default(): number | string {
+        protected __getDefaultValue_width(): number | string {
             return undefined as any;
         }
 
         protected __emitCode_width(code: EmittedCode) {
             if (isString(this.width))
-                code.emitStringValue(this, "width", this.width_default);
+                code.emitStringValue(this, "width");
             else
-                code.emitNumberValue(this, "width", this.width_default);
+                code.emitNumberValue(this, "width");
         }
 
         protected __getPropertyEditor_width(): PropertyEditor {
             let StringPropertyEditor = require("../../designer/StringPropertyEditor").StringPropertyEditor;
             let pe = new StringPropertyEditor();
-            pe.default = this.width_default;
+            //pe.default = this.width_default;
             pe.propertyName = "width";
             pe.category = Категория_РазмерПозиция;
             return pe;

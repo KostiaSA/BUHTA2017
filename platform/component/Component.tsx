@@ -151,6 +151,18 @@ export class Component {//} extends React.Component<any, any>{
             changeCallback();
     }
 
+    getPropertyValue(propName: string): any {
+        return (this as any)[propName];
+    }
+
+    getPropertyDefaultValue(propName: string): any {
+        let getter = (this as any)["__getDefaultValue_" + propName];
+        if (isFunction(getter))
+            return getter();
+        else
+            return undefined;
+    }
+
     // --- owner ---
     get owner(): Component {
         if (!this.parent)

@@ -3,6 +3,8 @@ import {PropertyEditor} from "./PropertyEditor";
 import {Input} from "../component/input/Input";
 import {ComponentAsReactElement} from "../react/ComponentAsReactElement";
 
+
+
 export class StringPropertyEditor extends PropertyEditor {
 
     render(): JSX.Element {

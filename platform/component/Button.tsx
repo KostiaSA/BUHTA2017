@@ -65,11 +65,11 @@ export class Button extends EnabledMixin(
     style: IButtonStyle = DefaultButtonStyle;
 
 
-    protected get height_default(): number | string {
+    protected __getDefaultValue_height(): number | string {
         return 28;
     }
 
-    protected get text_default(): string | JSX.Element {
+    protected __getDefaultValue_text(): string | JSX.Element {
         return "кнопка";
     }
 

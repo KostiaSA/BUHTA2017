@@ -10,7 +10,7 @@ export function EnabledMixin<T extends MixinConstructor<Component>>(Base: T) {
 
 
         // ------------------------------ enabled ------------------------------
-        protected _enabled: boolean = this.enabled_default;
+        protected _enabled: boolean = this.__getDefaultValue_enabled();
         get enabled(): boolean {
             return this._enabled;
         }
@@ -19,7 +19,7 @@ export function EnabledMixin<T extends MixinConstructor<Component>>(Base: T) {
             this.setPropertyWithForceUpdate("_enabled",value);
         }
 
-        protected get enabled_default(): boolean {
+        protected __getDefaultValue_enabled(): boolean {
             return true;
         }
 

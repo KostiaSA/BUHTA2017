@@ -37,7 +37,7 @@ export class DataColumn extends Component {
 
 
     // ------------------------------ fieldName ------------------------------
-    protected _fieldName: string= this.fieldName_default;
+    protected _fieldName: string= this.__getDefaultValue_fieldName();
     get fieldName(): string{
         return this._fieldName;
     }
@@ -46,19 +46,18 @@ export class DataColumn extends Component {
         this.setPropertyWithForceUpdate("_fieldName",value);
     }
 
-    protected get fieldName_default(): string {
+    protected __getDefaultValue_fieldName(): string {
         return undefined as any;
     }
 
     protected __emitCode_fieldName(code: EmittedCode) {
-        code.emitStringValue(this, "fieldName", this.fieldName_default);
+        code.emitStringValue(this, "fieldName");
     }
 
     protected  __getPropertyEditor_fieldName(): PropertyEditor {
         let StringPropertyEditor = require("../designer/StringPropertyEditor").StringPropertyEditor;
 
         let pe = new StringPropertyEditor();
-        pe.default=this.fieldName_default;
         pe.propertyName = "fieldName";
         pe.category = Категория_Основное;
         return pe;

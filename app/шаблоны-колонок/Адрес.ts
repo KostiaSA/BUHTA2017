@@ -1,5 +1,15 @@
 import {SqlTable} from "../../platform/sql/SqlTable";
 import {SqlColumn, SqlDataType} from "../../platform/sql/SqlColumn";
+import {IComponentRegistration, Компоненты_Данные} from "../../platform/component/Component";
+
+export function __registerBuhtaComponent__(): IComponentRegistration {
+    return {
+        category: Компоненты_Данные,
+        componentClass: Адрес,
+        image: "vendor/fugue/icons/ui-toolbar.png",
+        title: "Адрес: sql колонка"
+    }
+}
 
 export class Адрес extends SqlColumn {
     //=== BEGIN-DESIGNER-DECLARE-CODE ===//
@@ -13,11 +23,11 @@ export class Адрес extends SqlColumn {
         //=== END-DESIGNER-INIT-CODE ===//
     }
 
-    protected get fieldName_default(): string {
+    protected __getDefaultValue_fieldName(): string {
         return "адрес";
     }
 
-    protected get sqlDataType_default(): SqlDataType {
+    protected __getDefaultValue_sqlDataType(): SqlDataType {
         return "varchar";
     }
 }

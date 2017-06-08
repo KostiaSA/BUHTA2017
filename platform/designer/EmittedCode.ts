@@ -1,3 +1,4 @@
+import {Component} from "../component/Component";
 export class EmittedImport {
     literal: string;
     modulePath: string;
@@ -17,37 +18,38 @@ export class EmittedCode {
         this.creates.push("        this." + varName + " = new " + type + "();");
     }
 
-    emitNumberValue(component: any, varName: string, defaultValue?: any) {
-        if (component[varName] !== undefined && (defaultValue === undefined || defaultValue !== component[varName])) {
+    emitNumberValue(component: Component, varName: string) {
+        if (component.getPropertyValue(varName) !==component.getPropertyDefaultValue(varName)) {
             if (component === component.owner)
-                this.inits.push("        " + "this." + varName + "=" + component[varName] + ";");
+                this.inits.push("        " + "this." + varName + "=" + component.getPropertyValue(varName) + ";");
             else
-                this.inits.push("        " + "this." + component.name + "." + varName + "=" + component[varName] + ";");
+                this.inits.push("        " + "this." + component.name + "." + varName + "=" + component.getPropertyValue(varName) + ";");
         }
     }
 
-    emitBooleanValue(component: any, varName: string, defaultValue?: boolean) {
-        if (component[varName] !== undefined && (defaultValue === undefined || defaultValue !== component[varName])) {
+    emitBooleanValue(component: Component, varName: string) {
+        //if (component[varName] !== undefined && (defaultValue === undefined || defaultValue !== component[varName])) {
+        if (component.getPropertyValue(varName) !==component.getPropertyDefaultValue(varName)) {
             if (component === component.owner)
-                this.inits.push("        " + "this." + varName + "=" + component[varName] + ";");
+                this.inits.push("        " + "this." + varName + "=" + component.getPropertyValue(varName) + ";");
             else
-                this.inits.push("        " + "this." + component.name + "." + varName + "=" + component[varName] + ";");
+                this.inits.push("        " + "this." + component.name + "." + varName + "=" + component.getPropertyValue(varName) + ";");
         }
     }
 
-    emitStringValue(component: any, varName: string, defaultValue?: any) {
-        if (component[varName] !== undefined && (defaultValue === undefined || defaultValue !== component[varName])) {
+    emitStringValue(component: Component, varName: string) {
+        if (component.getPropertyValue(varName) !==component.getPropertyDefaultValue(varName)) {
             if (component === component.owner)
-                this.inits.push("        " + "this." + varName + "=" + JSON.stringify(component[varName]) + ";");
+                this.inits.push("        " + "this." + varName + "=" + JSON.stringify(component.getPropertyValue(varName)) + ";");
             else
-                this.inits.push("        " + "this." + component.name + "." + varName + "=" + JSON.stringify(component[varName]) + ";");
+                this.inits.push("        " + "this." + component.name + "." + varName + "=" + JSON.stringify(component.getPropertyValue(varName)) + ";");
         }
     }
 
-    emitEventValue(component: any, varName: string) {
-        if (component[varName] !== undefined) {
+    emitEventValue(component: Component, varName: string) {
+        if (component.getPropertyValue(varName) !==component.getPropertyDefaultValue(varName)) {
             for (let propName of Object.getOwnPropertyNames(Object.getPrototypeOf(component.owner))) {
-                if (component[varName] === component.owner[propName]) {
+                if (component.getPropertyDefaultValue(varName) === component.owner.getPropertyDefaultValue(propName)) {
                     if (component === component.owner)
                         this.inits.push("        " + "this." + varName + "= this." + propName + ";");
                     else
@@ -64,31 +66,25 @@ export class EmittedCode {
 
     getInitsCode(): string {
         let code: string[] = [];
-        //code.push("    " + "//=== код дизайнера (конструктор начало) ===//");
         for (let str of this.inits) {
             code.push(str);
         }
-        //code.push("    " + "//=== код дизайнера (конструктор конец) ===//");
         return code.join("\n");
     }
 
     getDeclaresCode(): string {
         let code: string[] = [];
-        //code.push("    " + "//=== код дизайнера (объявление свойств начало) ===//");
         for (let str of this.declares) {
             code.push(str);
         }
-        //code.push("    " + "//=== код дизайнера (объявление свойств конец) ===//");
         return code.join("\n");
     }
 
     getCreatesCode(): string {
         let code: string[] = [];
-        //code.push("    " + "//=== код дизайнера (объявление свойств начало) ===//");
         for (let str of this.creates) {
             code.push(str);
         }
-        //code.push("    " + "//=== код дизайнера (объявление свойств конец) ===//");
         return code.join("\n");
     }
 

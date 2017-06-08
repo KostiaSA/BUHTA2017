@@ -11,7 +11,7 @@ export function VisibleMixin<T extends MixinConstructor<Component>>(Base: T) {
 
 
         // ------------------------------ Visible ------------------------------
-        protected _visible: boolean = this.visible_default;
+        protected _visible: boolean = this.__getDefaultValue_visible();
         get visible(): boolean {
             return this._visible;
         }
@@ -20,12 +20,12 @@ export function VisibleMixin<T extends MixinConstructor<Component>>(Base: T) {
             this.setPropertyWithForceUpdate("_visible",value);
         }
 
-        protected get visible_default(): boolean {
+        protected __getDefaultValue_visible(): boolean {
             return true;
         }
 
         emitCode_visible(code: EmittedCode) {
-            code.emitBooleanValue(this, "visible", true);
+            code.emitBooleanValue(this, "visible");
         }
 
 

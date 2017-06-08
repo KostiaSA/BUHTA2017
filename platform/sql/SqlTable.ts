@@ -54,7 +54,7 @@ export class SqlTable extends DataTable<SqlColumn, DataRow> {
     }
 
     // ------------------------------ sqlName ------------------------------
-    protected _sqlName: string | JSX.Element= this.sqlName_default;
+    protected _sqlName: string | JSX.Element= this.__getDefaultValue_sqlName();
     get sqlName(): string | JSX.Element{
         return this._sqlName;
     }
@@ -63,19 +63,18 @@ export class SqlTable extends DataTable<SqlColumn, DataRow> {
         this.setPropertyWithForceUpdate("_sqlName",value);
     }
 
-    protected get sqlName_default(): string| JSX.Element {
+    protected __getDefaultValue_sqlName(): string| JSX.Element {
         return undefined as any;
     }
 
     protected __emitCode_sqlName(code: EmittedCode) {
-        code.emitStringValue(this, "sqlName", true);
+        code.emitStringValue(this, "sqlName");
     }
 
     protected  __getPropertyEditor_sqlName(): PropertyEditor {
         let StringPropertyEditor = require("../designer/StringPropertyEditor").StringPropertyEditor;
 
         let pe = new StringPropertyEditor();
-        pe.default=this.sqlName_default;
         pe.propertyName = "sqlName";
         pe.category = Категория_Основное;
         return pe;

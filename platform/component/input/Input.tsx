@@ -67,7 +67,7 @@ export class Input extends EnabledMixin(
 
     style: IInputStyle = DefaultInputStyle;
 
-    protected get height_default(): number | string {
+    protected __getDefaultValue_height(): number | string {
         return 20;
     }
 
@@ -82,7 +82,11 @@ export class Input extends EnabledMixin(
         this._bindObject = value;
         if (this.bindObject && this.bindProperty) {
             this.internalValue = this.bindObject[this.bindProperty];
-            this.internalDefaultValue = this.bindObject[this.bindProperty + "_default"];
+            let defaultGetter = this.bindObject["__getDefaultValue_" + this.bindProperty];
+            if (defaultGetter)
+                this.internalDefaultValue = defaultGetter();
+            else
+                this.internalDefaultValue = undefined as any;
         }
         // if (this.$) {
         //     if (this._designer) {
@@ -111,7 +115,11 @@ export class Input extends EnabledMixin(
         this._bindProperty = value;
         if (this.bindObject && this.bindProperty) {
             this.internalValue = this.bindObject[this.bindProperty];
-            this.internalDefaultValue = this.bindObject[this.bindProperty + "_default"];
+            let defaultGetter = this.bindObject["__getDefaultValue_" + this.bindProperty];
+            if (defaultGetter)
+                this.internalDefaultValue = defaultGetter();
+            else
+                this.internalDefaultValue = undefined as any;
         }
         // if (this.$) {
         //     if (this._designer) {
@@ -281,7 +289,7 @@ export class Input extends EnabledMixin(
         this.setPropertyWithForceUpdate("_onChange", value);
     }
 
-    protected get onChange_default(): string | Function {
+    protected __getDefaultValue_onChange(): string | Function {
         return undefined as any;
     }
 
@@ -293,7 +301,7 @@ export class Input extends EnabledMixin(
         let StringPropertyEditor = require("../../designer/StringPropertyEditor").StringPropertyEditor;
 
         let pe = new StringPropertyEditor();
-        pe.default = this.onChange_default;
+        pe.default = this.__getDefaultValue_onChange;
         pe.propertyName = "onChange";
         pe.category = Категория_События;
         return pe;
@@ -457,10 +465,10 @@ export class Input extends EnabledMixin(
             width: this.width,
             paddingLeft: 5,
             paddingRight: 3,
-            color:"black"
+            color: "black"
         };
 
-        if (this.internalValue===this.internalDefaultValue) {
+        if (this.internalValue === this.internalDefaultValue) {
             inputStyle.color = "gray";
         }
 

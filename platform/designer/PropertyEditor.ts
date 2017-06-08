@@ -28,7 +28,7 @@ export class PropertyEditor {
     category: string;
     title: string;
     help: string;
-    default: any;
+//    default: any;
 
     render(): JSX.Element {
         throw "PropertyEditor.render(): abstract error";

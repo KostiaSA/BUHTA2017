@@ -12,7 +12,7 @@ export function TextMixin<T extends MixinConstructor<Component>>(Base: T) {
 
 
         // ------------------------------ text ------------------------------
-        protected _text: string | JSX.Element= this.text_default;
+        protected _text: string | JSX.Element= this.__getDefaultValue_text();
         get text(): string | JSX.Element{
             return this._text;
         }
@@ -21,19 +21,18 @@ export function TextMixin<T extends MixinConstructor<Component>>(Base: T) {
             this.setPropertyWithForceUpdate("_text",value);
         }
 
-        protected get text_default(): string| JSX.Element {
+        protected __getDefaultValue_text(): string| JSX.Element {
             return undefined as any;
         }
 
         protected __emitCode_text(code: EmittedCode) {
-            code.emitStringValue(this, "text", true);
+            code.emitStringValue(this, "text");
         }
 
         protected  __getPropertyEditor_text(): PropertyEditor {
             let StringPropertyEditor = require("../../designer/StringPropertyEditor").StringPropertyEditor;
 
             let pe = new StringPropertyEditor();
-            pe.default=this.text_default;
             pe.propertyName = "text";
             pe.category = Категория_Прочее;
             return pe;

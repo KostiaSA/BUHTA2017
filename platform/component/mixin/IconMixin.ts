@@ -10,7 +10,7 @@ export function IconMixin<T extends MixinConstructor<Component>>(Base: T) {
 
 
         // ------------------------------ icon ------------------------------
-        protected _icon: string = this.icon_default;
+        protected _icon: string = this.__getDefaultValue_icon();
         get icon(): string {
             return this._icon;
         }
@@ -19,7 +19,7 @@ export function IconMixin<T extends MixinConstructor<Component>>(Base: T) {
             this.setPropertyWithForceUpdate("_icon",value);
         }
 
-        protected get icon_default(): string {
+        protected __getDefaultValue_icon(): string {
             return undefined as any;
         }
 
