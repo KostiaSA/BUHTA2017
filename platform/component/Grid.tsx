@@ -160,11 +160,13 @@ export class Grid extends EnabledMixin(
 
         let rows = await this.dataSource.getRows();
 
-
         if (this.dataSource.treeView) {
             if (cols[0])
                 cols[0].cellRenderer = "group";
-            this.createNodesFromParentKey(rows);
+            if (this.dataSource.parentIdColumn)
+                this.createNodesFromParentKey(rows);
+            else
+                this.nodes = rows;
         }
         else {
             this.nodes = rows;

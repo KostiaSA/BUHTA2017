@@ -10,6 +10,15 @@ export class ProjectItem {
     items: ProjectItem[] = [];
 
 
+    getDesignerLabel(): string {
+        return this.name;
+    }
+
+    getDesignerImage(): string {
+        return undefined as any;
+    }
+
+
     getFullPath(): string {
         return path.join(this.parent.getFullPath(), this.name);
     }
@@ -38,7 +47,7 @@ export class ProjectItem {
                     file.indexOf(".idea") === -1 &&
                     file.indexOf(".vs") === -1 &&
                     file.indexOf("node_modules") === -1 &&
-                    file.indexOf("vendor11") === -1
+                    file.indexOf("vendor") === -1
                 ) {
 
                     let folderItem = new ProjectFolder();

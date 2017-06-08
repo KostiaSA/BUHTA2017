@@ -161,6 +161,11 @@ textarea:focus, input:focus{
     background-color: rgba(135, 206, 250, 0.1) ;
 }
 
+.ag-fresh .ag-group-cell {
+    font-style: normal;
+    font-weight: bold;
+}
+
 .ag-fresh .ag-row-odd {
     background-color: white;
 }
