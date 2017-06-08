@@ -9,13 +9,13 @@ import {DesignerWindow} from "../designer/DesignerWindow";
 
 export class Desktop extends Component {
 
-    win1: BaseWindow;
+//    win1: BaseWindow;
     win3: TestWindow1;
     designerWindow: DesignerWindow;
 
     constructor() {
         super();
-        this.win1 = new BaseWindow();
+        //this.win1 = new BaseWindow();
         this.win3 = new TestWindow1();
         this.designerWindow = new DesignerWindow();
 
@@ -26,7 +26,7 @@ export class Desktop extends Component {
 //        this.designerWindow.designedComponentPath="platform/designer/DesignerWindow.tsx";
         this.designerWindow.designedComponentPath="app/тестовые-таблицы/Организация.ts";
 
-        this.childrenAdd(this.designerWindow);
+        //this.childrenAdd(this.designerWindow);
         //this.childrenAdd(this.win5);
         //this.childrenAdd(this.win6);
 

@@ -8,6 +8,8 @@ import {StringArrayComboBoxDataSource} from "../platform/component/input/StringA
 import {DesignerTreeDataTable} from "../platform/designer/DesignerTreeDataTable";
 import {Grid} from "../platform/component/Grid";
 import {TestWindow2} from "./TestWindow2";
+import {Project} from "../platform/designer/project/Project";
+
 
 
 export class TestWindow1 extends BaseWindow {
@@ -70,7 +72,11 @@ export class TestWindow1 extends BaseWindow {
             console.log("click");
             this.but1.text += "*";
 
-            this.grid1.loadData();
+            let p=new Project();
+            p.load();
+            console.log("p.load------------------------",p);
+
+            //this.grid1.loadData();
 
             // let x=new DesignerTreeDataTable();
             // x.designedComponent=this;
