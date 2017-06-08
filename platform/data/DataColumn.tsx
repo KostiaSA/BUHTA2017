@@ -51,7 +51,7 @@ export class DataColumn extends Component {
     }
 
     protected __emitCode_fieldName(code: EmittedCode) {
-        code.emitStringValue(this, "fieldName", true);
+        code.emitStringValue(this, "fieldName", this.fieldName_default);
     }
 
     protected  __getPropertyEditor_fieldName(): PropertyEditor {

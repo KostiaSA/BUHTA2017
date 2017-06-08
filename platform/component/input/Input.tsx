@@ -82,6 +82,7 @@ export class Input extends EnabledMixin(
         this._bindObject = value;
         if (this.bindObject && this.bindProperty) {
             this.internalValue = this.bindObject[this.bindProperty];
+            this.internalDefaultValue = this.bindObject[this.bindProperty + "_default"];
         }
         // if (this.$) {
         //     if (this._designer) {
@@ -110,6 +111,7 @@ export class Input extends EnabledMixin(
         this._bindProperty = value;
         if (this.bindObject && this.bindProperty) {
             this.internalValue = this.bindObject[this.bindProperty];
+            this.internalDefaultValue = this.bindObject[this.bindProperty + "_default"];
         }
         // if (this.$) {
         //     if (this._designer) {
@@ -301,6 +303,7 @@ export class Input extends EnabledMixin(
     // ------------------------------ getReactElement ------------------------------
 
     internalValue: string;
+    internalDefaultValue: string;
     inputElement: HTMLElement;
 
     popupVisible: boolean = false;
@@ -453,8 +456,14 @@ export class Input extends EnabledMixin(
             height: this.height,
             width: this.width,
             paddingLeft: 5,
-            paddingRight: 3
+            paddingRight: 3,
+            color:"black"
         };
+
+        if (this.internalValue===this.internalDefaultValue) {
+            inputStyle.color = "gray";
+        }
+
 
         let downButtonStyle: CSSProperties = {
             height: 22,

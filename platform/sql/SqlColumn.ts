@@ -71,7 +71,7 @@ export class SqlColumn extends DataColumn {
     }
 
     protected __emitCode_sqlDataType(code: EmittedCode) {
-        code.emitStringValue(this, "sqlDataType", true);
+        code.emitStringValue(this, "sqlDataType", this.sqlDataType_default);
     }
 
     protected  __getPropertyEditor_sqlDataType(): PropertyEditor {
