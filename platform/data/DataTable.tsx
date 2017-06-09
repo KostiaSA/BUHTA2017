@@ -10,7 +10,6 @@ export class DataTable<Col extends DataColumn, Row extends DataRow> extends Comp
 
     idColumn: DataColumn;
     parentIdColumn: DataColumn;
-    autoExpandNodesToLevel:number;
     positionColumn: DataColumn; // для сортировки
 
     async getRows(): Promise<Row[]> {
@@ -20,10 +19,18 @@ export class DataTable<Col extends DataColumn, Row extends DataRow> extends Comp
     getColumns(): Col[] {
         let cols: Col[] = [];
         for (let child of this.children) {
-            if (child instanceof DataColumn){
+            if (child instanceof DataColumn) {
                 cols.push(child as Col);
             }
         }
         return cols;
     }
+
+    // для отображения в Grid
+    autoExpandNodesToLevel: number;
+    hideColumnHeaders: boolean;
+    rowHeight: number;
+    headerHeight: number;
+    sizeColumnsToFit:boolean;
+
 }

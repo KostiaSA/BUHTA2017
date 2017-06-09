@@ -83,7 +83,7 @@ export class TestWindow1 extends BaseWindow {
             this.grid1.dataSource=t;
             this.grid1.loadData();
 
-            //this.grid1.loadData();
+            //this.grid.loadData();
 
             // let x=new DesignerTreeDataTable();
             // x.designedComponent=this;
@@ -102,7 +102,7 @@ export class TestWindow1 extends BaseWindow {
 
         // let ds=new DesignerTreeDataTable();
         // ds.designedComponent=new TestWindow2();
-        // this.grid1.dataSource=ds;
+        // this.grid.dataSource=ds;
         this.childrenAdd(this.grid1);
 
 

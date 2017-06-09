@@ -6,17 +6,18 @@ import {TestWindow1} from "../../app/TestWindow1";
 import {ComponentAsReactElement} from "../react/ComponentAsReactElement";
 //import {TestWindow2} from "../../app/TestWindow2";
 import {DesignerWindow} from "../designer/DesignerWindow";
+import {ProjectExplorer} from "../designer/ProjectExplorer";
 
 export class Desktop extends Component {
 
 //    win1: BaseWindow;
-    win3: TestWindow1;
+    win3: ProjectExplorer;
     designerWindow: DesignerWindow;
 
     constructor() {
         super();
         //this.win1 = new BaseWindow();
-        this.win3 = new TestWindow1();
+        this.win3 = new ProjectExplorer();
         this.designerWindow = new DesignerWindow();
 
         // this.childrenAdd(this.win1);

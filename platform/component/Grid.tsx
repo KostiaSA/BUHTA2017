@@ -176,6 +176,9 @@ export class Grid extends EnabledMixin(
 
         this.gridApi.setColumnDefs(cols);
         this.gridApi.setRowData(this.nodes);
+        this.updateGridOptions();
+        if (this.dataSource.sizeColumnsToFit)
+            this.gridApi.sizeColumnsToFit();
         this.gridApi.doLayout();
 
     }
@@ -189,7 +192,6 @@ export class Grid extends EnabledMixin(
         this.gridApi = event.api;
         this.gridColumnApi = event.columnApi;
         this.loadData();
-
         //this.comboGridApi.addEventListener()
 
         //this.comboGridApi.doLayout();
@@ -198,8 +200,37 @@ export class Grid extends EnabledMixin(
         //console.log("gridReadyHandler==========================================================");
     };
 
-    // ------------------------------ getReactElement ------------------------------
+    updateGridOptions() {
+        if (this.gridApi) {
+            let gridOptions = this.getGridOptions();
+            this.gridApi.setHeaderHeight(gridOptions.headerHeight);
+        }
+    }
 
+    getGridOptions(): any {
+        let gridOptions = {
+            suppressLoadingOverlay: true,
+            suppressNoRowsOverlay: true,
+            getNodeChildDetails: this.getNodeChildDetails,
+            rowHeight: 22,
+            headerHeight: 22
+        };
+
+        if (this.dataSource && this.dataSource.rowHeight) {
+            gridOptions.rowHeight = this.dataSource.rowHeight;
+        }
+
+        if (this.dataSource && this.dataSource.headerHeight) {
+            gridOptions.headerHeight = this.dataSource.headerHeight;
+        }
+
+        if (this.dataSource && this.dataSource.hideColumnHeaders) {
+            gridOptions.headerHeight = 0;
+        }
+        return gridOptions;
+    }
+
+    // ------------------------------ getReactElement ------------------------------
     getReactElement(index?: number | string): JSX.Element | null {
         console.log("Grid-getReactElement()", this.enabled);
 
@@ -207,12 +238,6 @@ export class Grid extends EnabledMixin(
             "buhta-grid": true,
             "ag-fresh": true,
         });
-
-
-        let gridOptions = {
-            getNodeChildDetails: this.getNodeChildDetails
-
-        };
 
 
         return (
@@ -228,11 +253,9 @@ export class Grid extends EnabledMixin(
                     border: "1px solid silver",
                 }}>
                 <AgGridReact
-                    gridOptions={gridOptions}
+                    gridOptions={this.getGridOptions()}
                     suppressCellSelection={false}
                     className="ag-fresh"
-                    rowHeight={22}
-                    headerHeight={22}
 
                     suppressColumnVirtualisation={true}
                     enableSorting={true}
