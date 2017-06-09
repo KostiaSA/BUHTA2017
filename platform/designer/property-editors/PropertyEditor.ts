@@ -1,4 +1,4 @@
-import {Component} from "../component/Component";
+import {Component} from "../../component/Component";
 
 export const Категория_Основное = "основное";
 export const Категория_РазмерПозиция = "размер и позиция";

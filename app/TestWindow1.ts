@@ -9,7 +9,7 @@ import {DesignerTreeDataTable} from "../platform/designer/DesignerTreeDataTable"
 import {Grid} from "../platform/component/Grid";
 import {TestWindow2} from "./TestWindow2";
 import {Project} from "../platform/designer/project/Project";
-import {ProjectItemDataTable} from "../platform/designer/project/ProjectDataTable";
+import {ProjectDataTable} from "../platform/designer/project/ProjectDataTable";
 
 
 
@@ -77,7 +77,7 @@ export class TestWindow1 extends BaseWindow {
             p.load();
             console.log("p.load------------------------",p);
 
-            let t=new  ProjectItemDataTable();
+            let t=new  ProjectDataTable();
             t.project=p;
             t.getRows().then((rows)=>{console.log("rows",rows)});
             this.grid1.dataSource=t;

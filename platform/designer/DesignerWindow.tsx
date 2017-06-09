@@ -13,7 +13,7 @@ import {PropertiesEditor} from "./PropertriesEditor";
 import {EmittedCode} from "./EmittedCode";
 import {replaceAll} from "../util/replaceAll";
 import {CompilerOptions, DiagnosticCategory, JsxEmit, ScriptTarget} from "typescript";
-import {CodeEditor} from "./CodeEditor";
+import {CodeEditor} from "./code-editor/CodeEditor";
 import {Grid, IRowFocusedEventArgs} from "../component/Grid";
 import {DesignerTreeDataRow, DesignerTreeDataTable} from "./DesignerTreeDataTable";
 import {DataRow} from "../data/DataRow";

@@ -1,6 +1,6 @@
 import {MixinConstructor} from "./MixinConstructor";
 import {Component} from "../Component";
-import {PropertyEditor, Категория_Прочее} from "../../designer/PropertyEditor";
+import {PropertyEditor, Категория_Прочее} from "../../designer/property-editors/PropertyEditor";
 import {EmittedCode} from "../../designer/EmittedCode";
 //import {appStateforceUpdate} from "../../util/appStateforceUpdate";
 
@@ -30,7 +30,7 @@ export function TextMixin<T extends MixinConstructor<Component>>(Base: T) {
         }
 
         protected  __getPropertyEditor_text(): PropertyEditor {
-            let StringPropertyEditor = require("../../designer/StringPropertyEditor").StringPropertyEditor;
+            let StringPropertyEditor = require("../../designer/property-editors/StringPropertyEditor").StringPropertyEditor;
 
             let pe = new StringPropertyEditor();
             pe.propertyName = "text";

@@ -9,7 +9,7 @@ import {DesignerTreeDataTable} from "./DesignerTreeDataTable";
 import {Grid} from "../component/Grid";
 import {TestWindow2} from "../../app/TestWindow2";
 import {Project} from "./project/Project";
-import {ProjectItemDataTable} from "./project/ProjectDataTable";
+import {ProjectDataTable} from "./project/ProjectDataTable";
 
 
 export class ProjectExplorer extends BaseWindow {
@@ -56,13 +56,18 @@ export class ProjectExplorer extends BaseWindow {
             let p = new Project();
             p.load();
 
-            let t = new ProjectItemDataTable();
+            let t = new ProjectDataTable();
             t.project = p;
             t.hideColumnHeaders = true;
             t.sizeColumnsToFit = true;
             // t.getRows().then((rows) => {
             //     console.log("rows", rows)
             // });
+            t.onRowEditKeyPress=(args)=>{
+                console.log("==============this.fireEvent(this.onRowEditKeyPress");
+
+            };
+
             this.grid.dataSource = t;
             this.grid.loadData();
         };

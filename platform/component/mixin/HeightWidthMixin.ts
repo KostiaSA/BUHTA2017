@@ -1,7 +1,7 @@
 import {MixinConstructor} from "./MixinConstructor";
 import {Component} from "../Component";
-import {PropertyEditor, Категория_РазмерПозиция} from "../../designer/PropertyEditor";
-import {StringPropertyEditor} from "../../designer/StringPropertyEditor";
+import {PropertyEditor, Категория_РазмерПозиция} from "../../designer/property-editors/PropertyEditor";
+import {StringPropertyEditor} from "../../designer/property-editors/StringPropertyEditor";
 import {EmittedCode} from "../../designer/EmittedCode";
 import {isString} from "util";
 
@@ -42,7 +42,7 @@ export function HeightWidthMixin<T extends MixinConstructor<Component>>(Base: T)
 
 
         protected __getPropertyEditor_height(): PropertyEditor {
-            let StringPropertyEditor = require("../../designer/StringPropertyEditor").StringPropertyEditor;
+            let StringPropertyEditor = require("../../designer/property-editors/StringPropertyEditor").StringPropertyEditor;
 
             let pe = new StringPropertyEditor();
             //pe.default = this.height_default;
@@ -86,7 +86,7 @@ export function HeightWidthMixin<T extends MixinConstructor<Component>>(Base: T)
         }
 
         protected __getPropertyEditor_width(): PropertyEditor {
-            let StringPropertyEditor = require("../../designer/StringPropertyEditor").StringPropertyEditor;
+            let StringPropertyEditor = require("../../designer/property-editors/StringPropertyEditor").StringPropertyEditor;
             let pe = new StringPropertyEditor();
             //pe.default = this.width_default;
             pe.propertyName = "width";

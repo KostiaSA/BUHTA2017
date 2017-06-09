@@ -2,7 +2,7 @@ import * as React from "react";
 import {Component, IComponentRegistration, Компоненты_Данные} from "../component/Component";
 import {IGridCellRenderer} from "../component/Grid";
 import {EmittedCode} from "../designer/EmittedCode";
-import {PropertyEditor, Категория_Основное, Категория_Прочее} from "../designer/PropertyEditor";
+import {PropertyEditor, Категория_Основное, Категория_Прочее} from "../designer/property-editors/PropertyEditor";
 
 export type DataType = "string" | "boolean" | "number" | "object";
 
@@ -55,7 +55,7 @@ export class DataColumn extends Component {
     }
 
     protected  __getPropertyEditor_fieldName(): PropertyEditor {
-        let StringPropertyEditor = require("../designer/StringPropertyEditor").StringPropertyEditor;
+        let StringPropertyEditor = require("../designer/property-editors/StringPropertyEditor").StringPropertyEditor;
 
         let pe = new StringPropertyEditor();
         pe.propertyName = "fieldName";

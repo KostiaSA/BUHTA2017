@@ -15,7 +15,7 @@ import {AgGridColDef} from "../../react/AgGridColDef";
 import GridApi = ag.grid.GridApi;
 import ColumnApi = ag.grid.ColumnApi;
 import {IComboBoxDataSource} from "./IComboBoxDataSource";
-import {PropertyEditor, Категория_Прочее, Категория_События} from "../../designer/PropertyEditor";
+import {PropertyEditor, Категория_Прочее, Категория_События} from "../../designer/property-editors/PropertyEditor";
 let Highlighter = require("react-highlight-words");
 
 export interface IInputStyle {
@@ -298,7 +298,7 @@ export class Input extends EnabledMixin(
     // }
 
     protected  __getPropertyEditor_onChange(): PropertyEditor {
-        let StringPropertyEditor = require("../../designer/StringPropertyEditor").StringPropertyEditor;
+        let StringPropertyEditor = require("../../designer/property-editors/StringPropertyEditor").StringPropertyEditor;
 
         let pe = new StringPropertyEditor();
         pe.default = this.__getDefaultValue_onChange;
@@ -398,7 +398,7 @@ export class Input extends EnabledMixin(
         }
         if (event.key === "Escape") {
             this.popupVisible = false;
-            console.log(event.key);
+            //console.log(event.key);
         }
         this.refresh();
     };

@@ -1,6 +1,6 @@
 import {MixinConstructor} from "./MixinConstructor";
 import {Component} from "../Component";
-import {PropertyEditor, Категория_РазмерПозиция} from "../../designer/PropertyEditor";
+import {PropertyEditor, Категория_РазмерПозиция} from "../../designer/property-editors/PropertyEditor";
 import {EmittedCode} from "../../designer/EmittedCode";
 
 //import {appStateforceUpdate} from "../../util/appStateforceUpdate";
@@ -40,7 +40,7 @@ export function TopLeftMixin<T extends MixinConstructor<Component>>(Base: T) {
         }
 
         protected  __getPropertyEditor_top(): PropertyEditor {
-            let NumberPropertyEditor = require("../../designer/NumberPropertyEditor").NumberPropertyEditor;
+            let NumberPropertyEditor = require("../../designer/property-editors/NumberPropertyEditor").NumberPropertyEditor;
             let pe = new NumberPropertyEditor();
             pe.propertyName = "top";
             pe.category = Категория_РазмерПозиция;
@@ -67,7 +67,7 @@ export function TopLeftMixin<T extends MixinConstructor<Component>>(Base: T) {
 
 
         protected  __getPropertyEditor_left(): PropertyEditor {
-            let NumberPropertyEditor = require("../../designer/NumberPropertyEditor").NumberPropertyEditor;
+            let NumberPropertyEditor = require("../../designer/property-editors/NumberPropertyEditor").NumberPropertyEditor;
             let pe = new NumberPropertyEditor();
             pe.propertyName = "left";
             pe.category = Категория_РазмерПозиция;
@@ -93,7 +93,7 @@ export function TopLeftMixin<T extends MixinConstructor<Component>>(Base: T) {
         }
 
         protected  __getPropertyEditor_bottom(): PropertyEditor {
-            let NumberPropertyEditor = require("../../designer/NumberPropertyEditor").NumberPropertyEditor;
+            let NumberPropertyEditor = require("../../designer/property-editors/NumberPropertyEditor").NumberPropertyEditor;
             let pe = new NumberPropertyEditor();
             pe.propertyName = "bottom";
             pe.category = Категория_РазмерПозиция;
@@ -119,7 +119,7 @@ export function TopLeftMixin<T extends MixinConstructor<Component>>(Base: T) {
         }
 
         protected  __getPropertyEditor_right(): PropertyEditor {
-            let NumberPropertyEditor = require("../../designer/NumberPropertyEditor").NumberPropertyEditor;
+            let NumberPropertyEditor = require("../../designer/property-editors/NumberPropertyEditor").NumberPropertyEditor;
             let pe = new NumberPropertyEditor();
             pe.propertyName = "right";
             pe.category = Категория_РазмерПозиция;

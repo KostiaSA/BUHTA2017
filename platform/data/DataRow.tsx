@@ -33,5 +33,9 @@ export class DataRow {
         return (this as any)[fieldName] = value;
     }
 
+    __isFolder__(): boolean {
+        return this.__children__ && this.__children__.length > 0;
+    }
+
     //[name: string]: any;
 }

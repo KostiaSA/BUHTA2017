@@ -4,7 +4,7 @@ import {SqlColumn} from "./SqlColumn";
 import {SqlColumns} from "./SqlColumns";
 import {SqlIndexes} from "./SqlIndexes";
 import {EmittedCode} from "../designer/EmittedCode";
-import {PropertyEditor, Категория_Основное} from "../designer/PropertyEditor";
+import {PropertyEditor, Категория_Основное} from "../designer/property-editors/PropertyEditor";
 import {IComponentRegistration, Компоненты_Данные} from "../component/Component";
 
 
@@ -72,7 +72,7 @@ export class SqlTable extends DataTable<SqlColumn, DataRow> {
     }
 
     protected  __getPropertyEditor_sqlName(): PropertyEditor {
-        let StringPropertyEditor = require("../designer/StringPropertyEditor").StringPropertyEditor;
+        let StringPropertyEditor = require("../designer/property-editors/StringPropertyEditor").StringPropertyEditor;
 
         let pe = new StringPropertyEditor();
         pe.propertyName = "sqlName";

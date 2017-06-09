@@ -27,6 +27,7 @@ import {AgGridColDef} from "../react/AgGridColDef";
 import {isNumber, isString} from "util";
 import {numberCompare} from "../util/numberCompare";
 import {EmittedCode} from "../designer/EmittedCode";
+import {PropertyEditor, Категория_События} from "../designer/property-editors/PropertyEditor";
 
 export function __registerBuhtaComponent__(): IComponentRegistration {
     return {
@@ -39,6 +40,11 @@ export function __registerBuhtaComponent__(): IComponentRegistration {
 
 
 export interface IRowFocusedEventArgs extends IEventArgs {
+    sender: Grid;
+    focusedRow: DataRow;
+}
+
+export interface IRowAddEditDeleteKeyPressEventArgs extends IEventArgs {
     sender: Grid;
     focusedRow: DataRow;
 }
@@ -78,9 +84,7 @@ export class Grid extends EnabledMixin(
     }
 
 
-    // ------------------------------ onRowFocused ------------------------------
-
-
+    //<editor-fold desc="---------- property: onRowFocused ----------">
     _onRowFocused: IEvent<IRowFocusedEventArgs>;
     get onRowFocused(): IEvent<IRowFocusedEventArgs> {
         return this._onRowFocused;
@@ -90,9 +94,24 @@ export class Grid extends EnabledMixin(
         this._onRowFocused = value;
     }
 
+    protected __getDefaultValue_onRowFocused(): IEvent<IRowFocusedEventArgs> {
+        return undefined as any;
+    }
+
     protected  __emitCode_onRowFocused(code: EmittedCode) {
         code.emitEventValue(this, "onRowFocused");
     }
+
+    protected  __getPropertyEditor_onRowFocused(): PropertyEditor {
+        let EventPropertyEditor = require("../../designer/property-editors/EventPropertyEditor").EventPropertyEditor;
+
+        let pe = new EventPropertyEditor();
+        pe.propertyName = "onRowFocused";
+        pe.category = Категория_События;
+        return pe;
+    }
+
+    //</editor-fold>
 
 
     dataSource: DataTable<DataColumn, DataRow>;
@@ -230,6 +249,20 @@ export class Grid extends EnabledMixin(
         return gridOptions;
     }
 
+    getFocusedRow(): DataRow {
+
+        let focusedRowIndex = this.gridApi.getFocusedCell().rowIndex;
+        let renderedRows = this.gridApi.getRenderedNodes();
+
+        for (let row of renderedRows) {
+            if (row.rowIndex === focusedRowIndex) {
+                return row.data;
+            }
+        }
+        return undefined as any;
+    }
+
+    //private agGridReactNative: HTMLElement;
     // ------------------------------ getReactElement ------------------------------
     getReactElement(index?: number | string): JSX.Element | null {
         console.log("Grid-getReactElement()", this.enabled);
@@ -237,6 +270,7 @@ export class Grid extends EnabledMixin(
         let cls = classNames({
             "buhta-grid": true,
             "ag-fresh": true,
+            [this.id]: true,
         });
 
 
@@ -255,7 +289,6 @@ export class Grid extends EnabledMixin(
                 <AgGridReact
                     gridOptions={this.getGridOptions()}
                     suppressCellSelection={false}
-                    className="ag-fresh"
 
                     suppressColumnVirtualisation={true}
                     enableSorting={true}
@@ -289,29 +322,20 @@ export class Grid extends EnabledMixin(
                             }
                         }
 
-                        // $(this.popupElement).find(".ag-cell").off("keydown.buhta");
-                        // $(this.popupElement).find(".ag-cell").on("keydown.buhta", (event) => {
-                        //     //console.log(event.keyCode);
-                        //
-                        //     if (event.keyCode === 13) {
-                        //
-                        //         let focusedRowIndex = this.comboGridApi.getFocusedCell().rowIndex;
-                        //         let renderedRows = this.comboGridApi.getRenderedNodes();
-                        //
-                        //         for (let row of renderedRows) {
-                        //             if (row.rowIndex === focusedRowIndex) {
-                        //                 this.internalValue = row.data[this.lookupDataSource.getTitleFieldName()];
-                        //                 this.bindObject[this.bindProperty] == row.data[this.lookupDataSource.getValueFieldName()];
-                        //                 this.hideCombobox();
-                        //                 break;
-                        //             }
-                        //         }
-                        //
-                        //     }
-                        //     if (event.keyCode === 27) {
-                        //         this.hideCombobox();
-                        //     }
-                        //});
+                        //console.log("event.keyCode",$("."+this.id).find(".ag-cell"));
+                        $("." + this.id + " .ag-cell").off("keydown.buhta");
+                        $("." + this.id + " .ag-cell.ag-cell-focus").on("keydown.buhta", (event) => {
+                            //console.log(event.keyCode);
+                            if (event.keyCode === 13 || event.keyCode === 115/*F4*/) {
+                                if (this.dataSource.onRowEditKeyPress) {
+                                    let focusedRow = this.getFocusedRow();
+                                    if (focusedRow && !focusedRow.__isFolder__()) {
+                                        this.dataSource.fireEvent(this.dataSource.onRowEditKeyPress, {focusedRow: focusedRow});
+                                    }
+                                }
+
+                            }
+                        });
                     }}
 
                     onRowDataChanged={() => {
@@ -322,11 +346,21 @@ export class Grid extends EnabledMixin(
                         //     this.comboGridApi.sizeColumnsToFit();
                         // }
                     }}
+
                     onRowClicked={(event: any) => {
                         // console.log(event);
                         // this.internalValue = event.data[this.lookupDataSource.getTitleFieldName()];
                         // this.bindObject[this.bindProperty] == event.data[this.lookupDataSource.getValueFieldName()];
                         // this.hideCombobox();
+                    }}
+
+                    onRowDoubleClicked={(event: any) => {
+                        if (this.dataSource.onRowEditKeyPress) {
+                            let focusedRow = this.getFocusedRow();
+                            if (focusedRow && !focusedRow.__isFolder__()) {
+                                this.dataSource.fireEvent(this.dataSource.onRowEditKeyPress, {focusedRow: focusedRow});
+                            }
+                        }
                     }}
                 />
             </ComponentWrapper>

@@ -13,7 +13,7 @@ export class ProjectItemDataRow extends DataRow {
     // parentItemName: string;
 }
 
-export class ProjectItemDataTable extends DataTable<DataColumn, ProjectItemDataRow> {
+export class ProjectDataTable extends DataTable<DataColumn, ProjectItemDataRow> {
 
     project: Project;
 
@@ -75,5 +75,7 @@ export class ProjectItemDataTable extends DataTable<DataColumn, ProjectItemDataR
         else
             return Promise.resolve([]);
     }
+
+
 
 }

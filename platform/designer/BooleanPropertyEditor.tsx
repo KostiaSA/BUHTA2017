@@ -1,5 +1,5 @@
 import * as React from "react";
-import {PropertyEditor} from "./PropertyEditor";
+import {PropertyEditor} from "./property-editors/PropertyEditor";
 import {Input} from "../component/input/Input";
 import {ComponentAsReactElement} from "../react/ComponentAsReactElement";
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {PropertyEditor} from "./PropertyEditor";
-import {Input} from "../component/input/Input";
-import {ComponentAsReactElement} from "../react/ComponentAsReactElement";
+import {Input} from "../../component/input/Input";
+import {ComponentAsReactElement} from "../../react/ComponentAsReactElement";
 
 export class NumberPropertyEditor extends PropertyEditor {
 

@@ -1,6 +1,6 @@
 import {DataColumn} from "../data/DataColumn";
 import {EmittedCode} from "../designer/EmittedCode";
-import {PropertyEditor, Категория_Основное, Категория_Прочее} from "../designer/PropertyEditor";
+import {PropertyEditor, Категория_Основное, Категория_Прочее} from "../designer/property-editors/PropertyEditor";
 import {IComponentRegistration, Компоненты_Данные} from "../component/Component";
 
 export function __registerBuhtaComponent__(): IComponentRegistration {
@@ -75,7 +75,7 @@ export class SqlColumn extends DataColumn {
     }
 
     protected  __getPropertyEditor_sqlDataType(): PropertyEditor {
-        let StringPropertyEditor = require("../designer/StringPropertyEditor").StringPropertyEditor;
+        let StringPropertyEditor = require("../designer/property-editors/StringPropertyEditor").StringPropertyEditor;
 
         let pe = new StringPropertyEditor();
         pe.propertyName = "sqlDataType";

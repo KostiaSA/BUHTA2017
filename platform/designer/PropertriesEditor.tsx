@@ -11,7 +11,7 @@ import {EnabledMixin} from "../component/mixin/EnabledMixin";
 import {TopLeftMixin} from "../component/mixin/TopLeftMixin";
 import {HeightWidthMixin} from "../component/mixin/HeightWidthMixin";
 import {Component} from "../component/Component";
-import {PropertyEditor, PropertyEditorCategories} from "./PropertyEditor";
+import {PropertyEditor, PropertyEditorCategories} from "./property-editors/PropertyEditor";
 import {getAllObjectProps} from "../util/getAllObjectProps";
 import {BooleanPropertyEditor} from "./BooleanPropertyEditor";
 

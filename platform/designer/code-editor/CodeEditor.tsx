@@ -4,10 +4,10 @@ import * as React from "react";
 import IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 import IEditorOptions = monaco.editor.IEditorOptions;
 import IEditorConstructionOptions = monaco.editor.IEditorConstructionOptions;
-import {Component} from "../component/Component";
-import {TopLeftMixin} from "../component/mixin/TopLeftMixin";
-import {HeightWidthMixin} from "../component/mixin/HeightWidthMixin";
-import {MonacoEditor} from "../react/MonacoEditor";
+import {Component} from "../../component/Component";
+import {TopLeftMixin} from "../../component/mixin/TopLeftMixin";
+import {HeightWidthMixin} from "../../component/mixin/HeightWidthMixin";
+import {MonacoEditor} from "../../react/MonacoEditor";
 
 
 export class CodeEditor extends TopLeftMixin(
