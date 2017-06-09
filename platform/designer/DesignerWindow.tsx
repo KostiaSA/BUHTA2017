@@ -264,7 +264,7 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
 
     save() {
         if (!this.designedComponent) {
-            console.log(this.constructor.name + ".save(): нет designedForm");
+            console.error(this.constructor.name + ".save(): нет designedForm");
             return;
         }
         let e = new EmittedCode();
@@ -310,7 +310,7 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         let bakFileName = p.dir + "/" + p.name + ".bak";
         let jsFileName = p.dir + "/" + p.name + ".js";
 
-        console.log(this.designedComponentPath, bakFileName);
+        //console.log(this.designedComponentPath, bakFileName);
         //fs.renameSync(this.designedComponentPath, bakFileName);
         //fs.writeFileSync(this.designedComponentPath, code);
 
@@ -357,7 +357,7 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         //else
         //  fs.writeFileSync(jsFileName, res.outputText);
 
-        console.log(res.outputText);
+        //console.log(res.outputText);
 
         // reload module
         Object.keys(require.cache).forEach(module => {

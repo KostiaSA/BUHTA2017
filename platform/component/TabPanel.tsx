@@ -88,7 +88,7 @@ export class TabPanel extends EnabledMixin(
     // ------------------------------ getReactElement ------------------------------
 
     getReactElement(index?: number | string): JSX.Element | null {
-        console.log("TabPanel-getReactElement()", this.enabled);
+        //console.log("TabPanel-getReactElement()", this.enabled);
 
         let panelClass = classNames({
             "buhta-tab-panel": true,

@@ -19,7 +19,7 @@ export class App extends React.Component<any,any> {
     };
 
     componentWillUnmount() {
-        console.log("App unmount");
+        //console.log("App unmount");
     }
 
     bodyElement: HTMLElement;
@@ -27,7 +27,7 @@ export class App extends React.Component<any,any> {
     pageElement: HTMLElement;
 
     render(): any {
-        console.log("App render");
+        //console.log("App render");
 
 
         return (

@@ -66,7 +66,7 @@ export class SplitPanel extends EnabledMixin(
     // ------------------------------ getReactElement ------------------------------
 
     getReactElement(index?: number | string): JSX.Element | null {
-        console.log("SplitPanel-getReactElement()", this.enabled);
+        //console.log("SplitPanel-getReactElement()", this.enabled);
 
         let panelClass = classNames({
             "buhta-split-panel": true,

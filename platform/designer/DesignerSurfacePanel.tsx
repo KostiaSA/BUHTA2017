@@ -22,7 +22,7 @@ export class DesignerSurfacePanel extends EnabledMixin(
     // ------------------------------ getReactElement ------------------------------
 
     getReactElement(index?: number | string): JSX.Element | null {
-        console.log("DesignerSurfacePanel-getReactElement()", this.enabled);
+        //console.log("DesignerSurfacePanel-getReactElement()", this.enabled);
 
         let panelClass = classNames({
             "buhta-designer-surface-panel": true,

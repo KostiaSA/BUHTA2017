@@ -278,7 +278,7 @@ export class Grid extends EnabledMixin(
     //private agGridReactNative: HTMLElement;
     // ------------------------------ getReactElement ------------------------------
     getReactElement(index?: number | string): JSX.Element | null {
-        console.log("Grid-getReactElement()", this.enabled);
+        //console.log("Grid-getReactElement()", this.enabled);
 
         let cls = classNames({
             "buhta-grid": true,

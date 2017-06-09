@@ -444,7 +444,7 @@ export class Input extends EnabledMixin(
 
 
     getReactElement(index?: number | string): JSX.Element | null {
-        console.log("Input-getReactElement()", this.enabled);
+        //console.log("Input-getReactElement()", this.enabled);
 
         let inputClass = classNames({
             "buhta-input": true,
@@ -584,7 +584,7 @@ export class Input extends EnabledMixin(
                             // }
                         }}
                         onRowClicked={(event: any) => {
-                            console.log(event);
+                            //console.log(event);
                             this.internalValue = event.data[this.lookupDataSource.getTitleFieldName()];
                             this.bindObject[this.bindProperty] == event.data[this.lookupDataSource.getValueFieldName()];
                             this.hideCombobox();

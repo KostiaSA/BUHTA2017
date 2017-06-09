@@ -20,7 +20,6 @@ export class Desktop extends Component {
 
     constructor() {
         super();
-        console.error("desktop constructor");
         this.ixxxx=getRandomId();
         //this.win1 = new BaseWindow();
         this.win3 = new ProjectExplorer();
@@ -49,15 +48,11 @@ export class Desktop extends Component {
     }
 
     openWindow(win: BaseWindow) {
-        console.log("getReactElement-desktop, wincount ДО=",this.children.length,this);
         this.childrenAdd(win);
-        console.log("getReactElement-desktop, wincount ПОСЛЕ=",this.children.length,this);
         this.refreshApp();
     }
 
     getReactElement(index?: number | string): JSX.Element | null {
-
-        console.log("getReactElement-desktop, wincount=",this.children.length,this);
         return (
             <div key={index}
                  style={{position: "relative", overflow: "auto", height: 900, width: 900, border: "1px solid green"}}>

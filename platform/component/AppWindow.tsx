@@ -27,7 +27,7 @@ export class AppWindow extends Component {
 
 
     getReactElement(index?: number | string): JSX.Element | null {
-        console.log("App render");
+        //console.log("App render");
 
         return (
             <div style={{height: "97%", width: "97%", border: "1px solid red"}}>

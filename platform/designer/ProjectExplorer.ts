@@ -67,9 +67,7 @@ export class ProjectExplorer extends BaseWindow {
             //     console.log("rows", rows)
             // });
             t.onRowEditKeyPress = (args) => {
-                console.log("t.onRowEditKeyPress==============================");
                 this.openDesignerWindow((args.focusedRow as ProjectItemDataRow).item);
-
             };
 
             this.grid.dataSource = t;
@@ -89,7 +87,6 @@ export class ProjectExplorer extends BaseWindow {
     openDesignerWindow(projectItem: ProjectItem) {
         let designerWindow = new DesignerWindow();
         designerWindow.designedComponentPath=projectItem.getRelativePath();
-        console.log(projectItem.getRelativePath());
         getAppState().appWindow.desktop.openWindow(designerWindow);
 
     }

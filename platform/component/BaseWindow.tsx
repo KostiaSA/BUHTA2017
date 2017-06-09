@@ -70,7 +70,7 @@ export class BaseWindow extends Component {
 
 
     getReactElement(index?: number | string): JSX.Element | null {
-        console.log("getReactElement-window");
+        //console.log("getReactElement-window");
 
         let snapGrid: any = null;
         if (this.designMode)
@@ -89,7 +89,7 @@ export class BaseWindow extends Component {
                 bindHeight="height"
                 bindWidth="width"
                 onClick={() => {
-                    console.log("win-click->" + this.constructor.name);
+                    //console.log("win-click->" + this.constructor.name);
                     this.bringToFront();
                 }}
                 onDrag={() => {

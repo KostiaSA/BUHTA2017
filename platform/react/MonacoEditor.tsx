@@ -183,7 +183,7 @@ export class MonacoEditor extends React.Component<IMonacoEditorProps, any> {
     }
 
     render() {
-        console.log("RENDER MONACO-EDITOR");
+        //console.log("RENDER MONACO-EDITOR");
         return (
             <div ref={(e) => {
                 if (e) {
