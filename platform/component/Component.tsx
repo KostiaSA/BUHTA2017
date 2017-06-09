@@ -3,11 +3,11 @@ import * as ReactDOM from "react-dom";
 //import {appStateforceUpdate} from "../util/appStateforceUpdate";
 import {getRandomId} from "../util/getRandomId";
 import {ComponentAsReactElement} from "../react/ComponentAsReactElement";
-import {appState} from "../appState";
 import {IComponentDesigner} from "../designer/DesignerWindow";
 import {EmittedCode} from "../designer/EmittedCode";
 import {getAllObjectProps} from "../util/getAllObjectProps";
 import {isFunction, isString} from "util";
+import {getAppState} from "../appState";
 //import {BaseWindow} from "./BaseWindow";
 //import {AppWindow} from "./AppWindow";
 
@@ -217,6 +217,7 @@ export class Component {//} extends React.Component<any, any>{
     }
 
     refreshApp(needForceUpdate: boolean = true) {
+        let appState=getAppState();
         if (needForceUpdate && appState && appState.appWindow && appState.appWindow.buhtaComponentInstance) {
             appState.appWindow.buhtaComponentInstance.forceUpdate();
         }

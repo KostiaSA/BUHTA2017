@@ -9,7 +9,10 @@ import {DesignerTreeDataTable} from "./DesignerTreeDataTable";
 import {Grid} from "../component/Grid";
 import {TestWindow2} from "../../app/TestWindow2";
 import {Project} from "./project/Project";
-import {ProjectDataTable} from "./project/ProjectDataTable";
+import {ProjectDataTable, ProjectItemDataRow} from "./project/ProjectDataTable";
+import {ProjectItem} from "./project/ProjectItem";
+import {DesignerWindow} from "./DesignerWindow";
+import {getAppState} from "../appState";
 
 
 export class ProjectExplorer extends BaseWindow {
@@ -63,8 +66,9 @@ export class ProjectExplorer extends BaseWindow {
             // t.getRows().then((rows) => {
             //     console.log("rows", rows)
             // });
-            t.onRowEditKeyPress=(args)=>{
-                console.log("==============this.fireEvent(this.onRowEditKeyPress");
+            t.onRowEditKeyPress = (args) => {
+                console.log("t.onRowEditKeyPress==============================");
+                this.openDesignerWindow((args.focusedRow as ProjectItemDataRow).item);
 
             };
 
@@ -82,7 +86,13 @@ export class ProjectExplorer extends BaseWindow {
         //=== END-DESIGNER-INIT-CODE ===//
     }
 
+    openDesignerWindow(projectItem: ProjectItem) {
+        let designerWindow = new DesignerWindow();
+        designerWindow.designedComponentPath=projectItem.getRelativePath();
+        console.log(projectItem.getRelativePath());
+        getAppState().appWindow.desktop.openWindow(designerWindow);
 
+    }
 }
 
 

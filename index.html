@@ -66,9 +66,12 @@
 <body style="min-height: 100%; background: rgba(211, 211, 211, 0.35);margin: 0px">
   <div id="content" style="height: 100%; flex:1 0 auto">
   </div>
+  <script>
+      let a=require('./platform/AppState.js');
+      a.getAppState().start();
+
+      //console.log(require('./platform/AppState.js'));
+  </script>
 </body>
 
-<script>
-    require('./platform/AppState.js');
-</script>
 </html>

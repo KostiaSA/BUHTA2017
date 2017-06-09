@@ -62,7 +62,7 @@ export class SqlColumn extends DataColumn {
 
     set sqlDataType(value: SqlDataType) {
         this.setPropertyWithChangeCallback("_sqlDataType", value, () => {
-            console.log("new sqlDataType", value);
+            //console.log("new sqlDataType", value);
         });
     }
 

@@ -9,12 +9,11 @@ import {ComponentAsReactElement} from "../react/ComponentAsReactElement";
 
 export class AppWindow extends Component {
 
-    desktop: Desktop = new Desktop();
+    desktop: Desktop;
 
-    initialized:boolean=false;
-
-    init() {
-        if (this.initialized) return;
+    constructor() {
+        super();
+        this.desktop = new Desktop();
     }
 
     // componentDidMount() {
@@ -28,9 +27,7 @@ export class AppWindow extends Component {
 
 
     getReactElement(index?: number | string): JSX.Element | null {
-        console.log("App render2");
-
-        this.init();
+        console.log("App render");
 
         return (
             <div style={{height: "97%", width: "97%", border: "1px solid red"}}>

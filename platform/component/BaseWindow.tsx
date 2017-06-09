@@ -22,7 +22,7 @@ export const DefaultWindowStyle: IWindowStyle = {
 
 export class BaseWindow extends Component {
 
-    constructor(){
+    constructor() {
         super();
     }
 
@@ -61,6 +61,8 @@ export class BaseWindow extends Component {
 
 
     icon: string = "vendor/fugue/icons-shadowless/application-blue.png";
+
+    winId: string;
 
     bringToFront() {
         (this.parent as Desktop).bringWindowToFront(this);

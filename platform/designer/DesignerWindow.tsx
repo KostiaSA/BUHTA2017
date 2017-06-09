@@ -63,6 +63,11 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         super();
 
         //=== BEGIN-DESIGNER-INIT-CODE ===//
+        this.top = 10;
+        this.left = 10;
+        this.width = 800;
+        this.height = 800;
+
         this.saveButton = new Button();
 
         this.tabs = new TabPanel();
@@ -89,10 +94,6 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         this.codeEditor = new CodeEditor();
 
 
-        this.top = 10;
-        this.left = 10;
-        this.width = 800;
-        this.height = 800;
 
         this.tabs.top = 100;
         this.tabs.left = 10;
