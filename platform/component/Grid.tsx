@@ -117,6 +117,17 @@ export class Grid extends EnabledMixin(
     dataSource: DataTable<DataColumn, DataRow>;
 
 
+    focusedRowKeyDownHandler = (e:KeyboardEvent) => {
+        //console.log("eGridCell key ==================", e.key);
+        if (this.dataSource.onRowEditKeyPress && (e.key==="Enter" || e.key==="F4")) {
+            let focusedRow = this.getFocusedRow();
+            if (focusedRow && !focusedRow.__isFolder__()) {
+                this.dataSource.fireEvent(this.dataSource.onRowEditKeyPress, {focusedRow: focusedRow});
+            }
+        }
+
+    };
+
     async loadData() {
         if (!this.dataSource)
             return;
@@ -136,6 +147,8 @@ export class Grid extends EnabledMixin(
                     },
                     cellRendererParams: {
                         innerRenderer: (params: any) => {
+                            params.eGridCell.onkeydown = this.focusedRowKeyDownHandler;
+
                             let row = params.data as DataRow;
                             let strToRender: string;
                             if (dataColumn.gridCellRenderer) {
@@ -270,7 +283,6 @@ export class Grid extends EnabledMixin(
         let cls = classNames({
             "buhta-grid": true,
             "ag-fresh": true,
-            [this.id]: true,
         });
 
 
@@ -321,21 +333,6 @@ export class Grid extends EnabledMixin(
                                 this.fireEvent(this.onRowFocused, {focusedRow: focusedRowData});
                             }
                         }
-
-                        //console.log("event.keyCode",$("."+this.id).find(".ag-cell"));
-                        $("." + this.id + " .ag-cell").off("keydown.buhta");
-                        $("." + this.id + " .ag-cell.ag-cell-focus").on("keydown.buhta", (event) => {
-                            //console.log(event.keyCode);
-                            if (event.keyCode === 13 || event.keyCode === 115/*F4*/) {
-                                if (this.dataSource.onRowEditKeyPress) {
-                                    let focusedRow = this.getFocusedRow();
-                                    if (focusedRow && !focusedRow.__isFolder__()) {
-                                        this.dataSource.fireEvent(this.dataSource.onRowEditKeyPress, {focusedRow: focusedRow});
-                                    }
-                                }
-
-                            }
-                        });
                     }}
 
                     onRowDataChanged={() => {
