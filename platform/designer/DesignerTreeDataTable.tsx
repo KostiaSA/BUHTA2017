@@ -8,9 +8,17 @@ import {IGridCellRendererArgs} from "../component/Grid";
 
 export class DesignerTreeDataRow extends DataRow {
     component: Component;
-    componentName: string;
+    get componentName(): string{
+        return this.component.getDesignerLabel();
+    }
+//    componentName: string;
     parentComponent: Component;
     parentComponentName: string;
+    // __getValue__(fieldName: string): any {
+    //     return "999999999922222222";
+    //     //return (this as any)[fieldName];
+    // }
+
 }
 
 export class DesignerTreeDataTable extends DataTable<DataColumn, DesignerTreeDataRow> {
@@ -61,7 +69,7 @@ export class DesignerTreeDataTable extends DataTable<DataColumn, DesignerTreeDat
         let row = new DesignerTreeDataRow();
         row.component = comp;
 //        row.componentName = comp.constructor.name + "  (" + comp.name + ")";
-        row.componentName = comp.getDesignerLabel();
+        //row.componentName = comp.getDesignerLabel();
         row.__icon__ = comp.getDesignerImage();
         row.parentComponent = comp.parent;
         if (comp.parent) {

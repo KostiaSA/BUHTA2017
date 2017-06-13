@@ -215,8 +215,8 @@ export class Grid extends EnabledMixin(
 
     }
 
-    private gridApi: GridApi;
-    private gridColumnApi: ColumnApi;
+    gridApi: GridApi;
+    gridColumnApi: ColumnApi;
     private gridRowData: any[] = [];
 
 
@@ -312,9 +312,9 @@ export class Grid extends EnabledMixin(
                     }}
 
                     onCellFocused={(e: any) => {
-                        if (this.onRowFocused) {
-                            console.log(e, this.gridApi.getFocusedCell());
-                        }
+                        // if (this.onRowFocused) {
+                        //     console.log(e, this.gridApi.getFocusedCell());
+                        // }
                         if (this.onRowFocused) {
 
                             let focusedCell = this.gridApi.getFocusedCell();
