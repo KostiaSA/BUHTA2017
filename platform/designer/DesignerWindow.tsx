@@ -256,7 +256,6 @@ export class DesignerWindow extends BaseWindow implements IComponentDesigner {
         this.propertiesEditor.refresh();
         this.surface.refresh();
         this.grid.gridApi.refreshView();
-        console.log("this.treeGrid.reload+++++++++++++++++++");
     }
 
     addComponentToSelection(component: Component) {
